@@ -223,6 +223,15 @@ const BookingSummary = ({ selectedProperties, selectedExtras, nights, total, dis
 		}
 	};
 
+	// Debug: Log summary when it changes
+	console.log('BookingSummary - Summary object:', summary);
+	console.log('BookingSummary - Discount fields:', {
+		order_discount_amount: summary?.order_discount_amount,
+		discount_amount: summary?.discount_amount,
+		discountCode: discountCode,
+		discountApplied: discountApplied
+	});
+
 	if (!selectedProperties || selectedProperties.length === 0) return null;
 
 	return (
@@ -323,12 +332,12 @@ const BookingSummary = ({ selectedProperties, selectedExtras, nights, total, dis
 						<span>Total Cost</span>
 						<span className="bif-total-amount">${total}</span>
 					</div>
-					{/* Show discount if applied */}
-					{summary && summary.order_discount_amount > 0 && (
+										{/* Show discount if applied */}
+					{summary && (parseFloat(summary.order_discount_amount || summary.discount_amount || 0) > 0) && (
 						<div className="bif-total-breakdown">
 							<div className="bif-breakdown-row">
 								<span>Discount Applied</span>
-								<span>-${summary.order_discount_amount}</span>
+								<span>-${parseFloat(summary.order_discount_amount || summary.discount_amount || 0).toFixed(2)}</span>
 							</div>
 						</div>
 					)}
@@ -704,7 +713,7 @@ const MultiEmbedForm = ({
 						selectedProperties={selectedProperties}
 						selectedExtras={selectedOptionalExtras}
 						nights={form.nights}
-						total={summary.order_payable_now || 0}
+						total={(summary.order_payable_now || 0) - (summary.order_surcharge || 0)}
 						discountCode={discountCode}
 						onDiscountCodeChange={setDiscountCode}
 						onApplyDiscount={applyDiscountCode}
