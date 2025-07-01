@@ -446,12 +446,12 @@
 
     stripe._registerWrapper({
       name: 'react-stripe-js',
-      version: "3.1.0"
+      version: "3.6.0"
     });
 
     stripe.registerAppInfo({
       name: 'react-stripe-js',
-      version: "3.1.0",
+      version: "3.6.0",
       url: 'https://stripe.com/docs/stripe-js/react'
     });
   };
@@ -587,7 +587,7 @@
     children: PropTypes.func.isRequired
   };
 
-  var _excluded = ["on", "session"];
+  var _excluded$1 = ["on", "session"];
   var CheckoutSdkContext = /*#__PURE__*/React.createContext(null);
   CheckoutSdkContext.displayName = 'CheckoutSdkContext';
   var parseCheckoutSdkContext = function parseCheckoutSdkContext(ctx, useCase) {
@@ -606,13 +606,13 @@
 
     checkoutSdk.on;
         checkoutSdk.session;
-        var actions = _objectWithoutProperties(checkoutSdk, _excluded);
+        var actions = _objectWithoutProperties(checkoutSdk, _excluded$1);
 
     if (!sessionState) {
-      return _objectSpread2(_objectSpread2({}, actions), checkoutSdk.session());
+      return Object.assign(checkoutSdk.session(), actions);
     }
 
-    return _objectSpread2(_objectSpread2({}, actions), sessionState);
+    return Object.assign(sessionState, actions);
   };
   var INVALID_STRIPE_ERROR$1 = 'Invalid prop `stripe` supplied to `CheckoutProvider`. We recommend using the `loadStripe` utility from `@stripe/stripe-js`. See https://stripe.com/docs/stripe-js/react#elements-props-stripe for details.';
   var CheckoutProvider = function CheckoutProvider(_ref) {
@@ -701,10 +701,6 @@
         return;
       }
 
-      if (options.clientSecret && !isUnknownObject(prevOptions) && !isEqual(options.clientSecret, prevOptions.clientSecret)) {
-        console.warn('Unsupported prop change: options.clientSecret is not a mutable property.');
-      }
-
       var previousAppearance = prevOptions === null || prevOptions === void 0 ? void 0 : (_prevOptions$elements = prevOptions.elementsOptions) === null || _prevOptions$elements === void 0 ? void 0 : _prevOptions$elements.appearance;
       var currentAppearance = options === null || options === void 0 ? void 0 : (_options$elementsOpti = options.elementsOptions) === null || _options$elementsOpti === void 0 ? void 0 : _options$elementsOpti.appearance;
 
@@ -733,7 +729,7 @@
   CheckoutProvider.propTypes = {
     stripe: PropTypes.any,
     options: PropTypes.shape({
-      clientSecret: PropTypes.string.isRequired,
+      fetchClientSecret: PropTypes.func.isRequired,
       elementsOptions: PropTypes.object
     }).isRequired
   };
@@ -766,6 +762,8 @@
 
     return ctx;
   };
+
+  var _excluded = ["mode"];
 
   var capitalized = function capitalized(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -838,7 +836,40 @@
           var newElement = null;
 
           if (checkoutSdk) {
-            newElement = checkoutSdk.createElement(type, options);
+            switch (type) {
+              case 'payment':
+                newElement = checkoutSdk.createPaymentElement(options);
+                break;
+
+              case 'address':
+                if ('mode' in options) {
+                  var mode = options.mode,
+                      restOptions = _objectWithoutProperties(options, _excluded);
+
+                  if (mode === 'shipping') {
+                    newElement = checkoutSdk.createShippingAddressElement(restOptions);
+                  } else if (mode === 'billing') {
+                    newElement = checkoutSdk.createBillingAddressElement(restOptions);
+                  } else {
+                    throw new Error("Invalid options.mode. mode must be 'billing' or 'shipping'.");
+                  }
+                } else {
+                  throw new Error("You must supply options.mode. mode must be 'billing' or 'shipping'.");
+                }
+
+                break;
+
+              case 'expressCheckout':
+                newElement = checkoutSdk.createExpressCheckoutElement(options);
+                break;
+
+              case 'currencySelector':
+                newElement = checkoutSdk.createCurrencySelectorElement();
+                break;
+
+              default:
+                throw new Error("Invalid Element type ".concat(displayName, ". You must use either the <PaymentElement />, <AddressElement options={{mode: 'shipping'}} />, <AddressElement options={{mode: 'billing'}} />, or <ExpressCheckoutElement />."));
+            }
           } else if (elements) {
             newElement = elements.create(type, options);
           } // Store element in a ref to ensure it's _immediately_ available in cleanup hooks in StrictMode
@@ -1264,16 +1295,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   loadStripe: () => (/* binding */ loadStripe)
 /* harmony export */ });
-var V3_URL = 'https://js.stripe.com/v3';
+var RELEASE_TRAIN = 'v3';
+
+var runtimeVersionToUrlVersion = function runtimeVersionToUrlVersion(version) {
+  return version === 3 ? 'v3' : version;
+};
+
+var ORIGIN = 'https://js.stripe.com';
+var STRIPE_JS_URL = "".concat(ORIGIN, "/v3") ;
 var V3_URL_REGEX = /^https:\/\/js\.stripe\.com\/v3\/?(\?.*)?$/;
+var STRIPE_JS_URL_REGEX = /^https:\/\/js\.stripe\.com\/(v3|[a-z]+)\/stripe\.js(\?.*)?$/;
 var EXISTING_SCRIPT_MESSAGE = 'loadStripe.setLoadParameters was called but an existing Stripe.js script already exists in the document; existing script parameters will be used';
+
+var isStripeJSURL = function isStripeJSURL(url) {
+  return V3_URL_REGEX.test(url) || STRIPE_JS_URL_REGEX.test(url);
+};
+
 var findScript = function findScript() {
-  var scripts = document.querySelectorAll("script[src^=\"".concat(V3_URL, "\"]"));
+  var scripts = document.querySelectorAll("script[src^=\"".concat(ORIGIN, "\"]"));
 
   for (var i = 0; i < scripts.length; i++) {
     var script = scripts[i];
 
-    if (!V3_URL_REGEX.test(script.src)) {
+    if (!isStripeJSURL(script.src)) {
       continue;
     }
 
@@ -1286,7 +1330,7 @@ var findScript = function findScript() {
 var injectScript = function injectScript(params) {
   var queryString = params && !params.advancedFraudSignals ? '?advancedFraudSignals=false' : '';
   var script = document.createElement('script');
-  script.src = "".concat(V3_URL).concat(queryString);
+  script.src = "".concat(STRIPE_JS_URL).concat(queryString);
   var headOrBody = document.head || document.body;
 
   if (!headOrBody) {
@@ -1304,7 +1348,7 @@ var registerWrapper = function registerWrapper(stripe, startTime) {
 
   stripe._registerWrapper({
     name: 'stripe-js',
-    version: "5.6.0",
+    version: "5.10.0",
     startTime: startTime
   });
 };
@@ -1314,8 +1358,10 @@ var onErrorListener = null;
 var onLoadListener = null;
 
 var onError = function onError(reject) {
-  return function () {
-    reject(new Error('Failed to load Stripe.js'));
+  return function (cause) {
+    reject(new Error('Failed to load Stripe.js', {
+      cause: cause
+    }));
   };
 };
 
@@ -1389,6 +1435,16 @@ var loadScript = function loadScript(params) {
 var initStripe = function initStripe(maybeStripe, args, startTime) {
   if (maybeStripe === null) {
     return null;
+  }
+
+  var pk = args[0];
+  var isTestKey = pk.match(/^pk_test/); // @ts-expect-error this is not publicly typed
+
+  var version = runtimeVersionToUrlVersion(maybeStripe.version);
+  var expectedVersion = RELEASE_TRAIN;
+
+  if (isTestKey && version !== expectedVersion) {
+    console.warn("Stripe.js@".concat(version, " was loaded on the page, but @stripe/stripe-js@").concat("5.10.0", " expected Stripe.js@").concat(expectedVersion, ". This may result in unexpected behavior. For more information, see https://docs.stripe.com/sdks/stripejs-versioning"));
   }
 
   var stripe = maybeStripe.apply(undefined, args);
@@ -1568,6 +1624,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // Form validation function
 function validateForm() {
+  console.log('Starting form validation');
   const fields = [{
     id: 'gc_amount',
     name: 'Amount'
@@ -1603,7 +1660,14 @@ function validateForm() {
   let errorMessages = [];
   fields.forEach(field => {
     const element = document.getElementById(field.id);
-    if (!element.value.trim()) {
+    console.log(`Checking field ${field.id}:`, element ? 'found' : 'not found');
+    if (!element) {
+      console.error(`Field ${field.id} not found in the DOM`);
+      isValid = false;
+      errorMessages.push(`${field.name} field is missing from the form.`);
+      return;
+    }
+    if (!element.value || !element.value.trim()) {
       isValid = false;
       errorMessages.push(`${field.name} is required.`);
       element.classList.add('is-invalid');
@@ -1613,18 +1677,28 @@ function validateForm() {
   });
 
   // Additional validation for email and phone
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(document.getElementById('customer_email').value.trim())) {
-    isValid = false;
-    errorMessages.push('Please enter a valid email address.');
-    document.getElementById('customer_email').classList.add('is-invalid');
+  const emailElement = document.getElementById('customer_email');
+  const phoneElement = document.getElementById('customer_phone');
+  if (emailElement) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailElement.value.trim())) {
+      isValid = false;
+      errorMessages.push('Please enter a valid email address.');
+      emailElement.classList.add('is-invalid');
+    }
   }
-  const phoneRegex = /^\+?[0-9]{10,14}$/;
-  if (!phoneRegex.test(document.getElementById('customer_phone').value.trim())) {
-    isValid = false;
-    errorMessages.push('Please enter a valid phone number.');
-    document.getElementById('customer_phone').classList.add('is-invalid');
+  if (phoneElement) {
+    const phoneRegex = /^\+?[0-9]{10,14}$/;
+    if (!phoneRegex.test(phoneElement.value.trim())) {
+      isValid = false;
+      errorMessages.push('Please enter a valid phone number.');
+      phoneElement.classList.add('is-invalid');
+    }
   }
+  console.log('Validation result:', {
+    isValid,
+    errorMessages
+  });
   return {
     isValid,
     errorMessages
@@ -1762,17 +1836,29 @@ function GiftCertificatePaymentForm({
 
 // Main front-end logic.
 function GiftCertificateFrontend() {
-  console.log("GiftCertificateFrontend");
+  console.log("GiftCertificateFrontend initialized");
+  console.log("Document ready state:", document.readyState);
+  console.log("Looking for .bookitfast-certificate-form");
   const container = document.querySelector(".bookitfast-certificate-form");
-  if (!container) return;
-  console.log('GiftCertificatePaymentForm');
+  if (!container) {
+    console.log("No gift certificate form container found");
+    return;
+  }
+  console.log('Found gift certificate form container');
   const stripePk = container.getAttribute("data-stripe-pk");
   const surchargeRate = parseFloat(container.getAttribute("data-surcharge-rate"));
+  console.log('Stripe PK:', stripePk ? 'found' : 'not found');
+  console.log('Surcharge rate:', surchargeRate);
 
   // Listen for the "Proceed to Payment" button click.
   const proceedButton = document.getElementById("gc-proceed-button");
-  if (!proceedButton) return;
+  if (!proceedButton) {
+    console.log("No proceed button found");
+    return;
+  }
+  console.log('Found proceed button');
   proceedButton.addEventListener("click", () => {
+    console.log("Proceed button clicked");
     const {
       isValid,
       errorMessages
@@ -1780,13 +1866,20 @@ function GiftCertificateFrontend() {
     if (!isValid) {
       // Display error messages
       const errorContainer = document.getElementById('gc-error-container');
-      errorContainer.innerHTML = errorMessages.map(msg => `<p>${msg}</p>`).join('');
-      errorContainer.style.display = 'block';
+      if (errorContainer) {
+        errorContainer.innerHTML = errorMessages.map(msg => `<p>${msg}</p>`).join('');
+        errorContainer.style.display = 'block';
+      } else {
+        console.log('Error container not found');
+      }
       return;
     }
 
     // Clear any previous error messages
-    document.getElementById('gc-error-container').style.display = 'none';
+    const errorContainer = document.getElementById('gc-error-container');
+    if (errorContainer) {
+      errorContainer.style.display = 'none';
+    }
 
     // Get the entered amount.
     const amountField = container.querySelector("#gc_amount");
@@ -1820,9 +1913,15 @@ function GiftCertificateFrontend() {
     react_dom__WEBPACK_IMPORTED_MODULE_1___default().render(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(App, null), paymentContainer);
   });
 }
-document.addEventListener("DOMContentLoaded", () => {
+
+// Initialize when the DOM is ready
+if (document.readyState === 'loading') {
+  console.log('Document still loading, adding DOMContentLoaded listener');
+  document.addEventListener('DOMContentLoaded', GiftCertificateFrontend);
+} else {
+  console.log('Document already loaded, initializing directly');
   GiftCertificateFrontend();
-});
+}
 })();
 
 /******/ })()

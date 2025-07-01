@@ -87,12 +87,12 @@ var __webpack_exports__ = {};
   !*** ./src/components/GiftCertificate.js ***!
   \*******************************************/
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
-const {
-  registerBlockType
-} = wp.blocks;
 const {
   TextControl,
   Button,
@@ -102,64 +102,52 @@ const {
 const {
   InspectorControls
 } = wp.blockEditor || wp.editor;
-//const { Fragment } = wp.element;
 
-registerBlockType('bookitfast/gift-certificate', {
-  title: 'Gift Certificate Purchase',
-  icon: 'tickets-alt',
-  category: 'common',
-  attributes: {
-    // Save any settings you need for the preview
-    buttonColor: {
-      type: 'string',
-      default: '#00a80f'
+// Add the API URL helper function
+function getWPApiUrl() {
+  const apiLink = document.querySelector('link[rel="https://api.w.org/"]');
+  if (!apiLink) return '/wp-json';
+  return apiLink.href.replace(/\/$/, ''); // Remove trailing slash if present
+}
+const API_BASE = getWPApiUrl();
+const GiftCertificate = props => {
+  const {
+    attributes: {
+      buttonColor,
+      previewContent
     },
-    previewContent: {
-      type: 'string',
-      default: 'Gift Certificate Purchase Form'
+    setAttributes
+  } = props;
+  const [gcSettings, setGCSettings] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    async function fetchGCSettings() {
+      try {
+        // Update the fetch URL to use API_BASE
+        const response = await fetch(`${API_BASE}/bookitfast/v1/gc-settings`);
+        const settings = await response.json();
+        setGCSettings(settings);
+      } catch (error) {
+        console.error('Error fetching gift certificate settings:', error);
+      }
     }
-  },
-  edit: props => {
-    const {
-      attributes: {
-        buttonColor,
-        previewContent
-      },
-      setAttributes
-    } = props;
-    const [gcSettings, setGCSettings] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
-    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-      async function fetchGCSettings() {
-        try {
-          const response = await fetch('/wp-json/bookitfast/v1/gc-settings');
-          const settings = await response.json();
-          setGCSettings(settings);
-        } catch (error) {
-          console.error('Error fetching gift certificate settings:', error);
-        }
-      }
-      fetchGCSettings();
-    }, []);
-    return /*#__PURE__*/React.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
-      title: "Block Settings"
-    }, /*#__PURE__*/React.createElement(TextControl, {
-      label: "Button Color",
-      value: buttonColor,
-      onChange: newColor => setAttributes({
-        buttonColor: newColor
-      })
-    }))), /*#__PURE__*/React.createElement("div", {
-      style: {
-        border: `2px solid ${buttonColor}`,
-        padding: '1rem'
-      }
-    }, /*#__PURE__*/React.createElement("h3", null, "Gift Certificate Purchase"), /*#__PURE__*/React.createElement("p", null, previewContent), /*#__PURE__*/React.createElement("p", null, "This is a preview of the front\u2011end gift certificate purchase form.")));
-  },
-  save: () => {
-    // A dynamic block: the saved content is rendered on the server via PHP.
-    return null;
-  }
-});
+    fetchGCSettings();
+  }, []);
+  return /*#__PURE__*/React.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
+    title: "Block Settings"
+  }, /*#__PURE__*/React.createElement(TextControl, {
+    label: "Button Color",
+    value: buttonColor,
+    onChange: newColor => setAttributes({
+      buttonColor: newColor
+    })
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      border: `2px solid ${buttonColor}`,
+      padding: '1rem'
+    }
+  }, /*#__PURE__*/React.createElement("h3", null, "Gift Certificate Purchase"), /*#__PURE__*/React.createElement("p", null, previewContent), /*#__PURE__*/React.createElement("p", null, "This is a preview of the front\u2011end gift certificate purchase form.")));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GiftCertificate);
 })();
 
 /******/ })()

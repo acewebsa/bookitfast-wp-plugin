@@ -1,43 +1,49 @@
+const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const path = require('path');
 
 module.exports = {
-	mode: 'development',
+	...defaultConfig,
 	entry: {
-		'editor': './src/index.js',
-		'frontend': './src/frontend.js'
-	},
-	output: {
-		path: path.resolve(__dirname, 'build'),
-		filename: '[name].js'
+		// Editor block for multi-embed
+		editor: path.resolve(process.cwd(), 'src', 'editor.js'),
+		// Editor block for gift certificate
+		'gift-certificate': path.resolve(process.cwd(), 'src', 'gift-certificate.js'),
+		// Frontend JavaScript
+		frontend: path.resolve(process.cwd(), 'src', 'frontend.js'),
+		// Gift certificate frontend
+		'gift-certificate-frontend': path.resolve(process.cwd(), 'src', 'gift-certificate-frontend.js'),
 	},
 	module: {
+		...defaultConfig.module,
 		rules: [
-			{
-				test: /\.jsx?$/,
-				exclude: /node_modules/,
-				use: {
-					loader: 'babel-loader',
-					options: {
-						presets: ['@babel/preset-env', '@babel/preset-react']
-					}
+			...defaultConfig.module.rules.map(rule => {
+				// Modify babel-loader rule to use classic JSX transform
+				if (rule.test && rule.test.toString().includes('jsx?')) {
+					return {
+						...rule,
+						use: rule.use.map(use => {
+							if (use.loader && use.loader.includes('babel-loader')) {
+								return {
+									...use,
+									options: {
+										...use.options,
+										presets: [
+											...(use.options.presets || []).map(preset => {
+												if (Array.isArray(preset) && preset[0].includes('@babel/preset-react')) {
+													return [preset[0], { ...preset[1], runtime: 'classic' }];
+												}
+												return preset;
+											})
+										]
+									}
+								};
+							}
+							return use;
+						})
+					};
 				}
-			},
-			{
-				test: /\.css$/,
-				use: ['style-loader', 'css-loader']
-			}
+				return rule;
+			})
 		]
-	},
-	resolve: {
-		extensions: ['.js', '.jsx']
-	},
-	externals: {
-		react: 'React',
-		'react-dom': 'ReactDOM',
-		'@wordpress/element': 'wp.element',
-		'@wordpress/blocks': 'wp.blocks',
-		'@wordpress/components': 'wp.components',
-		'@wordpress/block-editor': 'wp.blockEditor',
-		'@wordpress/i18n': 'wp.i18n'
 	}
 };

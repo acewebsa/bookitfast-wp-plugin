@@ -1,0 +1,170 @@
+/* Book It Fast Admin Styles */
+
+.bookitfast-admin-container {
+	max-width: 800px;
+	margin: 20px 0;
+}
+
+.bookitfast-login-card {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	padding: 20px;
+	margin: 20px 0;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.bookitfast-login-card h2 {
+	margin-top: 0;
+	color: #1d2327;
+	font-size: 1.3em;
+	font-weight: 600;
+}
+
+.bookitfast-login-form .form-table th {
+	padding: 20px 10px 20px 0;
+	width: 200px;
+	vertical-align: top;
+}
+
+.bookitfast-login-form .form-table td {
+	padding: 15px 10px;
+}
+
+.bookitfast-login-form .form-table input[type="email"],
+.bookitfast-login-form .form-table input[type="password"] {
+	width: 100%;
+	max-width: 400px;
+}
+
+.bookitfast-login-form .description {
+	color: #646970;
+	font-style: italic;
+	margin-top: 5px;
+}
+
+.bookitfast-help-section {
+	background: #f6f7f7;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	padding: 20px;
+	margin: 20px 0;
+}
+
+.bookitfast-help-section h3 {
+	margin-top: 0;
+	color: #1d2327;
+	font-size: 1.1em;
+	font-weight: 600;
+}
+
+.bookitfast-help-section ul {
+	margin: 15px 0 0 0;
+	padding-left: 0;
+	list-style: none;
+}
+
+.bookitfast-help-section li {
+	margin: 10px 0;
+	padding: 8px 0;
+	border-bottom: 1px solid #dcdcde;
+}
+
+.bookitfast-help-section li:last-child {
+	border-bottom: none;
+}
+
+.bookitfast-help-section a {
+	text-decoration: none;
+	color: #2271b1;
+}
+
+.bookitfast-help-section a:hover {
+	color: #135e96;
+}
+
+/* Enhanced notice styles */
+.notice.notice-info h3 {
+	margin-top: 0;
+	color: #1d2327;
+	font-size: 1.1em;
+}
+
+.notice.notice-info p {
+	margin: 8px 0;
+}
+
+.notice.notice-success p,
+.notice.notice-error p,
+.notice.notice-warning p {
+	margin: 5px 0;
+}
+
+/* Inline notices for form feedback */
+.notice.inline {
+	margin: 15px 0;
+	padding: 10px 15px;
+	border-radius: 4px;
+}
+
+/* Button spacing */
+.bookitfast-login-form .submit {
+	margin-top: 20px;
+}
+
+/* Card styling for main dashboard */
+.wrap .card {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	padding: 15px;
+	margin: 15px 0;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.wrap .card p {
+	margin: 0;
+	color: #50575e;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	.bookitfast-admin-container {
+		max-width: 100%;
+		margin: 10px 0;
+	}
+
+	.bookitfast-login-card,
+	.bookitfast-help-section {
+		padding: 15px;
+		margin: 15px 0;
+	}
+
+	.bookitfast-login-form .form-table th {
+		width: 150px;
+	}
+
+	.bookitfast-login-form .form-table input[type="email"],
+	.bookitfast-login-form .form-table input[type="password"] {
+		max-width: 100%;
+	}
+}
+
+/* Accessibility improvements */
+.bookitfast-login-form input:focus,
+.bookitfast-login-form button:focus {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+}
+
+/* Loading state for form submission */
+.bookitfast-login-form.loading .button-primary {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+/* Icon styling for help section */
+.bookitfast-help-section li strong {
+	color: #1d2327;
+	font-weight: 600;
+}

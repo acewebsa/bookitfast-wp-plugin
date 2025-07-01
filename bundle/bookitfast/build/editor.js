@@ -1,11 +1,3 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -15,7 +7,1280 @@
   \***********************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
-eval("(function (global, factory) {\n   true ? factory(exports, __webpack_require__(/*! react */ \"react\")) :\n  0;\n})(this, (function (exports, React) { 'use strict';\n\n  function ownKeys(object, enumerableOnly) {\n    var keys = Object.keys(object);\n\n    if (Object.getOwnPropertySymbols) {\n      var symbols = Object.getOwnPropertySymbols(object);\n\n      if (enumerableOnly) {\n        symbols = symbols.filter(function (sym) {\n          return Object.getOwnPropertyDescriptor(object, sym).enumerable;\n        });\n      }\n\n      keys.push.apply(keys, symbols);\n    }\n\n    return keys;\n  }\n\n  function _objectSpread2(target) {\n    for (var i = 1; i < arguments.length; i++) {\n      var source = arguments[i] != null ? arguments[i] : {};\n\n      if (i % 2) {\n        ownKeys(Object(source), true).forEach(function (key) {\n          _defineProperty(target, key, source[key]);\n        });\n      } else if (Object.getOwnPropertyDescriptors) {\n        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));\n      } else {\n        ownKeys(Object(source)).forEach(function (key) {\n          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));\n        });\n      }\n    }\n\n    return target;\n  }\n\n  function _typeof(obj) {\n    \"@babel/helpers - typeof\";\n\n    if (typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\") {\n      _typeof = function (obj) {\n        return typeof obj;\n      };\n    } else {\n      _typeof = function (obj) {\n        return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj;\n      };\n    }\n\n    return _typeof(obj);\n  }\n\n  function _defineProperty(obj, key, value) {\n    if (key in obj) {\n      Object.defineProperty(obj, key, {\n        value: value,\n        enumerable: true,\n        configurable: true,\n        writable: true\n      });\n    } else {\n      obj[key] = value;\n    }\n\n    return obj;\n  }\n\n  function _objectWithoutPropertiesLoose(source, excluded) {\n    if (source == null) return {};\n    var target = {};\n    var sourceKeys = Object.keys(source);\n    var key, i;\n\n    for (i = 0; i < sourceKeys.length; i++) {\n      key = sourceKeys[i];\n      if (excluded.indexOf(key) >= 0) continue;\n      target[key] = source[key];\n    }\n\n    return target;\n  }\n\n  function _objectWithoutProperties(source, excluded) {\n    if (source == null) return {};\n\n    var target = _objectWithoutPropertiesLoose(source, excluded);\n\n    var key, i;\n\n    if (Object.getOwnPropertySymbols) {\n      var sourceSymbolKeys = Object.getOwnPropertySymbols(source);\n\n      for (i = 0; i < sourceSymbolKeys.length; i++) {\n        key = sourceSymbolKeys[i];\n        if (excluded.indexOf(key) >= 0) continue;\n        if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;\n        target[key] = source[key];\n      }\n    }\n\n    return target;\n  }\n\n  function _slicedToArray(arr, i) {\n    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();\n  }\n\n  function _arrayWithHoles(arr) {\n    if (Array.isArray(arr)) return arr;\n  }\n\n  function _iterableToArrayLimit(arr, i) {\n    var _i = arr && (typeof Symbol !== \"undefined\" && arr[Symbol.iterator] || arr[\"@@iterator\"]);\n\n    if (_i == null) return;\n    var _arr = [];\n    var _n = true;\n    var _d = false;\n\n    var _s, _e;\n\n    try {\n      for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {\n        _arr.push(_s.value);\n\n        if (i && _arr.length === i) break;\n      }\n    } catch (err) {\n      _d = true;\n      _e = err;\n    } finally {\n      try {\n        if (!_n && _i[\"return\"] != null) _i[\"return\"]();\n      } finally {\n        if (_d) throw _e;\n      }\n    }\n\n    return _arr;\n  }\n\n  function _unsupportedIterableToArray(o, minLen) {\n    if (!o) return;\n    if (typeof o === \"string\") return _arrayLikeToArray(o, minLen);\n    var n = Object.prototype.toString.call(o).slice(8, -1);\n    if (n === \"Object\" && o.constructor) n = o.constructor.name;\n    if (n === \"Map\" || n === \"Set\") return Array.from(o);\n    if (n === \"Arguments\" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);\n  }\n\n  function _arrayLikeToArray(arr, len) {\n    if (len == null || len > arr.length) len = arr.length;\n\n    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];\n\n    return arr2;\n  }\n\n  function _nonIterableRest() {\n    throw new TypeError(\"Invalid attempt to destructure non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\");\n  }\n\n  function getDefaultExportFromCjs (x) {\n  \treturn x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;\n  }\n\n  var propTypes = {exports: {}};\n\n  /**\n   * Copyright (c) 2013-present, Facebook, Inc.\n   *\n   * This source code is licensed under the MIT license found in the\n   * LICENSE file in the root directory of this source tree.\n   */\n  var ReactPropTypesSecret_1;\n  var hasRequiredReactPropTypesSecret;\n\n  function requireReactPropTypesSecret() {\n    if (hasRequiredReactPropTypesSecret) return ReactPropTypesSecret_1;\n    hasRequiredReactPropTypesSecret = 1;\n\n    var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';\n    ReactPropTypesSecret_1 = ReactPropTypesSecret;\n    return ReactPropTypesSecret_1;\n  }\n\n  /**\n   * Copyright (c) 2013-present, Facebook, Inc.\n   *\n   * This source code is licensed under the MIT license found in the\n   * LICENSE file in the root directory of this source tree.\n   */\n  var factoryWithThrowingShims;\n  var hasRequiredFactoryWithThrowingShims;\n\n  function requireFactoryWithThrowingShims() {\n    if (hasRequiredFactoryWithThrowingShims) return factoryWithThrowingShims;\n    hasRequiredFactoryWithThrowingShims = 1;\n\n    var ReactPropTypesSecret = requireReactPropTypesSecret();\n\n    function emptyFunction() {}\n\n    function emptyFunctionWithReset() {}\n\n    emptyFunctionWithReset.resetWarningCache = emptyFunction;\n\n    factoryWithThrowingShims = function () {\n      function shim(props, propName, componentName, location, propFullName, secret) {\n        if (secret === ReactPropTypesSecret) {\n          // It is still safe when called from React.\n          return;\n        }\n\n        var err = new Error('Calling PropTypes validators directly is not supported by the `prop-types` package. ' + 'Use PropTypes.checkPropTypes() to call them. ' + 'Read more at http://fb.me/use-check-prop-types');\n        err.name = 'Invariant Violation';\n        throw err;\n      }\n      shim.isRequired = shim;\n\n      function getShim() {\n        return shim;\n      }\n      // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.\n\n      var ReactPropTypes = {\n        array: shim,\n        bool: shim,\n        func: shim,\n        number: shim,\n        object: shim,\n        string: shim,\n        symbol: shim,\n        any: shim,\n        arrayOf: getShim,\n        element: shim,\n        elementType: shim,\n        instanceOf: getShim,\n        node: shim,\n        objectOf: getShim,\n        oneOf: getShim,\n        oneOfType: getShim,\n        shape: getShim,\n        exact: getShim,\n        checkPropTypes: emptyFunctionWithReset,\n        resetWarningCache: emptyFunction\n      };\n      ReactPropTypes.PropTypes = ReactPropTypes;\n      return ReactPropTypes;\n    };\n\n    return factoryWithThrowingShims;\n  }\n\n  /**\n   * Copyright (c) 2013-present, Facebook, Inc.\n   *\n   * This source code is licensed under the MIT license found in the\n   * LICENSE file in the root directory of this source tree.\n   */\n\n  {\n    // By explicitly using `prop-types` you are opting into new production behavior.\n    // http://fb.me/prop-types-in-prod\n    propTypes.exports = requireFactoryWithThrowingShims()();\n  }\n\n  var propTypesExports = propTypes.exports;\n  var PropTypes = /*@__PURE__*/getDefaultExportFromCjs(propTypesExports);\n\n  var useAttachEvent = function useAttachEvent(element, event, cb) {\n    var cbDefined = !!cb;\n    var cbRef = React.useRef(cb); // In many integrations the callback prop changes on each render.\n    // Using a ref saves us from calling element.on/.off every render.\n\n    React.useEffect(function () {\n      cbRef.current = cb;\n    }, [cb]);\n    React.useEffect(function () {\n      if (!cbDefined || !element) {\n        return function () {};\n      }\n\n      var decoratedCb = function decoratedCb() {\n        if (cbRef.current) {\n          cbRef.current.apply(cbRef, arguments);\n        }\n      };\n\n      element.on(event, decoratedCb);\n      return function () {\n        element.off(event, decoratedCb);\n      };\n    }, [cbDefined, event, element, cbRef]);\n  };\n\n  var usePrevious = function usePrevious(value) {\n    var ref = React.useRef(value);\n    React.useEffect(function () {\n      ref.current = value;\n    }, [value]);\n    return ref.current;\n  };\n\n  var isUnknownObject = function isUnknownObject(raw) {\n    return raw !== null && _typeof(raw) === 'object';\n  };\n  var isPromise = function isPromise(raw) {\n    return isUnknownObject(raw) && typeof raw.then === 'function';\n  }; // We are using types to enforce the `stripe` prop in this lib,\n  // but in an untyped integration `stripe` could be anything, so we need\n  // to do some sanity validation to prevent type errors.\n\n  var isStripe = function isStripe(raw) {\n    return isUnknownObject(raw) && typeof raw.elements === 'function' && typeof raw.createToken === 'function' && typeof raw.createPaymentMethod === 'function' && typeof raw.confirmCardPayment === 'function';\n  };\n\n  var PLAIN_OBJECT_STR = '[object Object]';\n  var isEqual = function isEqual(left, right) {\n    if (!isUnknownObject(left) || !isUnknownObject(right)) {\n      return left === right;\n    }\n\n    var leftArray = Array.isArray(left);\n    var rightArray = Array.isArray(right);\n    if (leftArray !== rightArray) return false;\n    var leftPlainObject = Object.prototype.toString.call(left) === PLAIN_OBJECT_STR;\n    var rightPlainObject = Object.prototype.toString.call(right) === PLAIN_OBJECT_STR;\n    if (leftPlainObject !== rightPlainObject) return false; // not sure what sort of special object this is (regexp is one option), so\n    // fallback to reference check.\n\n    if (!leftPlainObject && !leftArray) return left === right;\n    var leftKeys = Object.keys(left);\n    var rightKeys = Object.keys(right);\n    if (leftKeys.length !== rightKeys.length) return false;\n    var keySet = {};\n\n    for (var i = 0; i < leftKeys.length; i += 1) {\n      keySet[leftKeys[i]] = true;\n    }\n\n    for (var _i = 0; _i < rightKeys.length; _i += 1) {\n      keySet[rightKeys[_i]] = true;\n    }\n\n    var allKeys = Object.keys(keySet);\n\n    if (allKeys.length !== leftKeys.length) {\n      return false;\n    }\n\n    var l = left;\n    var r = right;\n\n    var pred = function pred(key) {\n      return isEqual(l[key], r[key]);\n    };\n\n    return allKeys.every(pred);\n  };\n\n  var extractAllowedOptionsUpdates = function extractAllowedOptionsUpdates(options, prevOptions, immutableKeys) {\n    if (!isUnknownObject(options)) {\n      return null;\n    }\n\n    return Object.keys(options).reduce(function (newOptions, key) {\n      var isUpdated = !isUnknownObject(prevOptions) || !isEqual(options[key], prevOptions[key]);\n\n      if (immutableKeys.includes(key)) {\n        if (isUpdated) {\n          console.warn(\"Unsupported prop change: options.\".concat(key, \" is not a mutable property.\"));\n        }\n\n        return newOptions;\n      }\n\n      if (!isUpdated) {\n        return newOptions;\n      }\n\n      return _objectSpread2(_objectSpread2({}, newOptions || {}), {}, _defineProperty({}, key, options[key]));\n    }, null);\n  };\n\n  var INVALID_STRIPE_ERROR$2 = 'Invalid prop `stripe` supplied to `Elements`. We recommend using the `loadStripe` utility from `@stripe/stripe-js`. See https://stripe.com/docs/stripe-js/react#elements-props-stripe for details.'; // We are using types to enforce the `stripe` prop in this lib, but in a real\n  // integration `stripe` could be anything, so we need to do some sanity\n  // validation to prevent type errors.\n\n  var validateStripe = function validateStripe(maybeStripe) {\n    var errorMsg = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : INVALID_STRIPE_ERROR$2;\n\n    if (maybeStripe === null || isStripe(maybeStripe)) {\n      return maybeStripe;\n    }\n\n    throw new Error(errorMsg);\n  };\n\n  var parseStripeProp = function parseStripeProp(raw) {\n    var errorMsg = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : INVALID_STRIPE_ERROR$2;\n\n    if (isPromise(raw)) {\n      return {\n        tag: 'async',\n        stripePromise: Promise.resolve(raw).then(function (result) {\n          return validateStripe(result, errorMsg);\n        })\n      };\n    }\n\n    var stripe = validateStripe(raw, errorMsg);\n\n    if (stripe === null) {\n      return {\n        tag: 'empty'\n      };\n    }\n\n    return {\n      tag: 'sync',\n      stripe: stripe\n    };\n  };\n\n  var registerWithStripeJs = function registerWithStripeJs(stripe) {\n    if (!stripe || !stripe._registerWrapper || !stripe.registerAppInfo) {\n      return;\n    }\n\n    stripe._registerWrapper({\n      name: 'react-stripe-js',\n      version: \"3.6.0\"\n    });\n\n    stripe.registerAppInfo({\n      name: 'react-stripe-js',\n      version: \"3.6.0\",\n      url: 'https://stripe.com/docs/stripe-js/react'\n    });\n  };\n\n  var ElementsContext = /*#__PURE__*/React.createContext(null);\n  ElementsContext.displayName = 'ElementsContext';\n  var parseElementsContext = function parseElementsContext(ctx, useCase) {\n    if (!ctx) {\n      throw new Error(\"Could not find Elements context; You need to wrap the part of your app that \".concat(useCase, \" in an <Elements> provider.\"));\n    }\n\n    return ctx;\n  };\n  /**\n   * The `Elements` provider allows you to use [Element components](https://stripe.com/docs/stripe-js/react#element-components) and access the [Stripe object](https://stripe.com/docs/js/initializing) in any nested component.\n   * Render an `Elements` provider at the root of your React app so that it is available everywhere you need it.\n   *\n   * To use the `Elements` provider, call `loadStripe` from `@stripe/stripe-js` with your publishable key.\n   * The `loadStripe` function will asynchronously load the Stripe.js script and initialize a `Stripe` object.\n   * Pass the returned `Promise` to `Elements`.\n   *\n   * @docs https://stripe.com/docs/stripe-js/react#elements-provider\n   */\n\n  var Elements = function Elements(_ref) {\n    var rawStripeProp = _ref.stripe,\n        options = _ref.options,\n        children = _ref.children;\n    var parsed = React.useMemo(function () {\n      return parseStripeProp(rawStripeProp);\n    }, [rawStripeProp]); // For a sync stripe instance, initialize into context\n\n    var _React$useState = React.useState(function () {\n      return {\n        stripe: parsed.tag === 'sync' ? parsed.stripe : null,\n        elements: parsed.tag === 'sync' ? parsed.stripe.elements(options) : null\n      };\n    }),\n        _React$useState2 = _slicedToArray(_React$useState, 2),\n        ctx = _React$useState2[0],\n        setContext = _React$useState2[1];\n\n    React.useEffect(function () {\n      var isMounted = true;\n\n      var safeSetContext = function safeSetContext(stripe) {\n        setContext(function (ctx) {\n          // no-op if we already have a stripe instance (https://github.com/stripe/react-stripe-js/issues/296)\n          if (ctx.stripe) return ctx;\n          return {\n            stripe: stripe,\n            elements: stripe.elements(options)\n          };\n        });\n      }; // For an async stripePromise, store it in context once resolved\n\n\n      if (parsed.tag === 'async' && !ctx.stripe) {\n        parsed.stripePromise.then(function (stripe) {\n          if (stripe && isMounted) {\n            // Only update Elements context if the component is still mounted\n            // and stripe is not null. We allow stripe to be null to make\n            // handling SSR easier.\n            safeSetContext(stripe);\n          }\n        });\n      } else if (parsed.tag === 'sync' && !ctx.stripe) {\n        // Or, handle a sync stripe instance going from null -> populated\n        safeSetContext(parsed.stripe);\n      }\n\n      return function () {\n        isMounted = false;\n      };\n    }, [parsed, ctx, options]); // Warn on changes to stripe prop\n\n    var prevStripe = usePrevious(rawStripeProp);\n    React.useEffect(function () {\n      if (prevStripe !== null && prevStripe !== rawStripeProp) {\n        console.warn('Unsupported prop change on Elements: You cannot change the `stripe` prop after setting it.');\n      }\n    }, [prevStripe, rawStripeProp]); // Apply updates to elements when options prop has relevant changes\n\n    var prevOptions = usePrevious(options);\n    React.useEffect(function () {\n      if (!ctx.elements) {\n        return;\n      }\n\n      var updates = extractAllowedOptionsUpdates(options, prevOptions, ['clientSecret', 'fonts']);\n\n      if (updates) {\n        ctx.elements.update(updates);\n      }\n    }, [options, prevOptions, ctx.elements]); // Attach react-stripe-js version to stripe.js instance\n\n    React.useEffect(function () {\n      registerWithStripeJs(ctx.stripe);\n    }, [ctx.stripe]);\n    return /*#__PURE__*/React.createElement(ElementsContext.Provider, {\n      value: ctx\n    }, children);\n  };\n  Elements.propTypes = {\n    stripe: PropTypes.any,\n    options: PropTypes.object\n  };\n  var useElementsContextWithUseCase = function useElementsContextWithUseCase(useCaseMessage) {\n    var ctx = React.useContext(ElementsContext);\n    return parseElementsContext(ctx, useCaseMessage);\n  };\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#useelements-hook\n   */\n\n  var useElements = function useElements() {\n    var _useElementsContextWi = useElementsContextWithUseCase('calls useElements()'),\n        elements = _useElementsContextWi.elements;\n\n    return elements;\n  };\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#elements-consumer\n   */\n\n  var ElementsConsumer = function ElementsConsumer(_ref2) {\n    var children = _ref2.children;\n    var ctx = useElementsContextWithUseCase('mounts <ElementsConsumer>'); // Assert to satisfy the busted React.FC return type (it should be ReactNode)\n\n    return children(ctx);\n  };\n  ElementsConsumer.propTypes = {\n    children: PropTypes.func.isRequired\n  };\n\n  var _excluded$1 = [\"on\", \"session\"];\n  var CheckoutSdkContext = /*#__PURE__*/React.createContext(null);\n  CheckoutSdkContext.displayName = 'CheckoutSdkContext';\n  var parseCheckoutSdkContext = function parseCheckoutSdkContext(ctx, useCase) {\n    if (!ctx) {\n      throw new Error(\"Could not find CheckoutProvider context; You need to wrap the part of your app that \".concat(useCase, \" in an <CheckoutProvider> provider.\"));\n    }\n\n    return ctx;\n  };\n  var CheckoutContext = /*#__PURE__*/React.createContext(null);\n  CheckoutContext.displayName = 'CheckoutContext';\n  var extractCheckoutContextValue = function extractCheckoutContextValue(checkoutSdk, sessionState) {\n    if (!checkoutSdk) {\n      return null;\n    }\n\n    checkoutSdk.on;\n        checkoutSdk.session;\n        var actions = _objectWithoutProperties(checkoutSdk, _excluded$1);\n\n    if (!sessionState) {\n      return Object.assign(checkoutSdk.session(), actions);\n    }\n\n    return Object.assign(sessionState, actions);\n  };\n  var INVALID_STRIPE_ERROR$1 = 'Invalid prop `stripe` supplied to `CheckoutProvider`. We recommend using the `loadStripe` utility from `@stripe/stripe-js`. See https://stripe.com/docs/stripe-js/react#elements-props-stripe for details.';\n  var CheckoutProvider = function CheckoutProvider(_ref) {\n    var rawStripeProp = _ref.stripe,\n        options = _ref.options,\n        children = _ref.children;\n    var parsed = React.useMemo(function () {\n      return parseStripeProp(rawStripeProp, INVALID_STRIPE_ERROR$1);\n    }, [rawStripeProp]); // State used to trigger a re-render when sdk.session is updated\n\n    var _React$useState = React.useState(null),\n        _React$useState2 = _slicedToArray(_React$useState, 2),\n        session = _React$useState2[0],\n        setSession = _React$useState2[1];\n\n    var _React$useState3 = React.useState(function () {\n      return {\n        stripe: parsed.tag === 'sync' ? parsed.stripe : null,\n        checkoutSdk: null\n      };\n    }),\n        _React$useState4 = _slicedToArray(_React$useState3, 2),\n        ctx = _React$useState4[0],\n        setContext = _React$useState4[1];\n\n    var safeSetContext = function safeSetContext(stripe, checkoutSdk) {\n      setContext(function (ctx) {\n        if (ctx.stripe && ctx.checkoutSdk) {\n          return ctx;\n        }\n\n        return {\n          stripe: stripe,\n          checkoutSdk: checkoutSdk\n        };\n      });\n    }; // Ref used to avoid calling initCheckout multiple times when options changes\n\n\n    var initCheckoutCalledRef = React.useRef(false);\n    React.useEffect(function () {\n      var isMounted = true;\n\n      if (parsed.tag === 'async' && !ctx.stripe) {\n        parsed.stripePromise.then(function (stripe) {\n          if (stripe && isMounted && !initCheckoutCalledRef.current) {\n            // Only update context if the component is still mounted\n            // and stripe is not null. We allow stripe to be null to make\n            // handling SSR easier.\n            initCheckoutCalledRef.current = true;\n            stripe.initCheckout(options).then(function (checkoutSdk) {\n              if (checkoutSdk) {\n                safeSetContext(stripe, checkoutSdk);\n                checkoutSdk.on('change', setSession);\n              }\n            });\n          }\n        });\n      } else if (parsed.tag === 'sync' && parsed.stripe && !initCheckoutCalledRef.current) {\n        initCheckoutCalledRef.current = true;\n        parsed.stripe.initCheckout(options).then(function (checkoutSdk) {\n          if (checkoutSdk) {\n            safeSetContext(parsed.stripe, checkoutSdk);\n            checkoutSdk.on('change', setSession);\n          }\n        });\n      }\n\n      return function () {\n        isMounted = false;\n      };\n    }, [parsed, ctx, options, setSession]); // Warn on changes to stripe prop\n\n    var prevStripe = usePrevious(rawStripeProp);\n    React.useEffect(function () {\n      if (prevStripe !== null && prevStripe !== rawStripeProp) {\n        console.warn('Unsupported prop change on CheckoutProvider: You cannot change the `stripe` prop after setting it.');\n      }\n    }, [prevStripe, rawStripeProp]); // Apply updates to elements when options prop has relevant changes\n\n    var prevOptions = usePrevious(options);\n    React.useEffect(function () {\n      var _prevOptions$elements, _options$elementsOpti;\n\n      if (!ctx.checkoutSdk) {\n        return;\n      }\n\n      var previousAppearance = prevOptions === null || prevOptions === void 0 ? void 0 : (_prevOptions$elements = prevOptions.elementsOptions) === null || _prevOptions$elements === void 0 ? void 0 : _prevOptions$elements.appearance;\n      var currentAppearance = options === null || options === void 0 ? void 0 : (_options$elementsOpti = options.elementsOptions) === null || _options$elementsOpti === void 0 ? void 0 : _options$elementsOpti.appearance;\n\n      if (currentAppearance && !isEqual(currentAppearance, previousAppearance)) {\n        ctx.checkoutSdk.changeAppearance(currentAppearance);\n      }\n    }, [options, prevOptions, ctx.checkoutSdk]); // Attach react-stripe-js version to stripe.js instance\n\n    React.useEffect(function () {\n      registerWithStripeJs(ctx.stripe);\n    }, [ctx.stripe]);\n    var checkoutContextValue = React.useMemo(function () {\n      return extractCheckoutContextValue(ctx.checkoutSdk, session);\n    }, [ctx.checkoutSdk, session]);\n\n    if (!ctx.checkoutSdk) {\n      return null;\n    }\n\n    return /*#__PURE__*/React.createElement(CheckoutSdkContext.Provider, {\n      value: ctx\n    }, /*#__PURE__*/React.createElement(CheckoutContext.Provider, {\n      value: checkoutContextValue\n    }, children));\n  };\n  CheckoutProvider.propTypes = {\n    stripe: PropTypes.any,\n    options: PropTypes.shape({\n      fetchClientSecret: PropTypes.func.isRequired,\n      elementsOptions: PropTypes.object\n    }).isRequired\n  };\n  var useCheckoutSdkContextWithUseCase = function useCheckoutSdkContextWithUseCase(useCaseString) {\n    var ctx = React.useContext(CheckoutSdkContext);\n    return parseCheckoutSdkContext(ctx, useCaseString);\n  };\n  var useElementsOrCheckoutSdkContextWithUseCase = function useElementsOrCheckoutSdkContextWithUseCase(useCaseString) {\n    var checkoutSdkContext = React.useContext(CheckoutSdkContext);\n    var elementsContext = React.useContext(ElementsContext);\n\n    if (checkoutSdkContext && elementsContext) {\n      throw new Error(\"You cannot wrap the part of your app that \".concat(useCaseString, \" in both <CheckoutProvider> and <Elements> providers.\"));\n    }\n\n    if (checkoutSdkContext) {\n      return parseCheckoutSdkContext(checkoutSdkContext, useCaseString);\n    }\n\n    return parseElementsContext(elementsContext, useCaseString);\n  };\n  var useCheckout = function useCheckout() {\n    // ensure it's in CheckoutProvider\n    useCheckoutSdkContextWithUseCase('calls useCheckout()');\n    var ctx = React.useContext(CheckoutContext);\n\n    if (!ctx) {\n      throw new Error('Could not find Checkout Context; You need to wrap the part of your app that calls useCheckout() in an <CheckoutProvider> provider.');\n    }\n\n    return ctx;\n  };\n\n  var _excluded = [\"mode\"];\n\n  var capitalized = function capitalized(str) {\n    return str.charAt(0).toUpperCase() + str.slice(1);\n  };\n\n  var createElementComponent = function createElementComponent(type, isServer) {\n    var displayName = \"\".concat(capitalized(type), \"Element\");\n\n    var ClientElement = function ClientElement(_ref) {\n      var id = _ref.id,\n          className = _ref.className,\n          _ref$options = _ref.options,\n          options = _ref$options === void 0 ? {} : _ref$options,\n          onBlur = _ref.onBlur,\n          onFocus = _ref.onFocus,\n          onReady = _ref.onReady,\n          onChange = _ref.onChange,\n          onEscape = _ref.onEscape,\n          onClick = _ref.onClick,\n          onLoadError = _ref.onLoadError,\n          onLoaderStart = _ref.onLoaderStart,\n          onNetworksChange = _ref.onNetworksChange,\n          onConfirm = _ref.onConfirm,\n          onCancel = _ref.onCancel,\n          onShippingAddressChange = _ref.onShippingAddressChange,\n          onShippingRateChange = _ref.onShippingRateChange;\n      var ctx = useElementsOrCheckoutSdkContextWithUseCase(\"mounts <\".concat(displayName, \">\"));\n      var elements = 'elements' in ctx ? ctx.elements : null;\n      var checkoutSdk = 'checkoutSdk' in ctx ? ctx.checkoutSdk : null;\n\n      var _React$useState = React.useState(null),\n          _React$useState2 = _slicedToArray(_React$useState, 2),\n          element = _React$useState2[0],\n          setElement = _React$useState2[1];\n\n      var elementRef = React.useRef(null);\n      var domNode = React.useRef(null); // For every event where the merchant provides a callback, call element.on\n      // with that callback. If the merchant ever changes the callback, removes\n      // the old callback with element.off and then call element.on with the new one.\n\n      useAttachEvent(element, 'blur', onBlur);\n      useAttachEvent(element, 'focus', onFocus);\n      useAttachEvent(element, 'escape', onEscape);\n      useAttachEvent(element, 'click', onClick);\n      useAttachEvent(element, 'loaderror', onLoadError);\n      useAttachEvent(element, 'loaderstart', onLoaderStart);\n      useAttachEvent(element, 'networkschange', onNetworksChange);\n      useAttachEvent(element, 'confirm', onConfirm);\n      useAttachEvent(element, 'cancel', onCancel);\n      useAttachEvent(element, 'shippingaddresschange', onShippingAddressChange);\n      useAttachEvent(element, 'shippingratechange', onShippingRateChange);\n      useAttachEvent(element, 'change', onChange);\n      var readyCallback;\n\n      if (onReady) {\n        if (type === 'expressCheckout') {\n          // Passes through the event, which includes visible PM types\n          readyCallback = onReady;\n        } else {\n          // For other Elements, pass through the Element itself.\n          readyCallback = function readyCallback() {\n            onReady(element);\n          };\n        }\n      }\n\n      useAttachEvent(element, 'ready', readyCallback);\n      React.useLayoutEffect(function () {\n        if (elementRef.current === null && domNode.current !== null && (elements || checkoutSdk)) {\n          var newElement = null;\n\n          if (checkoutSdk) {\n            switch (type) {\n              case 'payment':\n                newElement = checkoutSdk.createPaymentElement(options);\n                break;\n\n              case 'address':\n                if ('mode' in options) {\n                  var mode = options.mode,\n                      restOptions = _objectWithoutProperties(options, _excluded);\n\n                  if (mode === 'shipping') {\n                    newElement = checkoutSdk.createShippingAddressElement(restOptions);\n                  } else if (mode === 'billing') {\n                    newElement = checkoutSdk.createBillingAddressElement(restOptions);\n                  } else {\n                    throw new Error(\"Invalid options.mode. mode must be 'billing' or 'shipping'.\");\n                  }\n                } else {\n                  throw new Error(\"You must supply options.mode. mode must be 'billing' or 'shipping'.\");\n                }\n\n                break;\n\n              case 'expressCheckout':\n                newElement = checkoutSdk.createExpressCheckoutElement(options);\n                break;\n\n              case 'currencySelector':\n                newElement = checkoutSdk.createCurrencySelectorElement();\n                break;\n\n              default:\n                throw new Error(\"Invalid Element type \".concat(displayName, \". You must use either the <PaymentElement />, <AddressElement options={{mode: 'shipping'}} />, <AddressElement options={{mode: 'billing'}} />, or <ExpressCheckoutElement />.\"));\n            }\n          } else if (elements) {\n            newElement = elements.create(type, options);\n          } // Store element in a ref to ensure it's _immediately_ available in cleanup hooks in StrictMode\n\n\n          elementRef.current = newElement; // Store element in state to facilitate event listener attachment\n\n          setElement(newElement);\n\n          if (newElement) {\n            newElement.mount(domNode.current);\n          }\n        }\n      }, [elements, checkoutSdk, options]);\n      var prevOptions = usePrevious(options);\n      React.useEffect(function () {\n        if (!elementRef.current) {\n          return;\n        }\n\n        var updates = extractAllowedOptionsUpdates(options, prevOptions, ['paymentRequest']);\n\n        if (updates && 'update' in elementRef.current) {\n          elementRef.current.update(updates);\n        }\n      }, [options, prevOptions]);\n      React.useLayoutEffect(function () {\n        return function () {\n          if (elementRef.current && typeof elementRef.current.destroy === 'function') {\n            try {\n              elementRef.current.destroy();\n              elementRef.current = null;\n            } catch (error) {// Do nothing\n            }\n          }\n        };\n      }, []);\n      return /*#__PURE__*/React.createElement(\"div\", {\n        id: id,\n        className: className,\n        ref: domNode\n      });\n    }; // Only render the Element wrapper in a server environment.\n\n\n    var ServerElement = function ServerElement(props) {\n      useElementsOrCheckoutSdkContextWithUseCase(\"mounts <\".concat(displayName, \">\"));\n      var id = props.id,\n          className = props.className;\n      return /*#__PURE__*/React.createElement(\"div\", {\n        id: id,\n        className: className\n      });\n    };\n\n    var Element = isServer ? ServerElement : ClientElement;\n    Element.propTypes = {\n      id: PropTypes.string,\n      className: PropTypes.string,\n      onChange: PropTypes.func,\n      onBlur: PropTypes.func,\n      onFocus: PropTypes.func,\n      onReady: PropTypes.func,\n      onEscape: PropTypes.func,\n      onClick: PropTypes.func,\n      onLoadError: PropTypes.func,\n      onLoaderStart: PropTypes.func,\n      onNetworksChange: PropTypes.func,\n      onConfirm: PropTypes.func,\n      onCancel: PropTypes.func,\n      onShippingAddressChange: PropTypes.func,\n      onShippingRateChange: PropTypes.func,\n      options: PropTypes.object\n    };\n    Element.displayName = displayName;\n    Element.__elementType = type;\n    return Element;\n  };\n\n  var isServer = typeof window === 'undefined';\n\n  var EmbeddedCheckoutContext = /*#__PURE__*/React.createContext(null);\n  EmbeddedCheckoutContext.displayName = 'EmbeddedCheckoutProviderContext';\n  var useEmbeddedCheckoutContext = function useEmbeddedCheckoutContext() {\n    var ctx = React.useContext(EmbeddedCheckoutContext);\n\n    if (!ctx) {\n      throw new Error('<EmbeddedCheckout> must be used within <EmbeddedCheckoutProvider>');\n    }\n\n    return ctx;\n  };\n  var INVALID_STRIPE_ERROR = 'Invalid prop `stripe` supplied to `EmbeddedCheckoutProvider`. We recommend using the `loadStripe` utility from `@stripe/stripe-js`. See https://stripe.com/docs/stripe-js/react#elements-props-stripe for details.';\n  var EmbeddedCheckoutProvider = function EmbeddedCheckoutProvider(_ref) {\n    var rawStripeProp = _ref.stripe,\n        options = _ref.options,\n        children = _ref.children;\n    var parsed = React.useMemo(function () {\n      return parseStripeProp(rawStripeProp, INVALID_STRIPE_ERROR);\n    }, [rawStripeProp]);\n    var embeddedCheckoutPromise = React.useRef(null);\n    var loadedStripe = React.useRef(null);\n\n    var _React$useState = React.useState({\n      embeddedCheckout: null\n    }),\n        _React$useState2 = _slicedToArray(_React$useState, 2),\n        ctx = _React$useState2[0],\n        setContext = _React$useState2[1];\n\n    React.useEffect(function () {\n      // Don't support any ctx updates once embeddedCheckout or stripe is set.\n      if (loadedStripe.current || embeddedCheckoutPromise.current) {\n        return;\n      }\n\n      var setStripeAndInitEmbeddedCheckout = function setStripeAndInitEmbeddedCheckout(stripe) {\n        if (loadedStripe.current || embeddedCheckoutPromise.current) return;\n        loadedStripe.current = stripe;\n        embeddedCheckoutPromise.current = loadedStripe.current.initEmbeddedCheckout(options).then(function (embeddedCheckout) {\n          setContext({\n            embeddedCheckout: embeddedCheckout\n          });\n        });\n      }; // For an async stripePromise, store it once resolved\n\n\n      if (parsed.tag === 'async' && !loadedStripe.current && (options.clientSecret || options.fetchClientSecret)) {\n        parsed.stripePromise.then(function (stripe) {\n          if (stripe) {\n            setStripeAndInitEmbeddedCheckout(stripe);\n          }\n        });\n      } else if (parsed.tag === 'sync' && !loadedStripe.current && (options.clientSecret || options.fetchClientSecret)) {\n        // Or, handle a sync stripe instance going from null -> populated\n        setStripeAndInitEmbeddedCheckout(parsed.stripe);\n      }\n    }, [parsed, options, ctx, loadedStripe]);\n    React.useEffect(function () {\n      // cleanup on unmount\n      return function () {\n        // If embedded checkout is fully initialized, destroy it.\n        if (ctx.embeddedCheckout) {\n          embeddedCheckoutPromise.current = null;\n          ctx.embeddedCheckout.destroy();\n        } else if (embeddedCheckoutPromise.current) {\n          // If embedded checkout is still initializing, destroy it once\n          // it's done. This could be caused by unmounting very quickly\n          // after mounting.\n          embeddedCheckoutPromise.current.then(function () {\n            embeddedCheckoutPromise.current = null;\n\n            if (ctx.embeddedCheckout) {\n              ctx.embeddedCheckout.destroy();\n            }\n          });\n        }\n      };\n    }, [ctx.embeddedCheckout]); // Attach react-stripe-js version to stripe.js instance\n\n    React.useEffect(function () {\n      registerWithStripeJs(loadedStripe);\n    }, [loadedStripe]); // Warn on changes to stripe prop.\n    // The stripe prop value can only go from null to non-null once and\n    // can't be changed after that.\n\n    var prevStripe = usePrevious(rawStripeProp);\n    React.useEffect(function () {\n      if (prevStripe !== null && prevStripe !== rawStripeProp) {\n        console.warn('Unsupported prop change on EmbeddedCheckoutProvider: You cannot change the `stripe` prop after setting it.');\n      }\n    }, [prevStripe, rawStripeProp]); // Warn on changes to options.\n\n    var prevOptions = usePrevious(options);\n    React.useEffect(function () {\n      if (prevOptions == null) {\n        return;\n      }\n\n      if (options == null) {\n        console.warn('Unsupported prop change on EmbeddedCheckoutProvider: You cannot unset options after setting them.');\n        return;\n      }\n\n      if (options.clientSecret === undefined && options.fetchClientSecret === undefined) {\n        console.warn('Invalid props passed to EmbeddedCheckoutProvider: You must provide one of either `options.fetchClientSecret` or `options.clientSecret`.');\n      }\n\n      if (prevOptions.clientSecret != null && options.clientSecret !== prevOptions.clientSecret) {\n        console.warn('Unsupported prop change on EmbeddedCheckoutProvider: You cannot change the client secret after setting it. Unmount and create a new instance of EmbeddedCheckoutProvider instead.');\n      }\n\n      if (prevOptions.fetchClientSecret != null && options.fetchClientSecret !== prevOptions.fetchClientSecret) {\n        console.warn('Unsupported prop change on EmbeddedCheckoutProvider: You cannot change fetchClientSecret after setting it. Unmount and create a new instance of EmbeddedCheckoutProvider instead.');\n      }\n\n      if (prevOptions.onComplete != null && options.onComplete !== prevOptions.onComplete) {\n        console.warn('Unsupported prop change on EmbeddedCheckoutProvider: You cannot change the onComplete option after setting it.');\n      }\n\n      if (prevOptions.onShippingDetailsChange != null && options.onShippingDetailsChange !== prevOptions.onShippingDetailsChange) {\n        console.warn('Unsupported prop change on EmbeddedCheckoutProvider: You cannot change the onShippingDetailsChange option after setting it.');\n      }\n\n      if (prevOptions.onLineItemsChange != null && options.onLineItemsChange !== prevOptions.onLineItemsChange) {\n        console.warn('Unsupported prop change on EmbeddedCheckoutProvider: You cannot change the onLineItemsChange option after setting it.');\n      }\n    }, [prevOptions, options]);\n    return /*#__PURE__*/React.createElement(EmbeddedCheckoutContext.Provider, {\n      value: ctx\n    }, children);\n  };\n\n  var EmbeddedCheckoutClientElement = function EmbeddedCheckoutClientElement(_ref) {\n    var id = _ref.id,\n        className = _ref.className;\n\n    var _useEmbeddedCheckoutC = useEmbeddedCheckoutContext(),\n        embeddedCheckout = _useEmbeddedCheckoutC.embeddedCheckout;\n\n    var isMounted = React.useRef(false);\n    var domNode = React.useRef(null);\n    React.useLayoutEffect(function () {\n      if (!isMounted.current && embeddedCheckout && domNode.current !== null) {\n        embeddedCheckout.mount(domNode.current);\n        isMounted.current = true;\n      } // Clean up on unmount\n\n\n      return function () {\n        if (isMounted.current && embeddedCheckout) {\n          try {\n            embeddedCheckout.unmount();\n            isMounted.current = false;\n          } catch (e) {// Do nothing.\n            // Parent effects are destroyed before child effects, so\n            // in cases where both the EmbeddedCheckoutProvider and\n            // the EmbeddedCheckout component are removed at the same\n            // time, the embeddedCheckout instance will be destroyed,\n            // which causes an error when calling unmount.\n          }\n        }\n      };\n    }, [embeddedCheckout]);\n    return /*#__PURE__*/React.createElement(\"div\", {\n      ref: domNode,\n      id: id,\n      className: className\n    });\n  }; // Only render the wrapper in a server environment.\n\n\n  var EmbeddedCheckoutServerElement = function EmbeddedCheckoutServerElement(_ref2) {\n    var id = _ref2.id,\n        className = _ref2.className;\n    // Validate that we are in the right context by calling useEmbeddedCheckoutContext.\n    useEmbeddedCheckoutContext();\n    return /*#__PURE__*/React.createElement(\"div\", {\n      id: id,\n      className: className\n    });\n  };\n\n  var EmbeddedCheckout = isServer ? EmbeddedCheckoutServerElement : EmbeddedCheckoutClientElement;\n\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#usestripe-hook\n   */\n\n  var useStripe = function useStripe() {\n    var _useElementsOrCheckou = useElementsOrCheckoutSdkContextWithUseCase('calls useStripe()'),\n        stripe = _useElementsOrCheckou.stripe;\n\n    return stripe;\n  };\n\n  /**\n   * Requires beta access:\n   * Contact [Stripe support](https://support.stripe.com/) for more information.\n   *\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var AuBankAccountElement = createElementComponent('auBankAccount', isServer);\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var CardElement = createElementComponent('card', isServer);\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var CardNumberElement = createElementComponent('cardNumber', isServer);\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var CardExpiryElement = createElementComponent('cardExpiry', isServer);\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var CardCvcElement = createElementComponent('cardCvc', isServer);\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var FpxBankElement = createElementComponent('fpxBank', isServer);\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var IbanElement = createElementComponent('iban', isServer);\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var IdealBankElement = createElementComponent('idealBank', isServer);\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var P24BankElement = createElementComponent('p24Bank', isServer);\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var EpsBankElement = createElementComponent('epsBank', isServer);\n  var PaymentElement = createElementComponent('payment', isServer);\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var ExpressCheckoutElement = createElementComponent('expressCheckout', isServer);\n  /**\n   * Requires beta access:\n   * Contact [Stripe support](https://support.stripe.com/) for more information.\n   */\n\n  var CurrencySelectorElement = createElementComponent('currencySelector', isServer);\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var PaymentRequestButtonElement = createElementComponent('paymentRequestButton', isServer);\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var LinkAuthenticationElement = createElementComponent('linkAuthentication', isServer);\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var AddressElement = createElementComponent('address', isServer);\n  /**\n   * @deprecated\n   * Use `AddressElement` instead.\n   *\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var ShippingAddressElement = createElementComponent('shippingAddress', isServer);\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var PaymentMethodMessagingElement = createElementComponent('paymentMethodMessaging', isServer);\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var AffirmMessageElement = createElementComponent('affirmMessage', isServer);\n  /**\n   * @docs https://stripe.com/docs/stripe-js/react#element-components\n   */\n\n  var AfterpayClearpayMessageElement = createElementComponent('afterpayClearpayMessage', isServer);\n\n  exports.AddressElement = AddressElement;\n  exports.AffirmMessageElement = AffirmMessageElement;\n  exports.AfterpayClearpayMessageElement = AfterpayClearpayMessageElement;\n  exports.AuBankAccountElement = AuBankAccountElement;\n  exports.CardCvcElement = CardCvcElement;\n  exports.CardElement = CardElement;\n  exports.CardExpiryElement = CardExpiryElement;\n  exports.CardNumberElement = CardNumberElement;\n  exports.CheckoutProvider = CheckoutProvider;\n  exports.CurrencySelectorElement = CurrencySelectorElement;\n  exports.Elements = Elements;\n  exports.ElementsConsumer = ElementsConsumer;\n  exports.EmbeddedCheckout = EmbeddedCheckout;\n  exports.EmbeddedCheckoutProvider = EmbeddedCheckoutProvider;\n  exports.EpsBankElement = EpsBankElement;\n  exports.ExpressCheckoutElement = ExpressCheckoutElement;\n  exports.FpxBankElement = FpxBankElement;\n  exports.IbanElement = IbanElement;\n  exports.IdealBankElement = IdealBankElement;\n  exports.LinkAuthenticationElement = LinkAuthenticationElement;\n  exports.P24BankElement = P24BankElement;\n  exports.PaymentElement = PaymentElement;\n  exports.PaymentMethodMessagingElement = PaymentMethodMessagingElement;\n  exports.PaymentRequestButtonElement = PaymentRequestButtonElement;\n  exports.ShippingAddressElement = ShippingAddressElement;\n  exports.useCheckout = useCheckout;\n  exports.useElements = useElements;\n  exports.useStripe = useStripe;\n\n}));\n\n\n//# sourceURL=webpack://bookitfast/./node_modules/@stripe/react-stripe-js/dist/react-stripe.umd.js?");
+(function (global, factory) {
+   true ? factory(exports, __webpack_require__(/*! react */ "react")) :
+  0;
+})(this, (function (exports, React) { 'use strict';
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+
+      if (enumerableOnly) {
+        symbols = symbols.filter(function (sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      }
+
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
+  function _typeof(obj) {
+    "@babel/helpers - typeof";
+
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+
+    return _typeof(obj);
+  }
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null) return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i;
+
+    for (i = 0; i < sourceKeys.length; i++) {
+      key = sourceKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      target[key] = source[key];
+    }
+
+    return target;
+  }
+
+  function _objectWithoutProperties(source, excluded) {
+    if (source == null) return {};
+
+    var target = _objectWithoutPropertiesLoose(source, excluded);
+
+    var key, i;
+
+    if (Object.getOwnPropertySymbols) {
+      var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+      for (i = 0; i < sourceSymbolKeys.length; i++) {
+        key = sourceSymbolKeys[i];
+        if (excluded.indexOf(key) >= 0) continue;
+        if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+        target[key] = source[key];
+      }
+    }
+
+    return target;
+  }
+
+  function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+  }
+
+  function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+  }
+
+  function _iterableToArrayLimit(arr, i) {
+    var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]);
+
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+
+    var _s, _e;
+
+    try {
+      for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"] != null) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
+  }
+
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  function getDefaultExportFromCjs (x) {
+  	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+  }
+
+  var propTypes = {exports: {}};
+
+  /**
+   * Copyright (c) 2013-present, Facebook, Inc.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+  var ReactPropTypesSecret_1;
+  var hasRequiredReactPropTypesSecret;
+
+  function requireReactPropTypesSecret() {
+    if (hasRequiredReactPropTypesSecret) return ReactPropTypesSecret_1;
+    hasRequiredReactPropTypesSecret = 1;
+
+    var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+    ReactPropTypesSecret_1 = ReactPropTypesSecret;
+    return ReactPropTypesSecret_1;
+  }
+
+  /**
+   * Copyright (c) 2013-present, Facebook, Inc.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+  var factoryWithThrowingShims;
+  var hasRequiredFactoryWithThrowingShims;
+
+  function requireFactoryWithThrowingShims() {
+    if (hasRequiredFactoryWithThrowingShims) return factoryWithThrowingShims;
+    hasRequiredFactoryWithThrowingShims = 1;
+
+    var ReactPropTypesSecret = requireReactPropTypesSecret();
+
+    function emptyFunction() {}
+
+    function emptyFunctionWithReset() {}
+
+    emptyFunctionWithReset.resetWarningCache = emptyFunction;
+
+    factoryWithThrowingShims = function () {
+      function shim(props, propName, componentName, location, propFullName, secret) {
+        if (secret === ReactPropTypesSecret) {
+          // It is still safe when called from React.
+          return;
+        }
+
+        var err = new Error('Calling PropTypes validators directly is not supported by the `prop-types` package. ' + 'Use PropTypes.checkPropTypes() to call them. ' + 'Read more at http://fb.me/use-check-prop-types');
+        err.name = 'Invariant Violation';
+        throw err;
+      }
+      shim.isRequired = shim;
+
+      function getShim() {
+        return shim;
+      }
+      // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
+
+      var ReactPropTypes = {
+        array: shim,
+        bool: shim,
+        func: shim,
+        number: shim,
+        object: shim,
+        string: shim,
+        symbol: shim,
+        any: shim,
+        arrayOf: getShim,
+        element: shim,
+        elementType: shim,
+        instanceOf: getShim,
+        node: shim,
+        objectOf: getShim,
+        oneOf: getShim,
+        oneOfType: getShim,
+        shape: getShim,
+        exact: getShim,
+        checkPropTypes: emptyFunctionWithReset,
+        resetWarningCache: emptyFunction
+      };
+      ReactPropTypes.PropTypes = ReactPropTypes;
+      return ReactPropTypes;
+    };
+
+    return factoryWithThrowingShims;
+  }
+
+  /**
+   * Copyright (c) 2013-present, Facebook, Inc.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+
+  {
+    // By explicitly using `prop-types` you are opting into new production behavior.
+    // http://fb.me/prop-types-in-prod
+    propTypes.exports = requireFactoryWithThrowingShims()();
+  }
+
+  var propTypesExports = propTypes.exports;
+  var PropTypes = /*@__PURE__*/getDefaultExportFromCjs(propTypesExports);
+
+  var useAttachEvent = function useAttachEvent(element, event, cb) {
+    var cbDefined = !!cb;
+    var cbRef = React.useRef(cb); // In many integrations the callback prop changes on each render.
+    // Using a ref saves us from calling element.on/.off every render.
+
+    React.useEffect(function () {
+      cbRef.current = cb;
+    }, [cb]);
+    React.useEffect(function () {
+      if (!cbDefined || !element) {
+        return function () {};
+      }
+
+      var decoratedCb = function decoratedCb() {
+        if (cbRef.current) {
+          cbRef.current.apply(cbRef, arguments);
+        }
+      };
+
+      element.on(event, decoratedCb);
+      return function () {
+        element.off(event, decoratedCb);
+      };
+    }, [cbDefined, event, element, cbRef]);
+  };
+
+  var usePrevious = function usePrevious(value) {
+    var ref = React.useRef(value);
+    React.useEffect(function () {
+      ref.current = value;
+    }, [value]);
+    return ref.current;
+  };
+
+  var isUnknownObject = function isUnknownObject(raw) {
+    return raw !== null && _typeof(raw) === 'object';
+  };
+  var isPromise = function isPromise(raw) {
+    return isUnknownObject(raw) && typeof raw.then === 'function';
+  }; // We are using types to enforce the `stripe` prop in this lib,
+  // but in an untyped integration `stripe` could be anything, so we need
+  // to do some sanity validation to prevent type errors.
+
+  var isStripe = function isStripe(raw) {
+    return isUnknownObject(raw) && typeof raw.elements === 'function' && typeof raw.createToken === 'function' && typeof raw.createPaymentMethod === 'function' && typeof raw.confirmCardPayment === 'function';
+  };
+
+  var PLAIN_OBJECT_STR = '[object Object]';
+  var isEqual = function isEqual(left, right) {
+    if (!isUnknownObject(left) || !isUnknownObject(right)) {
+      return left === right;
+    }
+
+    var leftArray = Array.isArray(left);
+    var rightArray = Array.isArray(right);
+    if (leftArray !== rightArray) return false;
+    var leftPlainObject = Object.prototype.toString.call(left) === PLAIN_OBJECT_STR;
+    var rightPlainObject = Object.prototype.toString.call(right) === PLAIN_OBJECT_STR;
+    if (leftPlainObject !== rightPlainObject) return false; // not sure what sort of special object this is (regexp is one option), so
+    // fallback to reference check.
+
+    if (!leftPlainObject && !leftArray) return left === right;
+    var leftKeys = Object.keys(left);
+    var rightKeys = Object.keys(right);
+    if (leftKeys.length !== rightKeys.length) return false;
+    var keySet = {};
+
+    for (var i = 0; i < leftKeys.length; i += 1) {
+      keySet[leftKeys[i]] = true;
+    }
+
+    for (var _i = 0; _i < rightKeys.length; _i += 1) {
+      keySet[rightKeys[_i]] = true;
+    }
+
+    var allKeys = Object.keys(keySet);
+
+    if (allKeys.length !== leftKeys.length) {
+      return false;
+    }
+
+    var l = left;
+    var r = right;
+
+    var pred = function pred(key) {
+      return isEqual(l[key], r[key]);
+    };
+
+    return allKeys.every(pred);
+  };
+
+  var extractAllowedOptionsUpdates = function extractAllowedOptionsUpdates(options, prevOptions, immutableKeys) {
+    if (!isUnknownObject(options)) {
+      return null;
+    }
+
+    return Object.keys(options).reduce(function (newOptions, key) {
+      var isUpdated = !isUnknownObject(prevOptions) || !isEqual(options[key], prevOptions[key]);
+
+      if (immutableKeys.includes(key)) {
+        if (isUpdated) {
+          console.warn("Unsupported prop change: options.".concat(key, " is not a mutable property."));
+        }
+
+        return newOptions;
+      }
+
+      if (!isUpdated) {
+        return newOptions;
+      }
+
+      return _objectSpread2(_objectSpread2({}, newOptions || {}), {}, _defineProperty({}, key, options[key]));
+    }, null);
+  };
+
+  var INVALID_STRIPE_ERROR$2 = 'Invalid prop `stripe` supplied to `Elements`. We recommend using the `loadStripe` utility from `@stripe/stripe-js`. See https://stripe.com/docs/stripe-js/react#elements-props-stripe for details.'; // We are using types to enforce the `stripe` prop in this lib, but in a real
+  // integration `stripe` could be anything, so we need to do some sanity
+  // validation to prevent type errors.
+
+  var validateStripe = function validateStripe(maybeStripe) {
+    var errorMsg = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : INVALID_STRIPE_ERROR$2;
+
+    if (maybeStripe === null || isStripe(maybeStripe)) {
+      return maybeStripe;
+    }
+
+    throw new Error(errorMsg);
+  };
+
+  var parseStripeProp = function parseStripeProp(raw) {
+    var errorMsg = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : INVALID_STRIPE_ERROR$2;
+
+    if (isPromise(raw)) {
+      return {
+        tag: 'async',
+        stripePromise: Promise.resolve(raw).then(function (result) {
+          return validateStripe(result, errorMsg);
+        })
+      };
+    }
+
+    var stripe = validateStripe(raw, errorMsg);
+
+    if (stripe === null) {
+      return {
+        tag: 'empty'
+      };
+    }
+
+    return {
+      tag: 'sync',
+      stripe: stripe
+    };
+  };
+
+  var registerWithStripeJs = function registerWithStripeJs(stripe) {
+    if (!stripe || !stripe._registerWrapper || !stripe.registerAppInfo) {
+      return;
+    }
+
+    stripe._registerWrapper({
+      name: 'react-stripe-js',
+      version: "3.6.0"
+    });
+
+    stripe.registerAppInfo({
+      name: 'react-stripe-js',
+      version: "3.6.0",
+      url: 'https://stripe.com/docs/stripe-js/react'
+    });
+  };
+
+  var ElementsContext = /*#__PURE__*/React.createContext(null);
+  ElementsContext.displayName = 'ElementsContext';
+  var parseElementsContext = function parseElementsContext(ctx, useCase) {
+    if (!ctx) {
+      throw new Error("Could not find Elements context; You need to wrap the part of your app that ".concat(useCase, " in an <Elements> provider."));
+    }
+
+    return ctx;
+  };
+  /**
+   * The `Elements` provider allows you to use [Element components](https://stripe.com/docs/stripe-js/react#element-components) and access the [Stripe object](https://stripe.com/docs/js/initializing) in any nested component.
+   * Render an `Elements` provider at the root of your React app so that it is available everywhere you need it.
+   *
+   * To use the `Elements` provider, call `loadStripe` from `@stripe/stripe-js` with your publishable key.
+   * The `loadStripe` function will asynchronously load the Stripe.js script and initialize a `Stripe` object.
+   * Pass the returned `Promise` to `Elements`.
+   *
+   * @docs https://stripe.com/docs/stripe-js/react#elements-provider
+   */
+
+  var Elements = function Elements(_ref) {
+    var rawStripeProp = _ref.stripe,
+        options = _ref.options,
+        children = _ref.children;
+    var parsed = React.useMemo(function () {
+      return parseStripeProp(rawStripeProp);
+    }, [rawStripeProp]); // For a sync stripe instance, initialize into context
+
+    var _React$useState = React.useState(function () {
+      return {
+        stripe: parsed.tag === 'sync' ? parsed.stripe : null,
+        elements: parsed.tag === 'sync' ? parsed.stripe.elements(options) : null
+      };
+    }),
+        _React$useState2 = _slicedToArray(_React$useState, 2),
+        ctx = _React$useState2[0],
+        setContext = _React$useState2[1];
+
+    React.useEffect(function () {
+      var isMounted = true;
+
+      var safeSetContext = function safeSetContext(stripe) {
+        setContext(function (ctx) {
+          // no-op if we already have a stripe instance (https://github.com/stripe/react-stripe-js/issues/296)
+          if (ctx.stripe) return ctx;
+          return {
+            stripe: stripe,
+            elements: stripe.elements(options)
+          };
+        });
+      }; // For an async stripePromise, store it in context once resolved
+
+
+      if (parsed.tag === 'async' && !ctx.stripe) {
+        parsed.stripePromise.then(function (stripe) {
+          if (stripe && isMounted) {
+            // Only update Elements context if the component is still mounted
+            // and stripe is not null. We allow stripe to be null to make
+            // handling SSR easier.
+            safeSetContext(stripe);
+          }
+        });
+      } else if (parsed.tag === 'sync' && !ctx.stripe) {
+        // Or, handle a sync stripe instance going from null -> populated
+        safeSetContext(parsed.stripe);
+      }
+
+      return function () {
+        isMounted = false;
+      };
+    }, [parsed, ctx, options]); // Warn on changes to stripe prop
+
+    var prevStripe = usePrevious(rawStripeProp);
+    React.useEffect(function () {
+      if (prevStripe !== null && prevStripe !== rawStripeProp) {
+        console.warn('Unsupported prop change on Elements: You cannot change the `stripe` prop after setting it.');
+      }
+    }, [prevStripe, rawStripeProp]); // Apply updates to elements when options prop has relevant changes
+
+    var prevOptions = usePrevious(options);
+    React.useEffect(function () {
+      if (!ctx.elements) {
+        return;
+      }
+
+      var updates = extractAllowedOptionsUpdates(options, prevOptions, ['clientSecret', 'fonts']);
+
+      if (updates) {
+        ctx.elements.update(updates);
+      }
+    }, [options, prevOptions, ctx.elements]); // Attach react-stripe-js version to stripe.js instance
+
+    React.useEffect(function () {
+      registerWithStripeJs(ctx.stripe);
+    }, [ctx.stripe]);
+    return /*#__PURE__*/React.createElement(ElementsContext.Provider, {
+      value: ctx
+    }, children);
+  };
+  Elements.propTypes = {
+    stripe: PropTypes.any,
+    options: PropTypes.object
+  };
+  var useElementsContextWithUseCase = function useElementsContextWithUseCase(useCaseMessage) {
+    var ctx = React.useContext(ElementsContext);
+    return parseElementsContext(ctx, useCaseMessage);
+  };
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#useelements-hook
+   */
+
+  var useElements = function useElements() {
+    var _useElementsContextWi = useElementsContextWithUseCase('calls useElements()'),
+        elements = _useElementsContextWi.elements;
+
+    return elements;
+  };
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#elements-consumer
+   */
+
+  var ElementsConsumer = function ElementsConsumer(_ref2) {
+    var children = _ref2.children;
+    var ctx = useElementsContextWithUseCase('mounts <ElementsConsumer>'); // Assert to satisfy the busted React.FC return type (it should be ReactNode)
+
+    return children(ctx);
+  };
+  ElementsConsumer.propTypes = {
+    children: PropTypes.func.isRequired
+  };
+
+  var _excluded$1 = ["on", "session"];
+  var CheckoutSdkContext = /*#__PURE__*/React.createContext(null);
+  CheckoutSdkContext.displayName = 'CheckoutSdkContext';
+  var parseCheckoutSdkContext = function parseCheckoutSdkContext(ctx, useCase) {
+    if (!ctx) {
+      throw new Error("Could not find CheckoutProvider context; You need to wrap the part of your app that ".concat(useCase, " in an <CheckoutProvider> provider."));
+    }
+
+    return ctx;
+  };
+  var CheckoutContext = /*#__PURE__*/React.createContext(null);
+  CheckoutContext.displayName = 'CheckoutContext';
+  var extractCheckoutContextValue = function extractCheckoutContextValue(checkoutSdk, sessionState) {
+    if (!checkoutSdk) {
+      return null;
+    }
+
+    checkoutSdk.on;
+        checkoutSdk.session;
+        var actions = _objectWithoutProperties(checkoutSdk, _excluded$1);
+
+    if (!sessionState) {
+      return Object.assign(checkoutSdk.session(), actions);
+    }
+
+    return Object.assign(sessionState, actions);
+  };
+  var INVALID_STRIPE_ERROR$1 = 'Invalid prop `stripe` supplied to `CheckoutProvider`. We recommend using the `loadStripe` utility from `@stripe/stripe-js`. See https://stripe.com/docs/stripe-js/react#elements-props-stripe for details.';
+  var CheckoutProvider = function CheckoutProvider(_ref) {
+    var rawStripeProp = _ref.stripe,
+        options = _ref.options,
+        children = _ref.children;
+    var parsed = React.useMemo(function () {
+      return parseStripeProp(rawStripeProp, INVALID_STRIPE_ERROR$1);
+    }, [rawStripeProp]); // State used to trigger a re-render when sdk.session is updated
+
+    var _React$useState = React.useState(null),
+        _React$useState2 = _slicedToArray(_React$useState, 2),
+        session = _React$useState2[0],
+        setSession = _React$useState2[1];
+
+    var _React$useState3 = React.useState(function () {
+      return {
+        stripe: parsed.tag === 'sync' ? parsed.stripe : null,
+        checkoutSdk: null
+      };
+    }),
+        _React$useState4 = _slicedToArray(_React$useState3, 2),
+        ctx = _React$useState4[0],
+        setContext = _React$useState4[1];
+
+    var safeSetContext = function safeSetContext(stripe, checkoutSdk) {
+      setContext(function (ctx) {
+        if (ctx.stripe && ctx.checkoutSdk) {
+          return ctx;
+        }
+
+        return {
+          stripe: stripe,
+          checkoutSdk: checkoutSdk
+        };
+      });
+    }; // Ref used to avoid calling initCheckout multiple times when options changes
+
+
+    var initCheckoutCalledRef = React.useRef(false);
+    React.useEffect(function () {
+      var isMounted = true;
+
+      if (parsed.tag === 'async' && !ctx.stripe) {
+        parsed.stripePromise.then(function (stripe) {
+          if (stripe && isMounted && !initCheckoutCalledRef.current) {
+            // Only update context if the component is still mounted
+            // and stripe is not null. We allow stripe to be null to make
+            // handling SSR easier.
+            initCheckoutCalledRef.current = true;
+            stripe.initCheckout(options).then(function (checkoutSdk) {
+              if (checkoutSdk) {
+                safeSetContext(stripe, checkoutSdk);
+                checkoutSdk.on('change', setSession);
+              }
+            });
+          }
+        });
+      } else if (parsed.tag === 'sync' && parsed.stripe && !initCheckoutCalledRef.current) {
+        initCheckoutCalledRef.current = true;
+        parsed.stripe.initCheckout(options).then(function (checkoutSdk) {
+          if (checkoutSdk) {
+            safeSetContext(parsed.stripe, checkoutSdk);
+            checkoutSdk.on('change', setSession);
+          }
+        });
+      }
+
+      return function () {
+        isMounted = false;
+      };
+    }, [parsed, ctx, options, setSession]); // Warn on changes to stripe prop
+
+    var prevStripe = usePrevious(rawStripeProp);
+    React.useEffect(function () {
+      if (prevStripe !== null && prevStripe !== rawStripeProp) {
+        console.warn('Unsupported prop change on CheckoutProvider: You cannot change the `stripe` prop after setting it.');
+      }
+    }, [prevStripe, rawStripeProp]); // Apply updates to elements when options prop has relevant changes
+
+    var prevOptions = usePrevious(options);
+    React.useEffect(function () {
+      var _prevOptions$elements, _options$elementsOpti;
+
+      if (!ctx.checkoutSdk) {
+        return;
+      }
+
+      var previousAppearance = prevOptions === null || prevOptions === void 0 ? void 0 : (_prevOptions$elements = prevOptions.elementsOptions) === null || _prevOptions$elements === void 0 ? void 0 : _prevOptions$elements.appearance;
+      var currentAppearance = options === null || options === void 0 ? void 0 : (_options$elementsOpti = options.elementsOptions) === null || _options$elementsOpti === void 0 ? void 0 : _options$elementsOpti.appearance;
+
+      if (currentAppearance && !isEqual(currentAppearance, previousAppearance)) {
+        ctx.checkoutSdk.changeAppearance(currentAppearance);
+      }
+    }, [options, prevOptions, ctx.checkoutSdk]); // Attach react-stripe-js version to stripe.js instance
+
+    React.useEffect(function () {
+      registerWithStripeJs(ctx.stripe);
+    }, [ctx.stripe]);
+    var checkoutContextValue = React.useMemo(function () {
+      return extractCheckoutContextValue(ctx.checkoutSdk, session);
+    }, [ctx.checkoutSdk, session]);
+
+    if (!ctx.checkoutSdk) {
+      return null;
+    }
+
+    return /*#__PURE__*/React.createElement(CheckoutSdkContext.Provider, {
+      value: ctx
+    }, /*#__PURE__*/React.createElement(CheckoutContext.Provider, {
+      value: checkoutContextValue
+    }, children));
+  };
+  CheckoutProvider.propTypes = {
+    stripe: PropTypes.any,
+    options: PropTypes.shape({
+      fetchClientSecret: PropTypes.func.isRequired,
+      elementsOptions: PropTypes.object
+    }).isRequired
+  };
+  var useCheckoutSdkContextWithUseCase = function useCheckoutSdkContextWithUseCase(useCaseString) {
+    var ctx = React.useContext(CheckoutSdkContext);
+    return parseCheckoutSdkContext(ctx, useCaseString);
+  };
+  var useElementsOrCheckoutSdkContextWithUseCase = function useElementsOrCheckoutSdkContextWithUseCase(useCaseString) {
+    var checkoutSdkContext = React.useContext(CheckoutSdkContext);
+    var elementsContext = React.useContext(ElementsContext);
+
+    if (checkoutSdkContext && elementsContext) {
+      throw new Error("You cannot wrap the part of your app that ".concat(useCaseString, " in both <CheckoutProvider> and <Elements> providers."));
+    }
+
+    if (checkoutSdkContext) {
+      return parseCheckoutSdkContext(checkoutSdkContext, useCaseString);
+    }
+
+    return parseElementsContext(elementsContext, useCaseString);
+  };
+  var useCheckout = function useCheckout() {
+    // ensure it's in CheckoutProvider
+    useCheckoutSdkContextWithUseCase('calls useCheckout()');
+    var ctx = React.useContext(CheckoutContext);
+
+    if (!ctx) {
+      throw new Error('Could not find Checkout Context; You need to wrap the part of your app that calls useCheckout() in an <CheckoutProvider> provider.');
+    }
+
+    return ctx;
+  };
+
+  var _excluded = ["mode"];
+
+  var capitalized = function capitalized(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  var createElementComponent = function createElementComponent(type, isServer) {
+    var displayName = "".concat(capitalized(type), "Element");
+
+    var ClientElement = function ClientElement(_ref) {
+      var id = _ref.id,
+          className = _ref.className,
+          _ref$options = _ref.options,
+          options = _ref$options === void 0 ? {} : _ref$options,
+          onBlur = _ref.onBlur,
+          onFocus = _ref.onFocus,
+          onReady = _ref.onReady,
+          onChange = _ref.onChange,
+          onEscape = _ref.onEscape,
+          onClick = _ref.onClick,
+          onLoadError = _ref.onLoadError,
+          onLoaderStart = _ref.onLoaderStart,
+          onNetworksChange = _ref.onNetworksChange,
+          onConfirm = _ref.onConfirm,
+          onCancel = _ref.onCancel,
+          onShippingAddressChange = _ref.onShippingAddressChange,
+          onShippingRateChange = _ref.onShippingRateChange;
+      var ctx = useElementsOrCheckoutSdkContextWithUseCase("mounts <".concat(displayName, ">"));
+      var elements = 'elements' in ctx ? ctx.elements : null;
+      var checkoutSdk = 'checkoutSdk' in ctx ? ctx.checkoutSdk : null;
+
+      var _React$useState = React.useState(null),
+          _React$useState2 = _slicedToArray(_React$useState, 2),
+          element = _React$useState2[0],
+          setElement = _React$useState2[1];
+
+      var elementRef = React.useRef(null);
+      var domNode = React.useRef(null); // For every event where the merchant provides a callback, call element.on
+      // with that callback. If the merchant ever changes the callback, removes
+      // the old callback with element.off and then call element.on with the new one.
+
+      useAttachEvent(element, 'blur', onBlur);
+      useAttachEvent(element, 'focus', onFocus);
+      useAttachEvent(element, 'escape', onEscape);
+      useAttachEvent(element, 'click', onClick);
+      useAttachEvent(element, 'loaderror', onLoadError);
+      useAttachEvent(element, 'loaderstart', onLoaderStart);
+      useAttachEvent(element, 'networkschange', onNetworksChange);
+      useAttachEvent(element, 'confirm', onConfirm);
+      useAttachEvent(element, 'cancel', onCancel);
+      useAttachEvent(element, 'shippingaddresschange', onShippingAddressChange);
+      useAttachEvent(element, 'shippingratechange', onShippingRateChange);
+      useAttachEvent(element, 'change', onChange);
+      var readyCallback;
+
+      if (onReady) {
+        if (type === 'expressCheckout') {
+          // Passes through the event, which includes visible PM types
+          readyCallback = onReady;
+        } else {
+          // For other Elements, pass through the Element itself.
+          readyCallback = function readyCallback() {
+            onReady(element);
+          };
+        }
+      }
+
+      useAttachEvent(element, 'ready', readyCallback);
+      React.useLayoutEffect(function () {
+        if (elementRef.current === null && domNode.current !== null && (elements || checkoutSdk)) {
+          var newElement = null;
+
+          if (checkoutSdk) {
+            switch (type) {
+              case 'payment':
+                newElement = checkoutSdk.createPaymentElement(options);
+                break;
+
+              case 'address':
+                if ('mode' in options) {
+                  var mode = options.mode,
+                      restOptions = _objectWithoutProperties(options, _excluded);
+
+                  if (mode === 'shipping') {
+                    newElement = checkoutSdk.createShippingAddressElement(restOptions);
+                  } else if (mode === 'billing') {
+                    newElement = checkoutSdk.createBillingAddressElement(restOptions);
+                  } else {
+                    throw new Error("Invalid options.mode. mode must be 'billing' or 'shipping'.");
+                  }
+                } else {
+                  throw new Error("You must supply options.mode. mode must be 'billing' or 'shipping'.");
+                }
+
+                break;
+
+              case 'expressCheckout':
+                newElement = checkoutSdk.createExpressCheckoutElement(options);
+                break;
+
+              case 'currencySelector':
+                newElement = checkoutSdk.createCurrencySelectorElement();
+                break;
+
+              default:
+                throw new Error("Invalid Element type ".concat(displayName, ". You must use either the <PaymentElement />, <AddressElement options={{mode: 'shipping'}} />, <AddressElement options={{mode: 'billing'}} />, or <ExpressCheckoutElement />."));
+            }
+          } else if (elements) {
+            newElement = elements.create(type, options);
+          } // Store element in a ref to ensure it's _immediately_ available in cleanup hooks in StrictMode
+
+
+          elementRef.current = newElement; // Store element in state to facilitate event listener attachment
+
+          setElement(newElement);
+
+          if (newElement) {
+            newElement.mount(domNode.current);
+          }
+        }
+      }, [elements, checkoutSdk, options]);
+      var prevOptions = usePrevious(options);
+      React.useEffect(function () {
+        if (!elementRef.current) {
+          return;
+        }
+
+        var updates = extractAllowedOptionsUpdates(options, prevOptions, ['paymentRequest']);
+
+        if (updates && 'update' in elementRef.current) {
+          elementRef.current.update(updates);
+        }
+      }, [options, prevOptions]);
+      React.useLayoutEffect(function () {
+        return function () {
+          if (elementRef.current && typeof elementRef.current.destroy === 'function') {
+            try {
+              elementRef.current.destroy();
+              elementRef.current = null;
+            } catch (error) {// Do nothing
+            }
+          }
+        };
+      }, []);
+      return /*#__PURE__*/React.createElement("div", {
+        id: id,
+        className: className,
+        ref: domNode
+      });
+    }; // Only render the Element wrapper in a server environment.
+
+
+    var ServerElement = function ServerElement(props) {
+      useElementsOrCheckoutSdkContextWithUseCase("mounts <".concat(displayName, ">"));
+      var id = props.id,
+          className = props.className;
+      return /*#__PURE__*/React.createElement("div", {
+        id: id,
+        className: className
+      });
+    };
+
+    var Element = isServer ? ServerElement : ClientElement;
+    Element.propTypes = {
+      id: PropTypes.string,
+      className: PropTypes.string,
+      onChange: PropTypes.func,
+      onBlur: PropTypes.func,
+      onFocus: PropTypes.func,
+      onReady: PropTypes.func,
+      onEscape: PropTypes.func,
+      onClick: PropTypes.func,
+      onLoadError: PropTypes.func,
+      onLoaderStart: PropTypes.func,
+      onNetworksChange: PropTypes.func,
+      onConfirm: PropTypes.func,
+      onCancel: PropTypes.func,
+      onShippingAddressChange: PropTypes.func,
+      onShippingRateChange: PropTypes.func,
+      options: PropTypes.object
+    };
+    Element.displayName = displayName;
+    Element.__elementType = type;
+    return Element;
+  };
+
+  var isServer = typeof window === 'undefined';
+
+  var EmbeddedCheckoutContext = /*#__PURE__*/React.createContext(null);
+  EmbeddedCheckoutContext.displayName = 'EmbeddedCheckoutProviderContext';
+  var useEmbeddedCheckoutContext = function useEmbeddedCheckoutContext() {
+    var ctx = React.useContext(EmbeddedCheckoutContext);
+
+    if (!ctx) {
+      throw new Error('<EmbeddedCheckout> must be used within <EmbeddedCheckoutProvider>');
+    }
+
+    return ctx;
+  };
+  var INVALID_STRIPE_ERROR = 'Invalid prop `stripe` supplied to `EmbeddedCheckoutProvider`. We recommend using the `loadStripe` utility from `@stripe/stripe-js`. See https://stripe.com/docs/stripe-js/react#elements-props-stripe for details.';
+  var EmbeddedCheckoutProvider = function EmbeddedCheckoutProvider(_ref) {
+    var rawStripeProp = _ref.stripe,
+        options = _ref.options,
+        children = _ref.children;
+    var parsed = React.useMemo(function () {
+      return parseStripeProp(rawStripeProp, INVALID_STRIPE_ERROR);
+    }, [rawStripeProp]);
+    var embeddedCheckoutPromise = React.useRef(null);
+    var loadedStripe = React.useRef(null);
+
+    var _React$useState = React.useState({
+      embeddedCheckout: null
+    }),
+        _React$useState2 = _slicedToArray(_React$useState, 2),
+        ctx = _React$useState2[0],
+        setContext = _React$useState2[1];
+
+    React.useEffect(function () {
+      // Don't support any ctx updates once embeddedCheckout or stripe is set.
+      if (loadedStripe.current || embeddedCheckoutPromise.current) {
+        return;
+      }
+
+      var setStripeAndInitEmbeddedCheckout = function setStripeAndInitEmbeddedCheckout(stripe) {
+        if (loadedStripe.current || embeddedCheckoutPromise.current) return;
+        loadedStripe.current = stripe;
+        embeddedCheckoutPromise.current = loadedStripe.current.initEmbeddedCheckout(options).then(function (embeddedCheckout) {
+          setContext({
+            embeddedCheckout: embeddedCheckout
+          });
+        });
+      }; // For an async stripePromise, store it once resolved
+
+
+      if (parsed.tag === 'async' && !loadedStripe.current && (options.clientSecret || options.fetchClientSecret)) {
+        parsed.stripePromise.then(function (stripe) {
+          if (stripe) {
+            setStripeAndInitEmbeddedCheckout(stripe);
+          }
+        });
+      } else if (parsed.tag === 'sync' && !loadedStripe.current && (options.clientSecret || options.fetchClientSecret)) {
+        // Or, handle a sync stripe instance going from null -> populated
+        setStripeAndInitEmbeddedCheckout(parsed.stripe);
+      }
+    }, [parsed, options, ctx, loadedStripe]);
+    React.useEffect(function () {
+      // cleanup on unmount
+      return function () {
+        // If embedded checkout is fully initialized, destroy it.
+        if (ctx.embeddedCheckout) {
+          embeddedCheckoutPromise.current = null;
+          ctx.embeddedCheckout.destroy();
+        } else if (embeddedCheckoutPromise.current) {
+          // If embedded checkout is still initializing, destroy it once
+          // it's done. This could be caused by unmounting very quickly
+          // after mounting.
+          embeddedCheckoutPromise.current.then(function () {
+            embeddedCheckoutPromise.current = null;
+
+            if (ctx.embeddedCheckout) {
+              ctx.embeddedCheckout.destroy();
+            }
+          });
+        }
+      };
+    }, [ctx.embeddedCheckout]); // Attach react-stripe-js version to stripe.js instance
+
+    React.useEffect(function () {
+      registerWithStripeJs(loadedStripe);
+    }, [loadedStripe]); // Warn on changes to stripe prop.
+    // The stripe prop value can only go from null to non-null once and
+    // can't be changed after that.
+
+    var prevStripe = usePrevious(rawStripeProp);
+    React.useEffect(function () {
+      if (prevStripe !== null && prevStripe !== rawStripeProp) {
+        console.warn('Unsupported prop change on EmbeddedCheckoutProvider: You cannot change the `stripe` prop after setting it.');
+      }
+    }, [prevStripe, rawStripeProp]); // Warn on changes to options.
+
+    var prevOptions = usePrevious(options);
+    React.useEffect(function () {
+      if (prevOptions == null) {
+        return;
+      }
+
+      if (options == null) {
+        console.warn('Unsupported prop change on EmbeddedCheckoutProvider: You cannot unset options after setting them.');
+        return;
+      }
+
+      if (options.clientSecret === undefined && options.fetchClientSecret === undefined) {
+        console.warn('Invalid props passed to EmbeddedCheckoutProvider: You must provide one of either `options.fetchClientSecret` or `options.clientSecret`.');
+      }
+
+      if (prevOptions.clientSecret != null && options.clientSecret !== prevOptions.clientSecret) {
+        console.warn('Unsupported prop change on EmbeddedCheckoutProvider: You cannot change the client secret after setting it. Unmount and create a new instance of EmbeddedCheckoutProvider instead.');
+      }
+
+      if (prevOptions.fetchClientSecret != null && options.fetchClientSecret !== prevOptions.fetchClientSecret) {
+        console.warn('Unsupported prop change on EmbeddedCheckoutProvider: You cannot change fetchClientSecret after setting it. Unmount and create a new instance of EmbeddedCheckoutProvider instead.');
+      }
+
+      if (prevOptions.onComplete != null && options.onComplete !== prevOptions.onComplete) {
+        console.warn('Unsupported prop change on EmbeddedCheckoutProvider: You cannot change the onComplete option after setting it.');
+      }
+
+      if (prevOptions.onShippingDetailsChange != null && options.onShippingDetailsChange !== prevOptions.onShippingDetailsChange) {
+        console.warn('Unsupported prop change on EmbeddedCheckoutProvider: You cannot change the onShippingDetailsChange option after setting it.');
+      }
+
+      if (prevOptions.onLineItemsChange != null && options.onLineItemsChange !== prevOptions.onLineItemsChange) {
+        console.warn('Unsupported prop change on EmbeddedCheckoutProvider: You cannot change the onLineItemsChange option after setting it.');
+      }
+    }, [prevOptions, options]);
+    return /*#__PURE__*/React.createElement(EmbeddedCheckoutContext.Provider, {
+      value: ctx
+    }, children);
+  };
+
+  var EmbeddedCheckoutClientElement = function EmbeddedCheckoutClientElement(_ref) {
+    var id = _ref.id,
+        className = _ref.className;
+
+    var _useEmbeddedCheckoutC = useEmbeddedCheckoutContext(),
+        embeddedCheckout = _useEmbeddedCheckoutC.embeddedCheckout;
+
+    var isMounted = React.useRef(false);
+    var domNode = React.useRef(null);
+    React.useLayoutEffect(function () {
+      if (!isMounted.current && embeddedCheckout && domNode.current !== null) {
+        embeddedCheckout.mount(domNode.current);
+        isMounted.current = true;
+      } // Clean up on unmount
+
+
+      return function () {
+        if (isMounted.current && embeddedCheckout) {
+          try {
+            embeddedCheckout.unmount();
+            isMounted.current = false;
+          } catch (e) {// Do nothing.
+            // Parent effects are destroyed before child effects, so
+            // in cases where both the EmbeddedCheckoutProvider and
+            // the EmbeddedCheckout component are removed at the same
+            // time, the embeddedCheckout instance will be destroyed,
+            // which causes an error when calling unmount.
+          }
+        }
+      };
+    }, [embeddedCheckout]);
+    return /*#__PURE__*/React.createElement("div", {
+      ref: domNode,
+      id: id,
+      className: className
+    });
+  }; // Only render the wrapper in a server environment.
+
+
+  var EmbeddedCheckoutServerElement = function EmbeddedCheckoutServerElement(_ref2) {
+    var id = _ref2.id,
+        className = _ref2.className;
+    // Validate that we are in the right context by calling useEmbeddedCheckoutContext.
+    useEmbeddedCheckoutContext();
+    return /*#__PURE__*/React.createElement("div", {
+      id: id,
+      className: className
+    });
+  };
+
+  var EmbeddedCheckout = isServer ? EmbeddedCheckoutServerElement : EmbeddedCheckoutClientElement;
+
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#usestripe-hook
+   */
+
+  var useStripe = function useStripe() {
+    var _useElementsOrCheckou = useElementsOrCheckoutSdkContextWithUseCase('calls useStripe()'),
+        stripe = _useElementsOrCheckou.stripe;
+
+    return stripe;
+  };
+
+  /**
+   * Requires beta access:
+   * Contact [Stripe support](https://support.stripe.com/) for more information.
+   *
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var AuBankAccountElement = createElementComponent('auBankAccount', isServer);
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var CardElement = createElementComponent('card', isServer);
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var CardNumberElement = createElementComponent('cardNumber', isServer);
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var CardExpiryElement = createElementComponent('cardExpiry', isServer);
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var CardCvcElement = createElementComponent('cardCvc', isServer);
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var FpxBankElement = createElementComponent('fpxBank', isServer);
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var IbanElement = createElementComponent('iban', isServer);
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var IdealBankElement = createElementComponent('idealBank', isServer);
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var P24BankElement = createElementComponent('p24Bank', isServer);
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var EpsBankElement = createElementComponent('epsBank', isServer);
+  var PaymentElement = createElementComponent('payment', isServer);
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var ExpressCheckoutElement = createElementComponent('expressCheckout', isServer);
+  /**
+   * Requires beta access:
+   * Contact [Stripe support](https://support.stripe.com/) for more information.
+   */
+
+  var CurrencySelectorElement = createElementComponent('currencySelector', isServer);
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var PaymentRequestButtonElement = createElementComponent('paymentRequestButton', isServer);
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var LinkAuthenticationElement = createElementComponent('linkAuthentication', isServer);
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var AddressElement = createElementComponent('address', isServer);
+  /**
+   * @deprecated
+   * Use `AddressElement` instead.
+   *
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var ShippingAddressElement = createElementComponent('shippingAddress', isServer);
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var PaymentMethodMessagingElement = createElementComponent('paymentMethodMessaging', isServer);
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var AffirmMessageElement = createElementComponent('affirmMessage', isServer);
+  /**
+   * @docs https://stripe.com/docs/stripe-js/react#element-components
+   */
+
+  var AfterpayClearpayMessageElement = createElementComponent('afterpayClearpayMessage', isServer);
+
+  exports.AddressElement = AddressElement;
+  exports.AffirmMessageElement = AffirmMessageElement;
+  exports.AfterpayClearpayMessageElement = AfterpayClearpayMessageElement;
+  exports.AuBankAccountElement = AuBankAccountElement;
+  exports.CardCvcElement = CardCvcElement;
+  exports.CardElement = CardElement;
+  exports.CardExpiryElement = CardExpiryElement;
+  exports.CardNumberElement = CardNumberElement;
+  exports.CheckoutProvider = CheckoutProvider;
+  exports.CurrencySelectorElement = CurrencySelectorElement;
+  exports.Elements = Elements;
+  exports.ElementsConsumer = ElementsConsumer;
+  exports.EmbeddedCheckout = EmbeddedCheckout;
+  exports.EmbeddedCheckoutProvider = EmbeddedCheckoutProvider;
+  exports.EpsBankElement = EpsBankElement;
+  exports.ExpressCheckoutElement = ExpressCheckoutElement;
+  exports.FpxBankElement = FpxBankElement;
+  exports.IbanElement = IbanElement;
+  exports.IdealBankElement = IdealBankElement;
+  exports.LinkAuthenticationElement = LinkAuthenticationElement;
+  exports.P24BankElement = P24BankElement;
+  exports.PaymentElement = PaymentElement;
+  exports.PaymentMethodMessagingElement = PaymentMethodMessagingElement;
+  exports.PaymentRequestButtonElement = PaymentRequestButtonElement;
+  exports.ShippingAddressElement = ShippingAddressElement;
+  exports.useCheckout = useCheckout;
+  exports.useElements = useElements;
+  exports.useStripe = useStripe;
+
+}));
+
 
 /***/ }),
 
@@ -23,10 +1288,210 @@ eval("(function (global, factory) {\n   true ? factory(exports, __webpack_requir
 /*!*******************************************************!*\
   !*** ./node_modules/@stripe/stripe-js/dist/index.mjs ***!
   \*******************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   loadStripe: () => (/* binding */ loadStripe)\n/* harmony export */ });\nvar RELEASE_TRAIN = 'v3';\n\nvar runtimeVersionToUrlVersion = function runtimeVersionToUrlVersion(version) {\n  return version === 3 ? 'v3' : version;\n};\n\nvar ORIGIN = 'https://js.stripe.com';\nvar STRIPE_JS_URL = \"\".concat(ORIGIN, \"/v3\") ;\nvar V3_URL_REGEX = /^https:\\/\\/js\\.stripe\\.com\\/v3\\/?(\\?.*)?$/;\nvar STRIPE_JS_URL_REGEX = /^https:\\/\\/js\\.stripe\\.com\\/(v3|[a-z]+)\\/stripe\\.js(\\?.*)?$/;\nvar EXISTING_SCRIPT_MESSAGE = 'loadStripe.setLoadParameters was called but an existing Stripe.js script already exists in the document; existing script parameters will be used';\n\nvar isStripeJSURL = function isStripeJSURL(url) {\n  return V3_URL_REGEX.test(url) || STRIPE_JS_URL_REGEX.test(url);\n};\n\nvar findScript = function findScript() {\n  var scripts = document.querySelectorAll(\"script[src^=\\\"\".concat(ORIGIN, \"\\\"]\"));\n\n  for (var i = 0; i < scripts.length; i++) {\n    var script = scripts[i];\n\n    if (!isStripeJSURL(script.src)) {\n      continue;\n    }\n\n    return script;\n  }\n\n  return null;\n};\n\nvar injectScript = function injectScript(params) {\n  var queryString = params && !params.advancedFraudSignals ? '?advancedFraudSignals=false' : '';\n  var script = document.createElement('script');\n  script.src = \"\".concat(STRIPE_JS_URL).concat(queryString);\n  var headOrBody = document.head || document.body;\n\n  if (!headOrBody) {\n    throw new Error('Expected document.body not to be null. Stripe.js requires a <body> element.');\n  }\n\n  headOrBody.appendChild(script);\n  return script;\n};\n\nvar registerWrapper = function registerWrapper(stripe, startTime) {\n  if (!stripe || !stripe._registerWrapper) {\n    return;\n  }\n\n  stripe._registerWrapper({\n    name: 'stripe-js',\n    version: \"5.10.0\",\n    startTime: startTime\n  });\n};\n\nvar stripePromise$1 = null;\nvar onErrorListener = null;\nvar onLoadListener = null;\n\nvar onError = function onError(reject) {\n  return function (cause) {\n    reject(new Error('Failed to load Stripe.js', {\n      cause: cause\n    }));\n  };\n};\n\nvar onLoad = function onLoad(resolve, reject) {\n  return function () {\n    if (window.Stripe) {\n      resolve(window.Stripe);\n    } else {\n      reject(new Error('Stripe.js not available'));\n    }\n  };\n};\n\nvar loadScript = function loadScript(params) {\n  // Ensure that we only attempt to load Stripe.js at most once\n  if (stripePromise$1 !== null) {\n    return stripePromise$1;\n  }\n\n  stripePromise$1 = new Promise(function (resolve, reject) {\n    if (typeof window === 'undefined' || typeof document === 'undefined') {\n      // Resolve to null when imported server side. This makes the module\n      // safe to import in an isomorphic code base.\n      resolve(null);\n      return;\n    }\n\n    if (window.Stripe && params) {\n      console.warn(EXISTING_SCRIPT_MESSAGE);\n    }\n\n    if (window.Stripe) {\n      resolve(window.Stripe);\n      return;\n    }\n\n    try {\n      var script = findScript();\n\n      if (script && params) {\n        console.warn(EXISTING_SCRIPT_MESSAGE);\n      } else if (!script) {\n        script = injectScript(params);\n      } else if (script && onLoadListener !== null && onErrorListener !== null) {\n        var _script$parentNode;\n\n        // remove event listeners\n        script.removeEventListener('load', onLoadListener);\n        script.removeEventListener('error', onErrorListener); // if script exists, but we are reloading due to an error,\n        // reload script to trigger 'load' event\n\n        (_script$parentNode = script.parentNode) === null || _script$parentNode === void 0 ? void 0 : _script$parentNode.removeChild(script);\n        script = injectScript(params);\n      }\n\n      onLoadListener = onLoad(resolve, reject);\n      onErrorListener = onError(reject);\n      script.addEventListener('load', onLoadListener);\n      script.addEventListener('error', onErrorListener);\n    } catch (error) {\n      reject(error);\n      return;\n    }\n  }); // Resets stripePromise on error\n\n  return stripePromise$1[\"catch\"](function (error) {\n    stripePromise$1 = null;\n    return Promise.reject(error);\n  });\n};\nvar initStripe = function initStripe(maybeStripe, args, startTime) {\n  if (maybeStripe === null) {\n    return null;\n  }\n\n  var pk = args[0];\n  var isTestKey = pk.match(/^pk_test/); // @ts-expect-error this is not publicly typed\n\n  var version = runtimeVersionToUrlVersion(maybeStripe.version);\n  var expectedVersion = RELEASE_TRAIN;\n\n  if (isTestKey && version !== expectedVersion) {\n    console.warn(\"Stripe.js@\".concat(version, \" was loaded on the page, but @stripe/stripe-js@\").concat(\"5.10.0\", \" expected Stripe.js@\").concat(expectedVersion, \". This may result in unexpected behavior. For more information, see https://docs.stripe.com/sdks/stripejs-versioning\"));\n  }\n\n  var stripe = maybeStripe.apply(undefined, args);\n  registerWrapper(stripe, startTime);\n  return stripe;\n}; // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types\n\nvar stripePromise;\nvar loadCalled = false;\n\nvar getStripePromise = function getStripePromise() {\n  if (stripePromise) {\n    return stripePromise;\n  }\n\n  stripePromise = loadScript(null)[\"catch\"](function (error) {\n    // clear cache on error\n    stripePromise = null;\n    return Promise.reject(error);\n  });\n  return stripePromise;\n}; // Execute our own script injection after a tick to give users time to do their\n// own script injection.\n\n\nPromise.resolve().then(function () {\n  return getStripePromise();\n})[\"catch\"](function (error) {\n  if (!loadCalled) {\n    console.warn(error);\n  }\n});\nvar loadStripe = function loadStripe() {\n  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {\n    args[_key] = arguments[_key];\n  }\n\n  loadCalled = true;\n  var startTime = Date.now(); // if previous attempts are unsuccessful, will re-load script\n\n  return getStripePromise().then(function (maybeStripe) {\n    return initStripe(maybeStripe, args, startTime);\n  });\n};\n\n\n\n\n//# sourceURL=webpack://bookitfast/./node_modules/@stripe/stripe-js/dist/index.mjs?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   loadStripe: () => (/* binding */ loadStripe)
+/* harmony export */ });
+var RELEASE_TRAIN = 'v3';
+
+var runtimeVersionToUrlVersion = function runtimeVersionToUrlVersion(version) {
+  return version === 3 ? 'v3' : version;
+};
+
+var ORIGIN = 'https://js.stripe.com';
+var STRIPE_JS_URL = "".concat(ORIGIN, "/v3") ;
+var V3_URL_REGEX = /^https:\/\/js\.stripe\.com\/v3\/?(\?.*)?$/;
+var STRIPE_JS_URL_REGEX = /^https:\/\/js\.stripe\.com\/(v3|[a-z]+)\/stripe\.js(\?.*)?$/;
+var EXISTING_SCRIPT_MESSAGE = 'loadStripe.setLoadParameters was called but an existing Stripe.js script already exists in the document; existing script parameters will be used';
+
+var isStripeJSURL = function isStripeJSURL(url) {
+  return V3_URL_REGEX.test(url) || STRIPE_JS_URL_REGEX.test(url);
+};
+
+var findScript = function findScript() {
+  var scripts = document.querySelectorAll("script[src^=\"".concat(ORIGIN, "\"]"));
+
+  for (var i = 0; i < scripts.length; i++) {
+    var script = scripts[i];
+
+    if (!isStripeJSURL(script.src)) {
+      continue;
+    }
+
+    return script;
+  }
+
+  return null;
+};
+
+var injectScript = function injectScript(params) {
+  var queryString = params && !params.advancedFraudSignals ? '?advancedFraudSignals=false' : '';
+  var script = document.createElement('script');
+  script.src = "".concat(STRIPE_JS_URL).concat(queryString);
+  var headOrBody = document.head || document.body;
+
+  if (!headOrBody) {
+    throw new Error('Expected document.body not to be null. Stripe.js requires a <body> element.');
+  }
+
+  headOrBody.appendChild(script);
+  return script;
+};
+
+var registerWrapper = function registerWrapper(stripe, startTime) {
+  if (!stripe || !stripe._registerWrapper) {
+    return;
+  }
+
+  stripe._registerWrapper({
+    name: 'stripe-js',
+    version: "5.10.0",
+    startTime: startTime
+  });
+};
+
+var stripePromise$1 = null;
+var onErrorListener = null;
+var onLoadListener = null;
+
+var onError = function onError(reject) {
+  return function (cause) {
+    reject(new Error('Failed to load Stripe.js', {
+      cause: cause
+    }));
+  };
+};
+
+var onLoad = function onLoad(resolve, reject) {
+  return function () {
+    if (window.Stripe) {
+      resolve(window.Stripe);
+    } else {
+      reject(new Error('Stripe.js not available'));
+    }
+  };
+};
+
+var loadScript = function loadScript(params) {
+  // Ensure that we only attempt to load Stripe.js at most once
+  if (stripePromise$1 !== null) {
+    return stripePromise$1;
+  }
+
+  stripePromise$1 = new Promise(function (resolve, reject) {
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      // Resolve to null when imported server side. This makes the module
+      // safe to import in an isomorphic code base.
+      resolve(null);
+      return;
+    }
+
+    if (window.Stripe && params) {
+      console.warn(EXISTING_SCRIPT_MESSAGE);
+    }
+
+    if (window.Stripe) {
+      resolve(window.Stripe);
+      return;
+    }
+
+    try {
+      var script = findScript();
+
+      if (script && params) {
+        console.warn(EXISTING_SCRIPT_MESSAGE);
+      } else if (!script) {
+        script = injectScript(params);
+      } else if (script && onLoadListener !== null && onErrorListener !== null) {
+        var _script$parentNode;
+
+        // remove event listeners
+        script.removeEventListener('load', onLoadListener);
+        script.removeEventListener('error', onErrorListener); // if script exists, but we are reloading due to an error,
+        // reload script to trigger 'load' event
+
+        (_script$parentNode = script.parentNode) === null || _script$parentNode === void 0 ? void 0 : _script$parentNode.removeChild(script);
+        script = injectScript(params);
+      }
+
+      onLoadListener = onLoad(resolve, reject);
+      onErrorListener = onError(reject);
+      script.addEventListener('load', onLoadListener);
+      script.addEventListener('error', onErrorListener);
+    } catch (error) {
+      reject(error);
+      return;
+    }
+  }); // Resets stripePromise on error
+
+  return stripePromise$1["catch"](function (error) {
+    stripePromise$1 = null;
+    return Promise.reject(error);
+  });
+};
+var initStripe = function initStripe(maybeStripe, args, startTime) {
+  if (maybeStripe === null) {
+    return null;
+  }
+
+  var pk = args[0];
+  var isTestKey = pk.match(/^pk_test/); // @ts-expect-error this is not publicly typed
+
+  var version = runtimeVersionToUrlVersion(maybeStripe.version);
+  var expectedVersion = RELEASE_TRAIN;
+
+  if (isTestKey && version !== expectedVersion) {
+    console.warn("Stripe.js@".concat(version, " was loaded on the page, but @stripe/stripe-js@").concat("5.10.0", " expected Stripe.js@").concat(expectedVersion, ". This may result in unexpected behavior. For more information, see https://docs.stripe.com/sdks/stripejs-versioning"));
+  }
+
+  var stripe = maybeStripe.apply(undefined, args);
+  registerWrapper(stripe, startTime);
+  return stripe;
+}; // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
+var stripePromise;
+var loadCalled = false;
+
+var getStripePromise = function getStripePromise() {
+  if (stripePromise) {
+    return stripePromise;
+  }
+
+  stripePromise = loadScript(null)["catch"](function (error) {
+    // clear cache on error
+    stripePromise = null;
+    return Promise.reject(error);
+  });
+  return stripePromise;
+}; // Execute our own script injection after a tick to give users time to do their
+// own script injection.
+
+
+Promise.resolve().then(function () {
+  return getStripePromise();
+})["catch"](function (error) {
+  if (!loadCalled) {
+    console.warn(error);
+  }
+});
+var loadStripe = function loadStripe() {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  loadCalled = true;
+  var startTime = Date.now(); // if previous attempts are unsuccessful, will re-load script
+
+  return getStripePromise().then(function (maybeStripe) {
+    return initStripe(maybeStripe, args, startTime);
+  });
+};
+
+
+
 
 /***/ }),
 
@@ -34,10 +1499,215 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /*!******************************************************!*\
   !*** ./node_modules/@stripe/stripe-js/lib/index.mjs ***!
   \******************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   loadStripe: () => (/* reexport safe */ _dist_index_mjs__WEBPACK_IMPORTED_MODULE_0__.loadStripe)\n/* harmony export */ });\n/* harmony import */ var _dist_index_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../dist/index.mjs */ \"./node_modules/@stripe/stripe-js/dist/index.mjs\");\n\n\n\n//# sourceURL=webpack://bookitfast/./node_modules/@stripe/stripe-js/lib/index.mjs?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   loadStripe: () => (/* reexport safe */ _dist_index_mjs__WEBPACK_IMPORTED_MODULE_0__.loadStripe)
+/* harmony export */ });
+/* harmony import */ var _dist_index_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../dist/index.mjs */ "./node_modules/@stripe/stripe-js/dist/index.mjs");
+
+
+
+/***/ }),
+
+/***/ "./src/components/GiftCertificate.js":
+/*!*******************************************!*\
+  !*** ./src/components/GiftCertificate.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+const {
+  TextControl,
+  Button,
+  PanelBody,
+  ToggleControl
+} = wp.components;
+const {
+  InspectorControls
+} = wp.blockEditor || wp.editor;
+
+// Add the API URL helper function
+function getWPApiUrl() {
+  const apiLink = document.querySelector('link[rel="https://api.w.org/"]');
+  if (!apiLink) return '/wp-json';
+  return apiLink.href.replace(/\/$/, ''); // Remove trailing slash if present
+}
+const API_BASE = getWPApiUrl();
+const GiftCertificate = props => {
+  const {
+    attributes: {
+      buttonColor,
+      previewContent
+    },
+    setAttributes
+  } = props;
+  const [gcSettings, setGCSettings] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    async function fetchGCSettings() {
+      try {
+        // Update the fetch URL to use API_BASE
+        const response = await fetch(`${API_BASE}/bookitfast/v1/gc-settings`);
+        const settings = await response.json();
+        setGCSettings(settings);
+      } catch (error) {
+        console.error('Error fetching gift certificate settings:', error);
+      }
+    }
+    fetchGCSettings();
+  }, []);
+  return /*#__PURE__*/React.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
+    title: "Block Settings"
+  }, /*#__PURE__*/React.createElement(TextControl, {
+    label: "Button Color",
+    value: buttonColor,
+    onChange: newColor => setAttributes({
+      buttonColor: newColor
+    })
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      border: `2px solid ${buttonColor}`,
+      padding: '1rem'
+    }
+  }, /*#__PURE__*/React.createElement("h3", null, "Gift Certificate Purchase"), /*#__PURE__*/React.createElement("p", null, previewContent), /*#__PURE__*/React.createElement("p", null, "This is a preview of the front\u2011end gift certificate purchase form.")));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GiftCertificate);
+
+/***/ }),
+
+/***/ "./src/components/GiftCertificateBlock.js":
+/*!************************************************!*\
+  !*** ./src/components/GiftCertificateBlock.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ GiftCertificateBlock)
+/* harmony export */ });
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function GiftCertificateBlock({
+  attributes,
+  setAttributes
+}) {
+  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps)();
+  const {
+    buttonColor
+  } = attributes;
+  return /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement("div", {
+    className: "bookitfast-certificate-form"
+  }, /*#__PURE__*/React.createElement("h3", null, "Purchase a Gift Certificate"), /*#__PURE__*/React.createElement("div", {
+    id: "gc-error-container",
+    className: "alert alert-danger",
+    style: {
+      display: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("form", {
+    id: "gift-certificate-purchase-form"
+  }, /*#__PURE__*/React.createElement("h4", null, "Gift Certificate Details"), /*#__PURE__*/React.createElement("div", {
+    className: "form-group form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Amount:"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    id: "gc_amount",
+    className: "form-control",
+    placeholder: "Enter amount"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-group form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "To:"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    id: "gc_to",
+    className: "form-control",
+    placeholder: "Recipient name"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-group form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "From:"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    id: "gc_from",
+    className: "form-control",
+    placeholder: "Your name"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-group form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Message:"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    id: "gc_message",
+    className: "form-control",
+    placeholder: "Your message"
+  })), /*#__PURE__*/React.createElement("h4", null, "Recipient Details"), /*#__PURE__*/React.createElement("div", {
+    className: "form-group form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Recipient First Name:"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    id: "recipient_first_name",
+    className: "form-control",
+    placeholder: "Recipient first name"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-group form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Recipient Last Name:"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    id: "recipient_last_name",
+    className: "form-control",
+    placeholder: "Recipient last name"
+  })), /*#__PURE__*/React.createElement("h4", null, "Your Details"), /*#__PURE__*/React.createElement("div", {
+    className: "form-group form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Your First Name:"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    id: "customer_first_name",
+    className: "form-control",
+    placeholder: "Your first name"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-group form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Your Last Name:"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    id: "customer_last_name",
+    className: "form-control",
+    placeholder: "Your last name"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-group form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Your Phone:"), /*#__PURE__*/React.createElement("input", {
+    type: "tel",
+    id: "customer_phone",
+    className: "form-control",
+    placeholder: "Your phone number"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-group form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Your Email:"), /*#__PURE__*/React.createElement("input", {
+    type: "email",
+    id: "customer_email",
+    className: "form-control",
+    placeholder: "Your email address"
+  })), /*#__PURE__*/React.createElement("div", {
+    id: "stripe-gc-payment"
+  }), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    id: "gc-proceed-button",
+    className: "btn btn-rounded",
+    style: {
+      backgroundColor: buttonColor
+    }
+  }, "Proceed to Payment"))), /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+    title: "Button Settings"
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ColorPicker, {
+    color: buttonColor,
+    onChangeComplete: value => setAttributes({
+      buttonColor: value.hex
+    }),
+    label: "Button Color"
+  }))));
+}
 
 /***/ }),
 
@@ -48,51 +1718,877 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _stripe_stripe_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @stripe/stripe-js */ \"./node_modules/@stripe/stripe-js/lib/index.mjs\");\n/* harmony import */ var _stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @stripe/react-stripe-js */ \"./node_modules/@stripe/react-stripe-js/dist/react-stripe.umd.js\");\n/* harmony import */ var _stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__);\nfunction _typeof(o) { \"@babel/helpers - typeof\"; return _typeof = \"function\" == typeof Symbol && \"symbol\" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && \"function\" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? \"symbol\" : typeof o; }, _typeof(o); }\nfunction _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }\nfunction _nonIterableSpread() { throw new TypeError(\"Invalid attempt to spread non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\nfunction _iterableToArray(r) { if (\"undefined\" != typeof Symbol && null != r[Symbol.iterator] || null != r[\"@@iterator\"]) return Array.from(r); }\nfunction _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }\nfunction ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }\nfunction _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }\nfunction _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }\nfunction _toPropertyKey(t) { var i = _toPrimitive(t, \"string\"); return \"symbol\" == _typeof(i) ? i : i + \"\"; }\nfunction _toPrimitive(t, r) { if (\"object\" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || \"default\"); if (\"object\" != _typeof(i)) return i; throw new TypeError(\"@@toPrimitive must return a primitive value.\"); } return (\"string\" === r ? String : Number)(t); }\nfunction _regeneratorRuntime() { \"use strict\"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = \"function\" == typeof Symbol ? Symbol : {}, a = i.iterator || \"@@iterator\", c = i.asyncIterator || \"@@asyncIterator\", u = i.toStringTag || \"@@toStringTag\"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, \"\"); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, \"_invoke\", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: \"normal\", arg: t.call(e, r) }; } catch (t) { return { type: \"throw\", arg: t }; } } e.wrap = wrap; var h = \"suspendedStart\", l = \"suspendedYield\", f = \"executing\", s = \"completed\", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { [\"next\", \"throw\", \"return\"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if (\"throw\" !== c.type) { var u = c.arg, h = u.value; return h && \"object\" == _typeof(h) && n.call(h, \"__await\") ? e.resolve(h.__await).then(function (t) { invoke(\"next\", t, i, a); }, function (t) { invoke(\"throw\", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke(\"throw\", t, i, a); }); } a(c.arg); } var r; o(this, \"_invoke\", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error(\"Generator is already running\"); if (o === s) { if (\"throw\" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if (\"next\" === n.method) n.sent = n._sent = n.arg;else if (\"throw\" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else \"return\" === n.method && n.abrupt(\"return\", n.arg); o = f; var p = tryCatch(e, r, n); if (\"normal\" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } \"throw\" === p.type && (o = s, n.method = \"throw\", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, \"throw\" === n && e.iterator[\"return\"] && (r.method = \"return\", r.arg = t, maybeInvokeDelegate(e, r), \"throw\" === r.method) || \"return\" !== n && (r.method = \"throw\", r.arg = new TypeError(\"The iterator does not provide a '\" + n + \"' method\")), y; var i = tryCatch(o, e.iterator, r.arg); if (\"throw\" === i.type) return r.method = \"throw\", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, \"return\" !== r.method && (r.method = \"next\", r.arg = t), r.delegate = null, y) : a : (r.method = \"throw\", r.arg = new TypeError(\"iterator result is not an object\"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = \"normal\", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: \"root\" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || \"\" === e) { var r = e[a]; if (r) return r.call(e); if (\"function\" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + \" is not iterable\"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, \"constructor\", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, \"constructor\", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, \"GeneratorFunction\"), e.isGeneratorFunction = function (t) { var e = \"function\" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || \"GeneratorFunction\" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, \"GeneratorFunction\")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, \"Generator\"), define(g, a, function () { return this; }), define(g, \"toString\", function () { return \"[object Generator]\"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = \"next\", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) \"t\" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if (\"throw\" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = \"throw\", a.arg = e, r.next = n, o && (r.method = \"next\", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if (\"root\" === i.tryLoc) return handle(\"end\"); if (i.tryLoc <= this.prev) { var c = n.call(i, \"catchLoc\"), u = n.call(i, \"finallyLoc\"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error(\"try statement without catch or finally\"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, \"finallyLoc\") && this.prev < o.finallyLoc) { var i = o; break; } } i && (\"break\" === t || \"continue\" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = \"next\", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if (\"throw\" === t.type) throw t.arg; return \"break\" === t.type || \"continue\" === t.type ? this.next = t.arg : \"return\" === t.type ? (this.rval = this.arg = t.arg, this.method = \"return\", this.next = \"end\") : \"normal\" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, \"catch\": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if (\"throw\" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error(\"illegal catch attempt\"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, \"next\" === this.method && (this.arg = t), y; } }, e; }\nfunction asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }\nfunction _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, \"next\", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, \"throw\", n); } _next(void 0); }); }; }\nfunction _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }\nfunction _nonIterableRest() { throw new TypeError(\"Invalid attempt to destructure non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\nfunction _unsupportedIterableToArray(r, a) { if (r) { if (\"string\" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return \"Object\" === t && r.constructor && (t = r.constructor.name), \"Map\" === t || \"Set\" === t ? Array.from(r) : \"Arguments\" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }\nfunction _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }\nfunction _iterableToArrayLimit(r, l) { var t = null == r ? null : \"undefined\" != typeof Symbol && r[Symbol.iterator] || r[\"@@iterator\"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t[\"return\"] && (u = t[\"return\"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }\nfunction _arrayWithHoles(r) { if (Array.isArray(r)) return r; }\n\n\n\nfunction getWPApiUrl() {\n  var apiLink = document.querySelector('link[rel=\"https://api.w.org/\"]');\n  if (!apiLink) {\n    var _window$wpApiSettings;\n    // Check if we're using pretty permalinks\n    var restUrl = ((_window$wpApiSettings = window.wpApiSettings) === null || _window$wpApiSettings === void 0 ? void 0 : _window$wpApiSettings.restUrl) || '/wp-json';\n    return restUrl.replace(/\\/$/, ''); // Remove trailing slash if present\n  }\n  return apiLink.href.replace(/\\/$/, ''); // Remove trailing slash if present\n}\nvar API_BASE = getWPApiUrl();\nvar stripePromiseGlobal = (0,_stripe_stripe_js__WEBPACK_IMPORTED_MODULE_1__.loadStripe)('your-publishable-key-here');\nvar getQueryParam = function getQueryParam(param) {\n  var urlParams = new URLSearchParams(window.location.search);\n  return urlParams.get(param);\n};\nvar parseDateFromUrl = function parseDateFromUrl(dateString) {\n  var dateParts = dateString.split('-');\n  if (dateParts.length === 3) {\n    var _dateParts$map = dateParts.map(Number),\n      _dateParts$map2 = _slicedToArray(_dateParts$map, 3),\n      day = _dateParts$map2[0],\n      month = _dateParts$map2[1],\n      year = _dateParts$map2[2];\n    if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {\n      var parsedDate = new Date(year, month - 1, day);\n      parsedDate.setHours(12, 0, 0, 0); // Prevents timezone shift\n      return parsedDate.toISOString().split('T')[0]; // Returns YYYY-MM-DD format\n    }\n  }\n  return null;\n};\nvar MultiEmbedForm = function MultiEmbedForm(_ref) {\n  var _ref$propertyIds = _ref.propertyIds,\n    propertyIds = _ref$propertyIds === void 0 ? '' : _ref$propertyIds,\n    _ref$showDiscount = _ref.showDiscount,\n    showDiscount = _ref$showDiscount === void 0 ? false : _ref$showDiscount,\n    _ref$showSuburb = _ref.showSuburb,\n    showSuburb = _ref$showSuburb === void 0 ? true : _ref$showSuburb,\n    _ref$showPostcode = _ref.showPostcode,\n    showPostcode = _ref$showPostcode === void 0 ? true : _ref$showPostcode,\n    _ref$showRedeemGiftCe = _ref.showRedeemGiftCertificate,\n    showRedeemGiftCertificate = _ref$showRedeemGiftCe === void 0 ? false : _ref$showRedeemGiftCe,\n    _ref$showComments = _ref.showComments,\n    showComments = _ref$showComments === void 0 ? false : _ref$showComments;\n  var nightsFromUrl = getQueryParam('nights');\n  var validatedNights = nightsFromUrl && !isNaN(nightsFromUrl) ? parseInt(nightsFromUrl, 10) : 1;\n\n  // Extract and validate \"start\" date from URL\n  var startDateFromUrl = getQueryParam('start');\n  var discountCodeFromUrl = getQueryParam('discount');\n  var validatedStartDate = startDateFromUrl ? parseDateFromUrl(startDateFromUrl) : '';\n\n  // Ensure propertyIds is a string and handle it properly\n  var propertyIdsString = typeof propertyIds === 'string' ? propertyIds : '';\n  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({\n      date: validatedStartDate,\n      nights: validatedNights\n    }),\n    _useState2 = _slicedToArray(_useState, 2),\n    form = _useState2[0],\n    setForm = _useState2[1];\n  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),\n    _useState4 = _slicedToArray(_useState3, 2),\n    availability = _useState4[0],\n    setAvailability = _useState4[1];\n  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),\n    _useState6 = _slicedToArray(_useState5, 2),\n    selectionData = _useState6[0],\n    setSelectionData = _useState6[1];\n  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),\n    _useState8 = _slicedToArray(_useState7, 2),\n    stripePromise = _useState8[0],\n    setStripePromise = _useState8[1];\n  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),\n    _useState10 = _slicedToArray(_useState9, 2),\n    summary = _useState10[0],\n    setSummary = _useState10[1];\n  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),\n    _useState12 = _slicedToArray(_useState11, 2),\n    loading = _useState12[0],\n    setLoading = _useState12[1];\n  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),\n    _useState14 = _slicedToArray(_useState13, 2),\n    error = _useState14[0],\n    setError = _useState14[1];\n  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({\n      firstName: \"\",\n      lastName: \"\",\n      phone: \"\",\n      email: \"\",\n      postcode: \"\",\n      suburb: \"\",\n      comments: \"\"\n    }),\n    _useState16 = _slicedToArray(_useState15, 2),\n    userDetails = _useState16[0],\n    setUserDetails = _useState16[1];\n  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),\n    _useState18 = _slicedToArray(_useState17, 2),\n    agreeToTerms = _useState18[0],\n    setAgreeToTerms = _useState18[1];\n  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(discountCodeFromUrl),\n    _useState20 = _slicedToArray(_useState19, 2),\n    discountCode = _useState20[0],\n    setDiscountCode = _useState20[1];\n  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),\n    _useState22 = _slicedToArray(_useState21, 2),\n    discountMessage = _useState22[0],\n    setDiscountMessage = _useState22[1];\n  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),\n    _useState24 = _slicedToArray(_useState23, 2),\n    applyingDiscount = _useState24[0],\n    setApplyingDiscount = _useState24[1];\n  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),\n    _useState26 = _slicedToArray(_useState25, 2),\n    paymentSuccess = _useState26[0],\n    setPaymentSuccess = _useState26[1];\n\n  // New states for payment option and validation\n  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),\n    _useState28 = _slicedToArray(_useState27, 2),\n    showPaymentForm = _useState28[0],\n    setShowPaymentForm = _useState28[1];\n  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),\n    _useState30 = _slicedToArray(_useState29, 2),\n    selectedPaymentOption = _useState30[0],\n    setSelectedPaymentOption = _useState30[1]; // \"deposit\" or \"full\"\n  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),\n    _useState32 = _slicedToArray(_useState31, 2),\n    formErrors = _useState32[0],\n    setFormErrors = _useState32[1];\n  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({\n      number: \"\",\n      pin: \"\"\n    }),\n    _useState34 = _slicedToArray(_useState33, 2),\n    giftCertificate = _useState34[0],\n    setGiftCertificate = _useState34[1];\n  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),\n    _useState36 = _slicedToArray(_useState35, 2),\n    showGiftCertificateForm = _useState36[0],\n    setShowGiftCertificateForm = _useState36[1];\n  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),\n    _useState38 = _slicedToArray(_useState37, 2),\n    gcResult = _useState38[0],\n    setGcResult = _useState38[1];\n  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),\n    _useState40 = _slicedToArray(_useState39, 2),\n    selectedOptionalExtras = _useState40[0],\n    setSelectedOptionalExtras = _useState40[1];\n  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {\n    if (validatedStartDate && validatedNights) {\n      console.log(\"Auto-checking availability with:\", validatedStartDate, validatedNights);\n      fetchAvailability(validatedStartDate, validatedNights);\n    }\n  }, [validatedStartDate, validatedNights]);\n\n  // Fetch availability data\n  var fetchAvailability = /*#__PURE__*/function () {\n    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {\n      var startDate,\n        nights,\n        formattedStartDate,\n        propertyIdsArray,\n        response,\n        data,\n        initialSelection,\n        _args = arguments;\n      return _regeneratorRuntime().wrap(function _callee$(_context) {\n        while (1) switch (_context.prev = _context.next) {\n          case 0:\n            startDate = _args.length > 0 && _args[0] !== undefined ? _args[0] : form.date;\n            nights = _args.length > 1 && _args[1] !== undefined ? _args[1] : form.nights;\n            if (!(!startDate || !propertyIdsString)) {\n              _context.next = 5;\n              break;\n            }\n            console.warn(\"fetchAvailability skipped - Missing startDate or propertyIds\");\n            return _context.abrupt(\"return\");\n          case 5:\n            formattedStartDate = form.date;\n            propertyIdsArray = propertyIdsString.split(',').filter(function (id) {\n              return id.trim() !== '';\n            });\n            console.log(\"Requesting availability with:\", {\n              ids: propertyIdsArray,\n              start: formattedStartDate,\n              nights: nights\n            });\n            setLoading(true);\n            setError('');\n            _context.prev = 10;\n            _context.next = 13;\n            return fetch(\"\".concat(API_BASE, \"/bookitfast/v1/availability\"), {\n              method: 'POST',\n              headers: {\n                'Content-Type': 'application/json'\n              },\n              body: JSON.stringify({\n                ids: propertyIdsArray,\n                start: formattedStartDate,\n                nights: nights\n              })\n            });\n          case 13:\n            response = _context.sent;\n            _context.next = 16;\n            return response.json();\n          case 16:\n            data = _context.sent;\n            setAvailability(data);\n\n            // Initialise selectionData for each property\n            initialSelection = Object.keys(data).reduce(function (acc, propertyId) {\n              acc[propertyId] = false;\n              return acc;\n            }, {});\n            setSelectionData(initialSelection);\n            _context.next = 26;\n            break;\n          case 22:\n            _context.prev = 22;\n            _context.t0 = _context[\"catch\"](10);\n            console.error(_context.t0);\n            setError('Failed to fetch availability. Please try again.');\n          case 26:\n            _context.prev = 26;\n            setLoading(false);\n            return _context.finish(26);\n          case 29:\n          case \"end\":\n            return _context.stop();\n        }\n      }, _callee, null, [[10, 22, 26, 29]]);\n    }));\n    return function fetchAvailability() {\n      return _ref2.apply(this, arguments);\n    };\n  }();\n\n  // Toggle property selection and fetch summary\n  var toggleSelection = /*#__PURE__*/function () {\n    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(propertyId) {\n      var updatedSelection;\n      return _regeneratorRuntime().wrap(function _callee2$(_context2) {\n        while (1) switch (_context2.prev = _context2.next) {\n          case 0:\n            updatedSelection = _objectSpread(_objectSpread({}, selectionData), {}, _defineProperty({}, propertyId, !selectionData[propertyId]));\n            setSelectionData(updatedSelection);\n\n            // Fetch summary if at least one property is selected\n            if (!Object.values(updatedSelection).includes(true)) {\n              _context2.next = 7;\n              break;\n            }\n            _context2.next = 5;\n            return _fetchSummary(updatedSelection, discountCode);\n          case 5:\n            _context2.next = 8;\n            break;\n          case 7:\n            setSummary(null);\n          case 8:\n          case \"end\":\n            return _context2.stop();\n        }\n      }, _callee2);\n    }));\n    return function toggleSelection(_x) {\n      return _ref3.apply(this, arguments);\n    };\n  }();\n  var toggleOptionalExtra = function toggleOptionalExtra(propertyId, extraId) {\n    setSelectedOptionalExtras(function (prev) {\n      var propertyExtras = prev[propertyId] || {};\n      var newSelectedOptionalExtras = _objectSpread(_objectSpread({}, prev), {}, _defineProperty({}, propertyId, _objectSpread(_objectSpread({}, propertyExtras), {}, _defineProperty({}, extraId, !propertyExtras[extraId]))));\n      _fetchSummary(selectionData, discountCode, newSelectedOptionalExtras, 0);\n      return newSelectedOptionalExtras;\n    });\n  };\n\n  // Fetch summary data for selected properties\n  var _fetchSummary = /*#__PURE__*/function () {\n    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(updatedSelection) {\n      var discountCode,\n        updatedOptionalExtras,\n        retryCount,\n        start,\n        nights,\n        end,\n        response,\n        data,\n        _args3 = arguments;\n      return _regeneratorRuntime().wrap(function _callee3$(_context3) {\n        while (1) switch (_context3.prev = _context3.next) {\n          case 0:\n            discountCode = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : null;\n            updatedOptionalExtras = _args3.length > 2 && _args3[2] !== undefined ? _args3[2] : selectedOptionalExtras;\n            retryCount = _args3.length > 3 && _args3[3] !== undefined ? _args3[3] : 0;\n            start = form.date;\n            nights = form.nights;\n            end = new Date(new Date(start).getTime() + nights * 86400000).toISOString().split('T')[0];\n            setLoading(true);\n            setError('');\n            _context3.prev = 8;\n            _context3.next = 11;\n            return fetch(\"\".concat(API_BASE, \"/bookitfast/v1/availability/summary\"), {\n              method: 'POST',\n              headers: {\n                'Content-Type': 'application/json'\n              },\n              body: JSON.stringify({\n                selected: updatedSelection,\n                selected_optional_extras: updatedOptionalExtras,\n                start: start,\n                end: end,\n                discount_code: discountCode || null\n              })\n            });\n          case 11:\n            response = _context3.sent;\n            if (response.ok) {\n              _context3.next = 14;\n              break;\n            }\n            throw new Error(\"HTTP error! status: \".concat(response.status));\n          case 14:\n            _context3.next = 16;\n            return response.json();\n          case 16:\n            data = _context3.sent;\n            setSummary(data);\n\n            // Initialise Stripe if publishable key provided\n            if (data.stripe_publishable_key) {\n              setStripePromise((0,_stripe_stripe_js__WEBPACK_IMPORTED_MODULE_1__.loadStripe)(data.stripe_publishable_key));\n            }\n            _context3.next = 31;\n            break;\n          case 21:\n            _context3.prev = 21;\n            _context3.t0 = _context3[\"catch\"](8);\n            console.error(\"Error fetching summary:\", _context3.t0);\n            if (!(retryCount < 3)) {\n              _context3.next = 30;\n              break;\n            }\n            console.log(\"Retrying... Attempt \".concat(retryCount + 1));\n            _context3.next = 28;\n            return _fetchSummary(updatedSelection, discountCode, updatedOptionalExtras, retryCount + 1);\n          case 28:\n            _context3.next = 31;\n            break;\n          case 30:\n            setError('Failed to fetch summary. Please try again.');\n          case 31:\n            _context3.prev = 31;\n            setLoading(false);\n            return _context3.finish(31);\n          case 34:\n          case \"end\":\n            return _context3.stop();\n        }\n      }, _callee3, null, [[8, 21, 31, 34]]);\n    }));\n    return function fetchSummary(_x2) {\n      return _ref4.apply(this, arguments);\n    };\n  }();\n\n  // Apply discount code\n  var applyDiscountCode = /*#__PURE__*/function () {\n    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {\n      var response, data;\n      return _regeneratorRuntime().wrap(function _callee4$(_context4) {\n        while (1) switch (_context4.prev = _context4.next) {\n          case 0:\n            if (discountCode) {\n              _context4.next = 2;\n              break;\n            }\n            return _context4.abrupt(\"return\");\n          case 2:\n            setApplyingDiscount(true);\n            setDiscountMessage(null);\n            _context4.prev = 4;\n            _context4.next = 7;\n            return fetch(\"\".concat(API_BASE, \"/bookitfast/v1/multi/availability/apply-discount\"), {\n              method: \"POST\",\n              headers: {\n                \"Content-Type\": \"application/json\"\n              },\n              body: JSON.stringify({\n                discount_code: discountCode,\n                start: form.date,\n                nights: form.nights,\n                property_ids: Object.keys(selectionData).filter(function (id) {\n                  return selectionData[id];\n                })\n              })\n            });\n          case 7:\n            response = _context4.sent;\n            _context4.next = 10;\n            return response.json();\n          case 10:\n            data = _context4.sent;\n            if (data.success) {\n              setSummary(data.summary);\n              setDiscountMessage({\n                success: true,\n                message: \"Discount applied successfully!\"\n              });\n            } else {\n              setDiscountMessage({\n                success: false,\n                message: data.message || \"Invalid discount code.\"\n              });\n            }\n            _context4.next = 18;\n            break;\n          case 14:\n            _context4.prev = 14;\n            _context4.t0 = _context4[\"catch\"](4);\n            console.error(\"Error applying discount:\", _context4.t0);\n            setDiscountMessage({\n              success: false,\n              message: \"Error applying discount. Please try again.\"\n            });\n          case 18:\n            _context4.prev = 18;\n            setApplyingDiscount(false);\n            return _context4.finish(18);\n          case 21:\n          case \"end\":\n            return _context4.stop();\n        }\n      }, _callee4, null, [[4, 14, 18, 21]]);\n    }));\n    return function applyDiscountCode() {\n      return _ref5.apply(this, arguments);\n    };\n  }();\n\n  // Validate customer details before proceeding with payment\n  var validateCustomerDetails = function validateCustomerDetails() {\n    var errors = {};\n    if (!userDetails.firstName.trim()) errors.firstName = \"First name is required.\";\n    if (!userDetails.lastName.trim()) errors.lastName = \"Last name is required.\";\n    if (!userDetails.phone.trim()) errors.phone = \"Phone is required.\";\n    if (!userDetails.email.trim()) errors.email = \"Email is required.\";\n    if (showPostcode && !userDetails.postcode.trim()) errors.postcode = \"Postcode is required.\";\n    if (showSuburb && !userDetails.suburb.trim()) errors.suburb = \"Suburb is required.\";\n    if (!agreeToTerms) errors.agreeToTerms = \"You must agree to the terms and conditions.\";\n    setFormErrors(errors);\n    return Object.keys(errors).length === 0;\n  };\n\n  // Handle payment option selection (deposit/full)\n  var handlePaymentOption = function handlePaymentOption(option) {\n    if (validateCustomerDetails()) {\n      setSelectedPaymentOption(option);\n      setShowPaymentForm(true);\n    } else {\n      // Scroll to the bottom to show validation errors\n      window.scrollTo(0, document.body.scrollHeight);\n    }\n  };\n\n  // Trigger display of gift certificate form\n  var triggerShowGiftCertificate = function triggerShowGiftCertificate() {\n    setShowGiftCertificateForm(true);\n  };\n\n  // Apply gift certificate via POST request\n  var applyGiftCertificate = /*#__PURE__*/function () {\n    var _ref6 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5(e) {\n      var data, response, responseData;\n      return _regeneratorRuntime().wrap(function _callee5$(_context5) {\n        while (1) switch (_context5.prev = _context5.next) {\n          case 0:\n            e.preventDefault();\n            if (summary) {\n              _context5.next = 3;\n              break;\n            }\n            return _context5.abrupt(\"return\");\n          case 3:\n            data = {\n              certificate: giftCertificate,\n              summary: summary\n            };\n            _context5.prev = 4;\n            _context5.next = 7;\n            return fetch(\"\".concat(API_BASE, \"/bookitfast/v1/apply-gift-certificate\"), {\n              method: 'POST',\n              headers: {\n                'Content-Type': 'application/json'\n              },\n              body: JSON.stringify(data)\n            });\n          case 7:\n            response = _context5.sent;\n            _context5.next = 10;\n            return response.json();\n          case 10:\n            responseData = _context5.sent;\n            setGcResult(responseData);\n            // Update summary with new totals and set order_payable_now to the new grand total\n            /*setSummary(prev => ({\n            \t...prev,\n            \tgrand_total: responseData.order_grand_total,\n            \tsurcharge: responseData.new_surcharge,\n            \torder_payable_now: responseData.order_payable_now,\n            \t}));*/\n            setSummary(responseData.summary);\n            _context5.next = 18;\n            break;\n          case 15:\n            _context5.prev = 15;\n            _context5.t0 = _context5[\"catch\"](4);\n            console.error(\"Error applying gift certificate\", _context5.t0);\n          case 18:\n          case \"end\":\n            return _context5.stop();\n        }\n      }, _callee5, null, [[4, 15]]);\n    }));\n    return function applyGiftCertificate(_x3) {\n      return _ref6.apply(this, arguments);\n    };\n  }();\n\n  // New function to submit an order when the gift certificate covers the full balance.\n  var submitOrderNoPayment = /*#__PURE__*/function () {\n    var _ref7 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {\n      var response, result;\n      return _regeneratorRuntime().wrap(function _callee6$(_context6) {\n        while (1) switch (_context6.prev = _context6.next) {\n          case 0:\n            _context6.prev = 0;\n            setLoading(true);\n            console.log('Submit Order With Gift Certificate...');\n            _context6.next = 5;\n            return fetch(\"\".concat(API_BASE, \"/process-payment\"), {\n              method: \"POST\",\n              headers: {\n                \"Content-Type\": \"application/json\"\n              },\n              body: JSON.stringify({\n                giftCertificateApplied: true,\n                giftCertificate: gcResult,\n                summary: summary,\n                propertyIds: Object.keys(selectionData).filter(function (id) {\n                  return selectionData[id];\n                }),\n                userDetails: userDetails,\n                amount: 0 // no additional payment required\n              })\n            });\n          case 5:\n            response = _context6.sent;\n            _context6.next = 8;\n            return response.json();\n          case 8:\n            result = _context6.sent;\n            if (result.success) {\n              console.log(\"Payment successful:\", result);\n              //\tsetReceiptUrl(result.data.charge);\n              setPaymentSuccess(true);\n            } else {\n              setError(result.message || \"Order submission failed.\");\n            }\n            _context6.next = 16;\n            break;\n          case 12:\n            _context6.prev = 12;\n            _context6.t0 = _context6[\"catch\"](0);\n            console.error(\"Order submission error:\", _context6.t0);\n            setError(_context6.t0.message);\n          case 16:\n            _context6.prev = 16;\n            setLoading(false);\n            return _context6.finish(16);\n          case 19:\n          case \"end\":\n            return _context6.stop();\n        }\n      }, _callee6, null, [[0, 12, 16, 19]]);\n    }));\n    return function submitOrderNoPayment() {\n      return _ref7.apply(this, arguments);\n    };\n  }();\n\n  // Render gift certificate redemption section\n  var renderGiftCertificateSection = function renderGiftCertificateSection() {\n    if (!showRedeemGiftCertificate || !summary) return null;\n    return /*#__PURE__*/React.createElement(\"div\", {\n      id: \"bookitfast_gift_certificates\"\n    }, /*#__PURE__*/React.createElement(\"button\", {\n      className: \"btn btn-success\",\n      onClick: function onClick(e) {\n        e.preventDefault();\n        triggerShowGiftCertificate();\n      }\n    }, \"Apply Gift Certificate\"), showGiftCertificateForm && /*#__PURE__*/React.createElement(\"div\", {\n      className: \"bookitfast-container\"\n    }, /*#__PURE__*/React.createElement(\"form\", {\n      id: \"bookitfast_enter_gift_certificate\",\n      className: \"bookitfast-certificate-form\"\n    }, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"form-group form-row\"\n    }, /*#__PURE__*/React.createElement(\"label\", null, \"Certificate Number:\"), /*#__PURE__*/React.createElement(\"input\", {\n      type: \"text\",\n      value: giftCertificate.number,\n      onChange: function onChange(e) {\n        return setGiftCertificate(_objectSpread(_objectSpread({}, giftCertificate), {}, {\n          number: e.target.value\n        }));\n      },\n      className: \"form-control\"\n    })), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"form-group form-row\"\n    }, /*#__PURE__*/React.createElement(\"label\", null, \"Pin:\"), /*#__PURE__*/React.createElement(\"input\", {\n      type: \"number\",\n      value: giftCertificate.pin,\n      onChange: function onChange(e) {\n        return setGiftCertificate(_objectSpread(_objectSpread({}, giftCertificate), {}, {\n          pin: e.target.value\n        }));\n      },\n      className: \"form-control\"\n    })), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"form-row\"\n    }, /*#__PURE__*/React.createElement(\"button\", {\n      className: \"btn btn-success\",\n      onClick: applyGiftCertificate\n    }, \"Apply\"))), gcResult && gcResult.valid && gcResult.amount_remaining > 0 && /*#__PURE__*/React.createElement(\"div\", {\n      className: \"alert alert-success form-row\"\n    }, /*#__PURE__*/React.createElement(\"p\", null, \"Successfully Applied Gift Certificate\"), /*#__PURE__*/React.createElement(\"p\", null, \"An amount of $\", gcResult.gc_amount_applied, \" has been applied to your order\"), /*#__PURE__*/React.createElement(\"p\", null, \"Your Gift Certifcate will have a balance of $\", gcResult.gc_balance_after_order, \" after the order is placed.\"))));\n  };\n  var renderDiscountCode = function renderDiscountCode() {\n    return /*#__PURE__*/React.createElement(\"div\", {\n      className: \"bookitfast-container bif-mt-2 discount-code-container\"\n    }, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"discount-code-row\"\n    }, /*#__PURE__*/React.createElement(\"label\", {\n      htmlFor: \"discountCode\",\n      className: \"discount-label\"\n    }, \"Discount Code:\"), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"form-group\"\n    }, /*#__PURE__*/React.createElement(\"input\", {\n      type: \"text\",\n      id: \"discountCode\",\n      value: discountCode,\n      onChange: function onChange(e) {\n        return setDiscountCode(e.target.value);\n      },\n      className: \"discount-input\",\n      placeholder: \"Enter discount code\"\n    }), /*#__PURE__*/React.createElement(\"button\", {\n      className: \"btn btn-primary apply-discount-btn\",\n      onClick: function onClick() {\n        return _fetchSummary(selectionData, discountCode);\n      },\n      disabled: !discountCode\n    }, \"Apply Discount\"))), discountMessage && /*#__PURE__*/React.createElement(\"p\", {\n      className: \"discount-message \".concat(discountMessage.success ? \"success\" : \"error\")\n    }, discountMessage.message));\n  };\n  var renderAvailabilityTable = function renderAvailabilityTable() {\n    if (!availability || Object.keys(availability).length === 0) {\n      return /*#__PURE__*/React.createElement(\"p\", null, \"No availability data found.\");\n    }\n    return Object.entries(availability).map(function (_ref8) {\n      var _propertyData$optiona;\n      var _ref9 = _slicedToArray(_ref8, 2),\n        propertyId = _ref9[0],\n        propertyData = _ref9[1];\n      var property_name = propertyData.property_name,\n        propertyAvailability = propertyData.availability;\n      return /*#__PURE__*/React.createElement(\"div\", {\n        key: propertyId,\n        className: \"bookitfast_availability_grid_div\"\n      }, /*#__PURE__*/React.createElement(\"h3\", null, property_name), /*#__PURE__*/React.createElement(\"div\", {\n        className: 'availability_button alignright'\n      }, propertyAvailability.available ? /*#__PURE__*/React.createElement(\"button\", {\n        className: \"btn \".concat(selectionData[propertyId] ? 'btn-success' : 'btn-primary'),\n        onClick: function onClick() {\n          return toggleSelection(propertyId);\n        }\n      }, selectionData[propertyId] ? 'Selected' : 'Click to Select') : /*#__PURE__*/React.createElement(\"button\", {\n        className: \"btn btn-danger\",\n        disabled: true\n      }, \"Not Available\")), /*#__PURE__*/React.createElement(\"table\", {\n        className: \"availability_table\"\n      }, /*#__PURE__*/React.createElement(\"thead\", null, /*#__PURE__*/React.createElement(\"tr\", null, /*#__PURE__*/React.createElement(\"th\", {\n        className: \"availability_table_header\"\n      }, \"Date\"), /*#__PURE__*/React.createElement(\"th\", {\n        className: \"availability_table_header\"\n      }, \"Status\"), /*#__PURE__*/React.createElement(\"th\", {\n        className: \"availability_table_header\"\n      }, \"Price\"))), /*#__PURE__*/React.createElement(\"tbody\", null, propertyAvailability.dates.map(function (date, index) {\n        return /*#__PURE__*/React.createElement(\"tr\", {\n          key: index,\n          className: \"bookitfast_day_row \".concat(date.availability ? 'cell_date_available' : 'cell_date_unavailable')\n        }, /*#__PURE__*/React.createElement(\"td\", {\n          className: \"bookitfast_day\"\n        }, date.date_formatted), /*#__PURE__*/React.createElement(\"td\", {\n          className: \"bookitfast_availability_cell\"\n        }, /*#__PURE__*/React.createElement(\"div\", null, date.availability_reason === 'Min Nights' && \"Min Nights \".concat(date.min_nights), date.availability_reason === 'Booked Out' && 'Booked Out', date.availability_reason === 'No Tariff Set' && 'Rates Not Available', date.availability_reason === 'Available' && 'Available')), /*#__PURE__*/React.createElement(\"td\", null, /*#__PURE__*/React.createElement(\"div\", {\n          className: \"avail_rate\"\n        }, date.rate ? \"$\".concat(date.rate) : '-')));\n      }))), ((_propertyData$optiona = propertyData.optional_extras) === null || _propertyData$optiona === void 0 ? void 0 : _propertyData$optiona.length) > 0 && selectionData[propertyId] && /*#__PURE__*/React.createElement(\"div\", {\n        className: \"optional_extras\"\n      }, /*#__PURE__*/React.createElement(\"h4\", null, \"Optional Extras\"), propertyData.optional_extras.map(function (optionalExtra) {\n        var _selectedOptionalExtr;\n        return /*#__PURE__*/React.createElement(\"div\", {\n          key: optionalExtra.id,\n          className: \"property_summary_detail_row property_summary_item_body_section bookitfast_optional_extra\"\n        }, /*#__PURE__*/React.createElement(\"div\", null, /*#__PURE__*/React.createElement(\"input\", {\n          type: \"checkbox\",\n          checked: ((_selectedOptionalExtr = selectedOptionalExtras[propertyId]) === null || _selectedOptionalExtr === void 0 ? void 0 : _selectedOptionalExtr[optionalExtra.id]) || false,\n          onChange: function onChange() {\n            return toggleOptionalExtra(propertyId, optionalExtra.id);\n          }\n        }), /*#__PURE__*/React.createElement(\"label\", null, optionalExtra.description)), /*#__PURE__*/React.createElement(\"div\", null, \"$\", optionalExtra.amount));\n      })));\n    });\n  };\n  var renderTermsCheckbox = function renderTermsCheckbox() {\n    if (!summary || !summary.order_booking_conditions || summary.order_booking_conditions.length === 0) {\n      return null;\n    }\n    var conditions = summary.order_booking_conditions.map(function (condition) {\n      return condition.title;\n    });\n    var formattedConditions = conditions.length > 1 ? conditions.slice(0, -1).join(\", \") + \" and \" + conditions[conditions.length - 1] : conditions[0];\n    return /*#__PURE__*/React.createElement(\"div\", {\n      className: \"terms-checkbox bookitfast-text\"\n    }, /*#__PURE__*/React.createElement(\"input\", {\n      type: \"checkbox\",\n      id: \"agreeToTerms\",\n      checked: agreeToTerms,\n      onChange: function onChange() {\n        return setAgreeToTerms(!agreeToTerms);\n      }\n    }), /*#__PURE__*/React.createElement(\"label\", {\n      htmlFor: \"agreeToTerms\"\n    }, \"I have read and agree to the\", \" \", summary.order_booking_conditions.map(function (condition, index) {\n      return /*#__PURE__*/React.createElement(\"span\", {\n        key: index\n      }, /*#__PURE__*/React.createElement(\"a\", {\n        href: condition.url,\n        target: \"_blank\",\n        rel: \"noopener noreferrer\"\n      }, condition.title), index < summary.order_booking_conditions.length - 2 ? \", \" : \"\", index === summary.order_booking_conditions.length - 2 ? \" and \" : \"\");\n    })), formErrors.agreeToTerms && /*#__PURE__*/React.createElement(\"p\", {\n      className: \"error-text\"\n    }, formErrors.agreeToTerms));\n  };\n  var renderCustomerForm = function renderCustomerForm() {\n    return /*#__PURE__*/React.createElement(\"div\", {\n      className: \"user-details-form\"\n    }, /*#__PURE__*/React.createElement(\"h3\", null, \"Your Details\"), /*#__PURE__*/React.createElement(\"form\", null, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"form-group form-row\"\n    }, /*#__PURE__*/React.createElement(\"label\", {\n      htmlFor: \"firstName\"\n    }, \"First Name:\"), /*#__PURE__*/React.createElement(\"input\", {\n      type: \"text\",\n      id: \"firstName\",\n      className: \"form-control\",\n      value: userDetails.firstName,\n      onChange: function onChange(e) {\n        return setUserDetails(_objectSpread(_objectSpread({}, userDetails), {}, {\n          firstName: e.target.value\n        }));\n      }\n    })), formErrors.firstName && /*#__PURE__*/React.createElement(\"div\", {\n      className: \"alert alert-danger\"\n    }, formErrors.firstName), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"form-group form-row\"\n    }, /*#__PURE__*/React.createElement(\"label\", {\n      htmlFor: \"lastName\"\n    }, \"Last Name:\"), /*#__PURE__*/React.createElement(\"input\", {\n      type: \"text\",\n      id: \"lastName\",\n      className: \"form-control\",\n      value: userDetails.lastName,\n      onChange: function onChange(e) {\n        return setUserDetails(_objectSpread(_objectSpread({}, userDetails), {}, {\n          lastName: e.target.value\n        }));\n      }\n    })), formErrors.lastName && /*#__PURE__*/React.createElement(\"div\", {\n      className: \"alert alert-danger\"\n    }, formErrors.lastName), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"form-group form-row\"\n    }, /*#__PURE__*/React.createElement(\"label\", {\n      htmlFor: \"phone\"\n    }, \"Phone:\"), /*#__PURE__*/React.createElement(\"input\", {\n      type: \"tel\",\n      id: \"phone\",\n      className: \"form-control\",\n      value: userDetails.phone,\n      onChange: function onChange(e) {\n        return setUserDetails(_objectSpread(_objectSpread({}, userDetails), {}, {\n          phone: e.target.value\n        }));\n      }\n    })), formErrors.phone && /*#__PURE__*/React.createElement(\"div\", {\n      className: \"alert alert-danger\"\n    }, formErrors.phone), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"form-group form-row\"\n    }, /*#__PURE__*/React.createElement(\"label\", {\n      htmlFor: \"email\"\n    }, \"Email:\"), /*#__PURE__*/React.createElement(\"input\", {\n      type: \"email\",\n      id: \"email\",\n      className: \"form-control\",\n      value: userDetails.email,\n      onChange: function onChange(e) {\n        return setUserDetails(_objectSpread(_objectSpread({}, userDetails), {}, {\n          email: e.target.value\n        }));\n      }\n    })), formErrors.email && /*#__PURE__*/React.createElement(\"div\", {\n      className: \"alert alert-danger\"\n    }, formErrors.email), showPostcode && /*#__PURE__*/React.createElement(\"div\", null, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"form-group form-row\"\n    }, /*#__PURE__*/React.createElement(\"label\", {\n      htmlFor: \"postcode\"\n    }, \"Postcode:\"), /*#__PURE__*/React.createElement(\"input\", {\n      type: \"text\",\n      id: \"postcode\",\n      className: \"form-control\",\n      value: userDetails.postcode,\n      onChange: function onChange(e) {\n        return setUserDetails(_objectSpread(_objectSpread({}, userDetails), {}, {\n          postcode: e.target.value\n        }));\n      }\n    })), formErrors.postcode && /*#__PURE__*/React.createElement(\"div\", {\n      className: \"alert alert-danger\"\n    }, formErrors.postcode)), showSuburb && /*#__PURE__*/React.createElement(\"div\", null, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"form-group form-row\"\n    }, /*#__PURE__*/React.createElement(\"label\", {\n      htmlFor: \"suburb\"\n    }, \"Suburb:\"), /*#__PURE__*/React.createElement(\"input\", {\n      type: \"text\",\n      id: \"suburb\",\n      className: \"form-control\",\n      value: userDetails.suburb,\n      onChange: function onChange(e) {\n        return setUserDetails(_objectSpread(_objectSpread({}, userDetails), {}, {\n          suburb: e.target.value\n        }));\n      }\n    })), formErrors.suburb && /*#__PURE__*/React.createElement(\"div\", {\n      className: \"alert alert-danger\"\n    }, formErrors.suburb)), showComments && /*#__PURE__*/React.createElement(\"div\", {\n      className: \"form-group form-row\"\n    }, /*#__PURE__*/React.createElement(\"label\", {\n      htmlFor: \"comments\"\n    }, \"Comments:\"), /*#__PURE__*/React.createElement(\"textarea\", {\n      id: \"comments\",\n      className: \"form-control\",\n      value: userDetails.comments,\n      onChange: function onChange(e) {\n        return setUserDetails(_objectSpread(_objectSpread({}, userDetails), {}, {\n          comments: e.target.value\n        }));\n      }\n    }))));\n  };\n  var renderBookingSummary = function renderBookingSummary() {\n    if (!summary || !summary.property_summaries) {\n      return null;\n    }\n    return /*#__PURE__*/React.createElement(\"div\", {\n      className: \"bookitfast-container\"\n    }, /*#__PURE__*/React.createElement(\"h3\", {\n      className: \"aligncenter centered\"\n    }, \"Property Booking Summary\"), Object.entries(summary.property_summaries).map(function (_ref10) {\n      var _property$mandatory_e, _property$optional_ex;\n      var _ref11 = _slicedToArray(_ref10, 2),\n        propertyId = _ref11[0],\n        property = _ref11[1];\n      return /*#__PURE__*/React.createElement(\"div\", {\n        key: propertyId,\n        className: \"property_summary_item\"\n      }, /*#__PURE__*/React.createElement(\"h4\", {\n        className: \"property_summary_item_title\"\n      }, property.name), /*#__PURE__*/React.createElement(\"div\", {\n        className: \"property_summary_item_body\"\n      }, /*#__PURE__*/React.createElement(\"div\", {\n        className: \"property_summary_detail_row property_summary_item_body_section\"\n      }, /*#__PURE__*/React.createElement(\"div\", null, \"Subtotal:\"), /*#__PURE__*/React.createElement(\"div\", null, \"$\", property.sub_total)), ((_property$mandatory_e = property.mandatory_extras) === null || _property$mandatory_e === void 0 ? void 0 : _property$mandatory_e.length) > 0 && /*#__PURE__*/React.createElement(\"div\", {\n        className: \"bookitfast_extras\"\n      }, /*#__PURE__*/React.createElement(\"h4\", {\n        className: \"property_summary_sub_heading property_summary_item_body_section\"\n      }, \"Mandatory Extras Included\"), property.mandatory_extras.map(function (extra) {\n        return /*#__PURE__*/React.createElement(\"div\", {\n          key: extra.id,\n          className: \"property_summary_detail_row property_summary_item_body_section\"\n        }, /*#__PURE__*/React.createElement(\"div\", null, extra.description), /*#__PURE__*/React.createElement(\"div\", null, \"$\", extra.amount));\n      })), ((_property$optional_ex = property.optional_extras) === null || _property$optional_ex === void 0 ? void 0 : _property$optional_ex.length) > 0 && /*#__PURE__*/React.createElement(\"div\", {\n        className: \"optional_extras\"\n      }, /*#__PURE__*/React.createElement(\"h4\", {\n        className: \"property_summary_sub_heading property_summary_item_body_section\"\n      }, \"Optional Extras Included\"), property.optional_extras.map(function (optionalExtra) {\n        return /*#__PURE__*/React.createElement(\"div\", {\n          key: optionalExtra.id,\n          className: \"property_summary_detail_row property_summary_item_body_section\"\n        }, /*#__PURE__*/React.createElement(\"div\", null, optionalExtra.description), /*#__PURE__*/React.createElement(\"div\", null, \"$\", optionalExtra.amount));\n      })), (property.last_minute_discount > 0 || property.discount_code_rate_applies) && /*#__PURE__*/React.createElement(\"div\", {\n        className: \"discounts\"\n      }, /*#__PURE__*/React.createElement(\"h4\", {\n        className: \"property_summary_sub_heading property_summary_item_body_section\"\n      }, \"Discounts\"), property.last_minute_discount > 0 && /*#__PURE__*/React.createElement(\"div\", {\n        className: \"property_summary_detail_row property_summary_item_body_section\"\n      }, /*#__PURE__*/React.createElement(\"div\", null, \"Last Minute Discount\"), /*#__PURE__*/React.createElement(\"div\", null, \"-$\", property.last_minute_discount)), property.discount_code_rate_applies && /*#__PURE__*/React.createElement(\"div\", {\n        className: \"property_summary_detail_row property_summary_item_body_section\"\n      }, /*#__PURE__*/React.createElement(\"div\", null, \"Discount Code\"), /*#__PURE__*/React.createElement(\"div\", null, \"-$\", property.discount_code_discount))), /*#__PURE__*/React.createElement(\"div\", {\n        className: \"property_summary_detail_row bookitfast_total_cost property_summary_item_body_section\"\n      }, /*#__PURE__*/React.createElement(\"div\", null, \"Total Cost\"), /*#__PURE__*/React.createElement(\"div\", null, \"$\", property.grand_total))));\n    }));\n  };\n  return /*#__PURE__*/React.createElement(\"div\", null, /*#__PURE__*/React.createElement(\"div\", {\n    className: \"bookitfast-container\"\n  }, /*#__PURE__*/React.createElement(\"div\", {\n    className: \"form-inline\",\n    id: \"bookitfastbooking\"\n  }, /*#__PURE__*/React.createElement(\"div\", {\n    className: \"form-group\"\n  }, /*#__PURE__*/React.createElement(\"label\", null, \"Check-In Date:\"), /*#__PURE__*/React.createElement(\"input\", {\n    type: \"date\",\n    value: form.date,\n    onChange: function onChange(e) {\n      var newDate = e.target.value;\n      console.log(\"New selected date:\", newDate);\n      setForm(_objectSpread(_objectSpread({}, form), {}, {\n        date: newDate\n      }));\n    },\n    className: \"form-control\"\n  })), /*#__PURE__*/React.createElement(\"div\", {\n    className: \"form-group\"\n  }, /*#__PURE__*/React.createElement(\"label\", null, \"Number of Nights:\"), /*#__PURE__*/React.createElement(\"select\", {\n    value: form.nights,\n    onChange: function onChange(e) {\n      return setForm(_objectSpread(_objectSpread({}, form), {}, {\n        nights: parseInt(e.target.value)\n      }));\n    },\n    className: \"form-control\"\n  }, _toConsumableArray(Array(14).keys()).map(function (n) {\n    return /*#__PURE__*/React.createElement(\"option\", {\n      key: n,\n      value: n + 1\n    }, n + 1, \" night\", n + 1 > 1 ? 's' : '');\n  }))), /*#__PURE__*/React.createElement(\"div\", {\n    className: \"form-group bif-availability-button-container\"\n  }, /*#__PURE__*/React.createElement(\"button\", {\n    className: \"btn btn-success\",\n    onClick: fetchAvailability,\n    disabled: !form.date || loading\n  }, loading ? 'Checking...' : 'Check Availability'))), error && /*#__PURE__*/React.createElement(\"p\", {\n    className: \"alert alert-danger\"\n  }, error)), availability && renderAvailabilityTable(), summary && renderDiscountCode(), summary && renderGiftCertificateSection(), summary && renderBookingSummary(), summary && renderCustomerForm(), summary && renderTermsCheckbox(), summary && !showPaymentForm && /*#__PURE__*/React.createElement(\"div\", {\n    className: \"payment-options\"\n  }, Object.keys(formErrors).length > 0 && /*#__PURE__*/React.createElement(\"div\", {\n    className: \"alert alert-danger\"\n  }, \"Please rectify the highlighted errors before proceeding with payment.\"), gcResult && gcResult.valid ? /*#__PURE__*/React.createElement(\"div\", {\n    className: \"gift-certificate-payment-option\"\n  }, summary.order_payable_now === 0 ? /*#__PURE__*/React.createElement(\"button\", {\n    className: \"btn btn-success btn-rounded\",\n    onClick: submitOrderNoPayment\n  }, \"Pay in full with Gift Certificate\") : /*#__PURE__*/React.createElement(\"button\", {\n    className: \"btn btn-success btn-rounded\",\n    onClick: function onClick() {\n      return handlePaymentOption(\"gift\");\n    }\n  }, \"Apply Gift Certificate and Pay $\", summary.order_payable_now)) : null, (!gcResult || !gcResult.valid) && (summary.order_deposit_amount > 0 ? /*#__PURE__*/React.createElement(\"div\", null, /*#__PURE__*/React.createElement(\"button\", {\n    className: \"btn btn-primary mr-6\",\n    onClick: function onClick() {\n      return handlePaymentOption(\"deposit\");\n    }\n  }, \"Pay Deposit ($\", summary.order_deposit_amount, \")\"), /*#__PURE__*/React.createElement(\"button\", {\n    className: \"btn btn-primary\",\n    onClick: function onClick() {\n      return handlePaymentOption(\"full\");\n    }\n  }, \"Pay In Full ($\", summary.order_payable_now, \")\")) : /*#__PURE__*/React.createElement(\"button\", {\n    className: \"btn btn-primary\",\n    onClick: function onClick() {\n      return handlePaymentOption(\"full\");\n    }\n  }, \"Pay Now ($\", summary.order_payable_now, \")\")), summary.order_surcharge > 0 && /*#__PURE__*/React.createElement(\"div\", {\n    className: \"surcharge-info\"\n  }, /*#__PURE__*/React.createElement(\"p\", null, \"Please note a credit card surcharge applies of\", summary.order_deposit_surcharge > 0 ? /*#__PURE__*/React.createElement(React.Fragment, null, \" $\", summary.order_deposit_surcharge, \" for deposit or \") : null, \"$\", summary.order_surcharge, \" for the full payment.\"))), stripePromise && summary && showPaymentForm && /*#__PURE__*/React.createElement(\"div\", {\n    className: \"bookitfast-container\"\n  }, /*#__PURE__*/React.createElement(_stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__.Elements, {\n    stripe: stripePromise\n  }, /*#__PURE__*/React.createElement(PaymentForm, {\n    summary: summary,\n    propertyIds: typeof propertyIds === 'string' ? propertyIds.split(',').map(function (id) {\n      return parseInt(id.trim());\n    }) : propertyIds,\n    userDetails: userDetails,\n    paymentType: selectedPaymentOption,\n    giftCertificate: selectedPaymentOption === \"gift\" ? gcResult : null\n  }))));\n};\nvar PaymentForm = function PaymentForm(_ref12) {\n  var summary = _ref12.summary,\n    propertyIds = _ref12.propertyIds,\n    userDetails = _ref12.userDetails,\n    paymentType = _ref12.paymentType,\n    giftCertificate = _ref12.giftCertificate;\n  var stripe = (0,_stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__.useStripe)();\n  var elements = (0,_stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__.useElements)();\n  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),\n    _useState42 = _slicedToArray(_useState41, 2),\n    loading = _useState42[0],\n    setLoading = _useState42[1];\n  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(\"\"),\n    _useState44 = _slicedToArray(_useState43, 2),\n    error = _useState44[0],\n    setError = _useState44[1];\n  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),\n    _useState46 = _slicedToArray(_useState45, 2),\n    paymentSuccess = _useState46[0],\n    setPaymentSuccess = _useState46[1];\n  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(\"\"),\n    _useState48 = _slicedToArray(_useState47, 2),\n    receiptUrl = _useState48[0],\n    setReceiptUrl = _useState48[1];\n  var handleSubmitPayment = /*#__PURE__*/function () {\n    var _ref13 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee7(event) {\n      var cardElement, _yield$stripe$createP, paymentMethod, _error, amount, payload, response, result;\n      return _regeneratorRuntime().wrap(function _callee7$(_context7) {\n        while (1) switch (_context7.prev = _context7.next) {\n          case 0:\n            event.preventDefault();\n            if (!(!stripe || !elements)) {\n              _context7.next = 4;\n              break;\n            }\n            console.error(\"Stripe.js has not loaded yet.\");\n            return _context7.abrupt(\"return\");\n          case 4:\n            setLoading(true);\n            setError(\"\");\n            cardElement = elements.getElement(_stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__.CardElement);\n            _context7.prev = 7;\n            _context7.next = 10;\n            return stripe.createPaymentMethod({\n              type: \"card\",\n              card: cardElement\n            });\n          case 10:\n            _yield$stripe$createP = _context7.sent;\n            paymentMethod = _yield$stripe$createP.paymentMethod;\n            _error = _yield$stripe$createP.error;\n            if (!_error) {\n              _context7.next = 18;\n              break;\n            }\n            console.error(_error);\n            setError(_error.message);\n            setLoading(false);\n            return _context7.abrupt(\"return\");\n          case 18:\n            // Determine the amount based on the payment type\n            amount = paymentType === \"deposit\" ? summary.order_deposit_amount : summary.order_payable_now; // Build the payload\n            payload = {\n              stripePaymentMethodId: paymentMethod.id,\n              amount: amount,\n              currency: \"AUD\",\n              summary: summary,\n              propertyIds: typeof propertyIds === 'string' ? propertyIds.split(',').map(function (id) {\n                return parseInt(id.trim());\n              }) : propertyIds,\n              userDetails: userDetails,\n              paymentType: paymentType\n            }; // If paying with a gift certificate (partial payment), include its details\n            if (paymentType === \"gift\" && giftCertificate) {\n              payload.giftCertificateApplied = true;\n              payload.giftCertificate = giftCertificate;\n            }\n            _context7.next = 23;\n            return fetch(\"\".concat(API_BASE, \"/bookitfast/v1/process-payment\"), {\n              method: \"POST\",\n              headers: {\n                \"Content-Type\": \"application/json\"\n              },\n              body: JSON.stringify(payload)\n            });\n          case 23:\n            response = _context7.sent;\n            _context7.next = 26;\n            return response.json();\n          case 26:\n            result = _context7.sent;\n            if (!result.success) {\n              _context7.next = 33;\n              break;\n            }\n            console.log(\"Payment successful:\", result);\n            setReceiptUrl(result.data.charge);\n            setPaymentSuccess(true);\n            _context7.next = 34;\n            break;\n          case 33:\n            throw new Error(result.message || \"Payment failed.\");\n          case 34:\n            _context7.next = 40;\n            break;\n          case 36:\n            _context7.prev = 36;\n            _context7.t0 = _context7[\"catch\"](7);\n            console.error(\"Payment error:\", _context7.t0);\n            setError(_context7.t0.message);\n          case 40:\n            _context7.prev = 40;\n            setLoading(false);\n            return _context7.finish(40);\n          case 43:\n          case \"end\":\n            return _context7.stop();\n        }\n      }, _callee7, null, [[7, 36, 40, 43]]);\n    }));\n    return function handleSubmitPayment(_x4) {\n      return _ref13.apply(this, arguments);\n    };\n  }();\n  return /*#__PURE__*/React.createElement(\"div\", {\n    className: \"payment-container\"\n  }, /*#__PURE__*/React.createElement(\"h3\", null, \"Payment Details\"), error && /*#__PURE__*/React.createElement(\"p\", {\n    className: \"alert alert-danger\"\n  }, error), paymentSuccess ? /*#__PURE__*/React.createElement(\"div\", {\n    className: \"alert alert-success\"\n  }, /*#__PURE__*/React.createElement(\"p\", null, /*#__PURE__*/React.createElement(\"strong\", null, \"Payment Successful!\")), receiptUrl && /*#__PURE__*/React.createElement(\"p\", null, /*#__PURE__*/React.createElement(\"a\", {\n    href: receiptUrl,\n    target: \"_blank\",\n    rel: \"noopener noreferrer\"\n  }, \"Click here to view your receipt.\"))) : /*#__PURE__*/React.createElement(\"form\", {\n    onSubmit: handleSubmitPayment\n  }, /*#__PURE__*/React.createElement(_stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__.CardElement, {\n    options: {\n      hidePostalCode: true,\n      style: {\n        base: {\n          fontSize: \"16px\",\n          color: \"#424770\",\n          \"::placeholder\": {\n            color: \"#aab7c4\"\n          }\n        },\n        invalid: {\n          color: \"#9e2146\"\n        }\n      }\n    }\n  }), /*#__PURE__*/React.createElement(\"button\", {\n    type: \"submit\",\n    disabled: !stripe || loading,\n    className: \"btn btn-primary\"\n  }, loading ? \"Processing...\" : \"Pay Now\")));\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MultiEmbedForm);\n\n//# sourceURL=webpack://bookitfast/./src/components/MultiEmbedForm.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _stripe_stripe_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @stripe/stripe-js */ "./node_modules/@stripe/stripe-js/lib/index.mjs");
+/* harmony import */ var _stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @stripe/react-stripe-js */ "./node_modules/@stripe/react-stripe-js/dist/react-stripe.umd.js");
+/* harmony import */ var _stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__);
 
-/***/ }),
 
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _components_MultiEmbedForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/MultiEmbedForm */ \"./src/components/MultiEmbedForm.js\");\n/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ \"@wordpress/blocks\");\n/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ \"@wordpress/block-editor\");\n/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ \"@wordpress/components\");\n/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);\nfunction _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }\nfunction _nonIterableRest() { throw new TypeError(\"Invalid attempt to destructure non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\nfunction _unsupportedIterableToArray(r, a) { if (r) { if (\"string\" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return \"Object\" === t && r.constructor && (t = r.constructor.name), \"Map\" === t || \"Set\" === t ? Array.from(r) : \"Arguments\" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }\nfunction _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }\nfunction _iterableToArrayLimit(r, l) { var t = null == r ? null : \"undefined\" != typeof Symbol && r[Symbol.iterator] || r[\"@@iterator\"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t[\"return\"] && (u = t[\"return\"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }\nfunction _arrayWithHoles(r) { if (Array.isArray(r)) return r; }\n\n\n\n\nvar _wp$element = wp.element,\n  useState = _wp$element.useState,\n  useEffect = _wp$element.useEffect;\n(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)(\"bookitfast/multi-embed\", {\n  title: \"Book It Fast Availability\",\n  description: \"A multi-property booking embed for WordPress.\",\n  icon: \"calendar\",\n  category: \"widgets\",\n  attributes: {\n    propertyIds: {\n      type: \"string\",\n      \"default\": \"\" // Store selected IDs as a comma-separated string\n    },\n    showDiscount: {\n      type: \"boolean\",\n      \"default\": false\n    },\n    showSuburb: {\n      type: \"boolean\",\n      \"default\": false\n    },\n    showPostcode: {\n      type: \"boolean\",\n      \"default\": false\n    },\n    showRedeemGiftCertificate: {\n      type: \"boolean\",\n      \"default\": false\n    },\n    showComments: {\n      type: \"boolean\",\n      \"default\": false\n    }\n  },\n  edit: function edit(_ref) {\n    var attributes = _ref.attributes,\n      setAttributes = _ref.setAttributes;\n    var blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)();\n    var _useState = useState([]),\n      _useState2 = _slicedToArray(_useState, 2),\n      properties = _useState2[0],\n      setProperties = _useState2[1];\n    var _useState3 = useState(true),\n      _useState4 = _slicedToArray(_useState3, 2),\n      loading = _useState4[0],\n      setLoading = _useState4[1];\n    var _useState5 = useState(null),\n      _useState6 = _slicedToArray(_useState5, 2),\n      error = _useState6[0],\n      setError = _useState6[1];\n    useEffect(function () {\n      // Fetch properties from the existing WP function\n      wp.apiFetch({\n        path: \"/bookitfast/v1/properties\"\n      }).then(function (data) {\n        if (data.success) {\n          setProperties(data.properties);\n        } else {\n          setError(\"Failed to fetch properties.\");\n        }\n      })[\"catch\"](function (err) {\n        console.error(\"API Fetch Error:\", err);\n        setError(\"Error fetching properties.\");\n      })[\"finally\"](function () {\n        return setLoading(false);\n      });\n    }, []);\n\n    // Handle Multi-Select Property Change\n    var handlePropertyChange = function handlePropertyChange(selected) {\n      var formattedIds = selected.join(\",\"); // Convert array to comma-separated string\n      setAttributes({\n        propertyIds: formattedIds\n      });\n    };\n    return /*#__PURE__*/React.createElement(\"div\", blockProps, /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {\n      title: \"Settings\",\n      initialOpen: true\n    }, loading ? /*#__PURE__*/React.createElement(\"p\", null, \"Loading properties...\") : error ? /*#__PURE__*/React.createElement(\"p\", {\n      style: {\n        color: \"red\"\n      }\n    }, error) : /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {\n      multiple: true,\n      label: \"Select Properties\",\n      value: attributes.propertyIds ? attributes.propertyIds.split(\",\") : [],\n      options: properties.map(function (property) {\n        return {\n          label: property.title,\n          value: property.id.toString()\n        };\n      }),\n      onChange: handlePropertyChange\n    }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {\n      label: \"Show Discount Field\",\n      checked: attributes.showDiscount,\n      onChange: function onChange(value) {\n        return setAttributes({\n          showDiscount: value\n        });\n      }\n    }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {\n      label: \"Show Suburb Field\",\n      checked: attributes.showSuburb,\n      onChange: function onChange(value) {\n        return setAttributes({\n          showSuburb: value\n        });\n      }\n    }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {\n      label: \"Show Postcode Field\",\n      checked: attributes.showPostcode,\n      onChange: function onChange(value) {\n        return setAttributes({\n          showPostcode: value\n        });\n      }\n    }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {\n      label: \"Show Redeem Gift Certificate Section\",\n      checked: attributes.showRedeemGiftCertificate,\n      onChange: function onChange(value) {\n        return setAttributes({\n          showRedeemGiftCertificate: value\n        });\n      }\n    }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {\n      label: \"Show Comments Field\",\n      checked: attributes.showComments,\n      onChange: function onChange(value) {\n        return setAttributes({\n          showComments: value\n        });\n      }\n    }))), /*#__PURE__*/React.createElement(_components_MultiEmbedForm__WEBPACK_IMPORTED_MODULE_0__[\"default\"], {\n      propertyIds: attributes.propertyIds,\n      showDiscount: attributes.showDiscount,\n      showSuburb: attributes.showSuburb,\n      showPostcode: attributes.showPostcode,\n      showRedeemGiftCertificate: attributes.showRedeemGiftCertificate,\n      showComments: attributes.showComments\n    }));\n  },\n  save: function save() {\n    return null;\n  } // Dynamic rendering via PHP\n});\n\n//# sourceURL=webpack://bookitfast/./src/index.js?");
+function getWPApiUrl() {
+  const apiLink = document.querySelector('link[rel="https://api.w.org/"]');
+  if (!apiLink) {
+    // Check if we're using pretty permalinks
+    const restUrl = window.wpApiSettings?.restUrl || '/wp-json';
+    return restUrl.replace(/\/$/, ''); // Remove trailing slash if present
+  }
+  return apiLink.href.replace(/\/$/, ''); // Remove trailing slash if present
+}
+const API_BASE = getWPApiUrl();
+const stripePromiseGlobal = (0,_stripe_stripe_js__WEBPACK_IMPORTED_MODULE_1__.loadStripe)('your-publishable-key-here');
+const getQueryParam = param => {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+};
+const parseDateFromUrl = dateString => {
+  const dateParts = dateString.split('-');
+  if (dateParts.length === 3) {
+    const [day, month, year] = dateParts.map(Number);
+    if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
+      const parsedDate = new Date(year, month - 1, day);
+      parsedDate.setHours(12, 0, 0, 0); // Prevents timezone shift
+      return parsedDate.toISOString().split('T')[0]; // Returns YYYY-MM-DD format
+    }
+  }
+  return null;
+};
+const MultiEmbedForm = ({
+  propertyIds = '',
+  showDiscount = false,
+  // Ensure postcode and suburb are shown as these are required
+  showSuburb = true,
+  showPostcode = true,
+  showRedeemGiftCertificate = false,
+  showComments = false
+}) => {
+  const nightsFromUrl = getQueryParam('nights');
+  const validatedNights = nightsFromUrl && !isNaN(nightsFromUrl) ? parseInt(nightsFromUrl, 10) : 1;
+
+  // Extract and validate "start" date from URL
+  const startDateFromUrl = getQueryParam('start');
+  const discountCodeFromUrl = getQueryParam('discount');
+  const validatedStartDate = startDateFromUrl ? parseDateFromUrl(startDateFromUrl) : '';
+
+  // Ensure propertyIds is a string and handle it properly
+  const propertyIdsString = typeof propertyIds === 'string' ? propertyIds : '';
+  const [form, setForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    date: validatedStartDate,
+    nights: validatedNights
+  });
+  const [availability, setAvailability] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [selectionData, setSelectionData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
+  const [stripePromise, setStripePromise] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [summary, setSummary] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [loading, setLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [userDetails, setUserDetails] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    postcode: "",
+    suburb: "",
+    comments: ""
+  });
+  const [agreeToTerms, setAgreeToTerms] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [discountCode, setDiscountCode] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(discountCodeFromUrl);
+  const [discountMessage, setDiscountMessage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [applyingDiscount, setApplyingDiscount] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [paymentSuccess, setPaymentSuccess] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+
+  // New states for payment option and validation
+  const [showPaymentForm, setShowPaymentForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [selectedPaymentOption, setSelectedPaymentOption] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null); // "deposit" or "full"
+  const [formErrors, setFormErrors] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
+  const [giftCertificate, setGiftCertificate] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    number: "",
+    pin: ""
+  });
+  const [showGiftCertificateForm, setShowGiftCertificateForm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [gcResult, setGcResult] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [selectedOptionalExtras, setSelectedOptionalExtras] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (validatedStartDate && validatedNights) {
+      console.log("Auto-checking availability with:", validatedStartDate, validatedNights);
+      fetchAvailability(validatedStartDate, validatedNights);
+    }
+  }, [validatedStartDate, validatedNights]);
+
+  // Fetch availability data
+  const fetchAvailability = async (startDate = form.date, nights = form.nights) => {
+    if (!startDate || !propertyIdsString) {
+      console.warn("fetchAvailability skipped - Missing startDate or propertyIds");
+      return;
+    }
+    const formattedStartDate = form.date;
+    const propertyIdsArray = propertyIdsString.split(',').filter(id => id.trim() !== '');
+    console.log("Requesting availability with:", {
+      ids: propertyIdsArray,
+      start: formattedStartDate,
+      nights: nights
+    });
+    setLoading(true);
+    setError('');
+    try {
+      const response = await fetch(`${API_BASE}/bookitfast/v1/availability`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ids: propertyIdsArray,
+          start: formattedStartDate,
+          nights: nights
+        })
+      });
+      const data = await response.json();
+      setAvailability(data);
+
+      // Initialise selectionData for each property
+      const initialSelection = Object.keys(data).reduce((acc, propertyId) => {
+        acc[propertyId] = false;
+        return acc;
+      }, {});
+      setSelectionData(initialSelection);
+    } catch (err) {
+      console.error(err);
+      setError('Failed to fetch availability. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Toggle property selection and fetch summary
+  const toggleSelection = async propertyId => {
+    const updatedSelection = {
+      ...selectionData,
+      [propertyId]: !selectionData[propertyId]
+    };
+    setSelectionData(updatedSelection);
+
+    // Fetch summary if at least one property is selected
+    if (Object.values(updatedSelection).includes(true)) {
+      await fetchSummary(updatedSelection, discountCode);
+    } else {
+      setSummary(null);
+    }
+  };
+  const toggleOptionalExtra = (propertyId, extraId) => {
+    setSelectedOptionalExtras(prev => {
+      const propertyExtras = prev[propertyId] || {};
+      const newSelectedOptionalExtras = {
+        ...prev,
+        [propertyId]: {
+          ...propertyExtras,
+          [extraId]: !propertyExtras[extraId]
+        }
+      };
+      fetchSummary(selectionData, discountCode, newSelectedOptionalExtras, 0);
+      return newSelectedOptionalExtras;
+    });
+  };
+
+  // Fetch summary data for selected properties
+  const fetchSummary = async (updatedSelection, discountCode = null, updatedOptionalExtras = selectedOptionalExtras, retryCount = 0) => {
+    const start = form.date;
+    const nights = form.nights;
+    const end = new Date(new Date(start).getTime() + nights * 86400000).toISOString().split('T')[0];
+    setLoading(true);
+    setError('');
+    try {
+      const response = await fetch(`${API_BASE}/bookitfast/v1/availability/summary`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          selected: updatedSelection,
+          selected_optional_extras: updatedOptionalExtras,
+          start,
+          end,
+          discount_code: discountCode || null
+        })
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setSummary(data);
+
+      // Initialise Stripe if publishable key provided
+      if (data.stripe_publishable_key) {
+        setStripePromise((0,_stripe_stripe_js__WEBPACK_IMPORTED_MODULE_1__.loadStripe)(data.stripe_publishable_key));
+      }
+    } catch (err) {
+      console.error("Error fetching summary:", err);
+      if (retryCount < 3) {
+        console.log(`Retrying... Attempt ${retryCount + 1}`);
+        await fetchSummary(updatedSelection, discountCode, updatedOptionalExtras, retryCount + 1);
+      } else {
+        setError('Failed to fetch summary. Please try again.');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Apply discount code
+  const applyDiscountCode = async () => {
+    if (!discountCode) return;
+    setApplyingDiscount(true);
+    setDiscountMessage(null);
+    try {
+      const response = await fetch(`${API_BASE}/bookitfast/v1/multi/availability/apply-discount`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          discount_code: discountCode,
+          start: form.date,
+          nights: form.nights,
+          property_ids: Object.keys(selectionData).filter(id => selectionData[id])
+        })
+      });
+      const data = await response.json();
+      if (data.success) {
+        setSummary(data.summary);
+        setDiscountMessage({
+          success: true,
+          message: "Discount applied successfully!"
+        });
+      } else {
+        setDiscountMessage({
+          success: false,
+          message: data.message || "Invalid discount code."
+        });
+      }
+    } catch (err) {
+      console.error("Error applying discount:", err);
+      setDiscountMessage({
+        success: false,
+        message: "Error applying discount. Please try again."
+      });
+    } finally {
+      setApplyingDiscount(false);
+    }
+  };
+
+  // Validate customer details before proceeding with payment
+  const validateCustomerDetails = () => {
+    const errors = {};
+    if (!userDetails.firstName.trim()) errors.firstName = "First name is required.";
+    if (!userDetails.lastName.trim()) errors.lastName = "Last name is required.";
+    if (!userDetails.phone.trim()) errors.phone = "Phone is required.";
+    if (!userDetails.email.trim()) errors.email = "Email is required.";
+    if (showPostcode && !userDetails.postcode.trim()) errors.postcode = "Postcode is required.";
+    if (showSuburb && !userDetails.suburb.trim()) errors.suburb = "Suburb is required.";
+    if (!agreeToTerms) errors.agreeToTerms = "You must agree to the terms and conditions.";
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  // Handle payment option selection (deposit/full)
+  const handlePaymentOption = option => {
+    if (validateCustomerDetails()) {
+      setSelectedPaymentOption(option);
+      setShowPaymentForm(true);
+    } else {
+      // Scroll to the bottom to show validation errors
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  };
+
+  // Trigger display of gift certificate form
+  const triggerShowGiftCertificate = () => {
+    setShowGiftCertificateForm(true);
+  };
+
+  // Apply gift certificate via POST request
+  const applyGiftCertificate = async e => {
+    e.preventDefault();
+    if (!summary) return;
+    const data = {
+      certificate: giftCertificate,
+      summary: summary
+    };
+    try {
+      const response = await fetch(`${API_BASE}/bookitfast/v1/apply-gift-certificate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      const responseData = await response.json();
+      setGcResult(responseData);
+      // Update summary with new totals and set order_payable_now to the new grand total
+      /*setSummary(prev => ({
+      	...prev,
+      	grand_total: responseData.order_grand_total,
+      	surcharge: responseData.new_surcharge,
+      	order_payable_now: responseData.order_payable_now,
+      	}));*/
+      setSummary(responseData.summary);
+    } catch (err) {
+      console.error("Error applying gift certificate", err);
+    }
+  };
+
+  // New function to submit an order when the gift certificate covers the full balance.
+  const submitOrderNoPayment = async () => {
+    try {
+      setLoading(true);
+      console.log('Submit Order With Gift Certificate...');
+      const response = await fetch(`${API_BASE}/process-payment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          giftCertificateApplied: true,
+          giftCertificate: gcResult,
+          summary: summary,
+          propertyIds: Object.keys(selectionData).filter(id => selectionData[id]),
+          userDetails: userDetails,
+          amount: 0 // no additional payment required
+        })
+      });
+      const result = await response.json();
+      if (result.success) {
+        console.log("Payment successful:", result);
+        //	setReceiptUrl(result.data.charge);
+        setPaymentSuccess(true);
+      } else {
+        setError(result.message || "Order submission failed.");
+      }
+    } catch (err) {
+      console.error("Order submission error:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Render gift certificate redemption section
+  const renderGiftCertificateSection = () => {
+    if (!showRedeemGiftCertificate || !summary) return null;
+    return /*#__PURE__*/React.createElement("div", {
+      id: "bookitfast_gift_certificates"
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "btn btn-success",
+      onClick: e => {
+        e.preventDefault();
+        triggerShowGiftCertificate();
+      }
+    }, "Apply Gift Certificate"), showGiftCertificateForm && /*#__PURE__*/React.createElement("div", {
+      className: "bookitfast-container"
+    }, /*#__PURE__*/React.createElement("form", {
+      id: "bookitfast_enter_gift_certificate",
+      className: "bookitfast-certificate-form"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "form-group form-row"
+    }, /*#__PURE__*/React.createElement("label", null, "Certificate Number:"), /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      value: giftCertificate.number,
+      onChange: e => setGiftCertificate({
+        ...giftCertificate,
+        number: e.target.value
+      }),
+      className: "form-control"
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "form-group form-row"
+    }, /*#__PURE__*/React.createElement("label", null, "Pin:"), /*#__PURE__*/React.createElement("input", {
+      type: "number",
+      value: giftCertificate.pin,
+      onChange: e => setGiftCertificate({
+        ...giftCertificate,
+        pin: e.target.value
+      }),
+      className: "form-control"
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "form-row"
+    }, /*#__PURE__*/React.createElement("button", {
+      className: "btn btn-success",
+      onClick: applyGiftCertificate
+    }, "Apply"))), gcResult && gcResult.valid && gcResult.amount_remaining > 0 && /*#__PURE__*/React.createElement("div", {
+      className: "alert alert-success form-row"
+    }, /*#__PURE__*/React.createElement("p", null, "Successfully Applied Gift Certificate"), /*#__PURE__*/React.createElement("p", null, "An amount of $", gcResult.gc_amount_applied, " has been applied to your order"), /*#__PURE__*/React.createElement("p", null, "Your Gift Certifcate will have a balance of $", gcResult.gc_balance_after_order, " after the order is placed."))));
+  };
+  const renderDiscountCode = () => {
+    return /*#__PURE__*/React.createElement("div", {
+      className: "bookitfast-container bif-mt-2 discount-code-container"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "discount-code-row"
+    }, /*#__PURE__*/React.createElement("label", {
+      htmlFor: "discountCode",
+      className: "discount-label"
+    }, "Discount Code:"), /*#__PURE__*/React.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      id: "discountCode",
+      value: discountCode,
+      onChange: e => setDiscountCode(e.target.value),
+      className: "discount-input",
+      placeholder: "Enter discount code"
+    }), /*#__PURE__*/React.createElement("button", {
+      className: "btn btn-primary apply-discount-btn",
+      onClick: () => fetchSummary(selectionData, discountCode),
+      disabled: !discountCode
+    }, "Apply Discount"))), discountMessage && /*#__PURE__*/React.createElement("p", {
+      className: `discount-message ${discountMessage.success ? "success" : "error"}`
+    }, discountMessage.message));
+  };
+  const renderAvailabilityTable = () => {
+    if (!availability || Object.keys(availability).length === 0) {
+      return /*#__PURE__*/React.createElement("p", null, "No availability data found.");
+    }
+    return Object.entries(availability).map(([propertyId, propertyData]) => {
+      const {
+        property_name,
+        availability: propertyAvailability
+      } = propertyData;
+      return /*#__PURE__*/React.createElement("div", {
+        key: propertyId,
+        className: "bookitfast_availability_grid_div"
+      }, /*#__PURE__*/React.createElement("h3", null, property_name), /*#__PURE__*/React.createElement("div", {
+        className: 'availability_button alignright'
+      }, propertyAvailability.available ? /*#__PURE__*/React.createElement("button", {
+        className: `btn ${selectionData[propertyId] ? 'btn-success' : 'btn-primary'}`,
+        onClick: () => toggleSelection(propertyId)
+      }, selectionData[propertyId] ? 'Selected' : 'Click to Select') : /*#__PURE__*/React.createElement("button", {
+        className: "btn btn-danger",
+        disabled: true
+      }, "Not Available")), /*#__PURE__*/React.createElement("table", {
+        className: "availability_table"
+      }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+        className: "availability_table_header"
+      }, "Date"), /*#__PURE__*/React.createElement("th", {
+        className: "availability_table_header"
+      }, "Status"), /*#__PURE__*/React.createElement("th", {
+        className: "availability_table_header"
+      }, "Price"))), /*#__PURE__*/React.createElement("tbody", null, propertyAvailability.dates.map((date, index) => /*#__PURE__*/React.createElement("tr", {
+        key: index,
+        className: `bookitfast_day_row ${date.availability ? 'cell_date_available' : 'cell_date_unavailable'}`
+      }, /*#__PURE__*/React.createElement("td", {
+        className: "bookitfast_day"
+      }, date.date_formatted), /*#__PURE__*/React.createElement("td", {
+        className: "bookitfast_availability_cell"
+      }, /*#__PURE__*/React.createElement("div", null, date.availability_reason === 'Min Nights' && `Min Nights ${date.min_nights}`, date.availability_reason === 'Booked Out' && 'Booked Out', date.availability_reason === 'No Tariff Set' && 'Rates Not Available', date.availability_reason === 'Available' && 'Available')), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
+        className: "avail_rate"
+      }, date.rate ? `$${date.rate}` : '-')))))), propertyData.optional_extras?.length > 0 && selectionData[propertyId] && /*#__PURE__*/React.createElement("div", {
+        className: "optional_extras"
+      }, /*#__PURE__*/React.createElement("h4", null, "Optional Extras"), propertyData.optional_extras.map(optionalExtra => /*#__PURE__*/React.createElement("div", {
+        key: optionalExtra.id,
+        className: "property_summary_detail_row property_summary_item_body_section bookitfast_optional_extra"
+      }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
+        type: "checkbox",
+        checked: selectedOptionalExtras[propertyId]?.[optionalExtra.id] || false,
+        onChange: () => toggleOptionalExtra(propertyId, optionalExtra.id)
+      }), /*#__PURE__*/React.createElement("label", null, optionalExtra.description)), /*#__PURE__*/React.createElement("div", null, "$", optionalExtra.amount)))));
+    });
+  };
+  const renderTermsCheckbox = () => {
+    if (!summary || !summary.order_booking_conditions || summary.order_booking_conditions.length === 0) {
+      return null;
+    }
+    const conditions = summary.order_booking_conditions.map(condition => condition.title);
+    const formattedConditions = conditions.length > 1 ? conditions.slice(0, -1).join(", ") + " and " + conditions[conditions.length - 1] : conditions[0];
+    return /*#__PURE__*/React.createElement("div", {
+      className: "terms-checkbox bookitfast-text"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "checkbox",
+      id: "agreeToTerms",
+      checked: agreeToTerms,
+      onChange: () => setAgreeToTerms(!agreeToTerms)
+    }), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "agreeToTerms"
+    }, "I have read and agree to the", " ", summary.order_booking_conditions.map((condition, index) => /*#__PURE__*/React.createElement("span", {
+      key: index
+    }, /*#__PURE__*/React.createElement("a", {
+      href: condition.url,
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, condition.title), index < summary.order_booking_conditions.length - 2 ? ", " : "", index === summary.order_booking_conditions.length - 2 ? " and " : ""))), formErrors.agreeToTerms && /*#__PURE__*/React.createElement("p", {
+      className: "error-text"
+    }, formErrors.agreeToTerms));
+  };
+  const renderCustomerForm = () => {
+    return /*#__PURE__*/React.createElement("div", {
+      className: "user-details-form"
+    }, /*#__PURE__*/React.createElement("h3", null, "Your Details"), /*#__PURE__*/React.createElement("form", null, /*#__PURE__*/React.createElement("div", {
+      className: "form-group form-row"
+    }, /*#__PURE__*/React.createElement("label", {
+      htmlFor: "firstName"
+    }, "First Name:"), /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      id: "firstName",
+      className: "form-control",
+      value: userDetails.firstName,
+      onChange: e => setUserDetails({
+        ...userDetails,
+        firstName: e.target.value
+      })
+    })), formErrors.firstName && /*#__PURE__*/React.createElement("div", {
+      className: "alert alert-danger"
+    }, formErrors.firstName), /*#__PURE__*/React.createElement("div", {
+      className: "form-group form-row"
+    }, /*#__PURE__*/React.createElement("label", {
+      htmlFor: "lastName"
+    }, "Last Name:"), /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      id: "lastName",
+      className: "form-control",
+      value: userDetails.lastName,
+      onChange: e => setUserDetails({
+        ...userDetails,
+        lastName: e.target.value
+      })
+    })), formErrors.lastName && /*#__PURE__*/React.createElement("div", {
+      className: "alert alert-danger"
+    }, formErrors.lastName), /*#__PURE__*/React.createElement("div", {
+      className: "form-group form-row"
+    }, /*#__PURE__*/React.createElement("label", {
+      htmlFor: "phone"
+    }, "Phone:"), /*#__PURE__*/React.createElement("input", {
+      type: "tel",
+      id: "phone",
+      className: "form-control",
+      value: userDetails.phone,
+      onChange: e => setUserDetails({
+        ...userDetails,
+        phone: e.target.value
+      })
+    })), formErrors.phone && /*#__PURE__*/React.createElement("div", {
+      className: "alert alert-danger"
+    }, formErrors.phone), /*#__PURE__*/React.createElement("div", {
+      className: "form-group form-row"
+    }, /*#__PURE__*/React.createElement("label", {
+      htmlFor: "email"
+    }, "Email:"), /*#__PURE__*/React.createElement("input", {
+      type: "email",
+      id: "email",
+      className: "form-control",
+      value: userDetails.email,
+      onChange: e => setUserDetails({
+        ...userDetails,
+        email: e.target.value
+      })
+    })), formErrors.email && /*#__PURE__*/React.createElement("div", {
+      className: "alert alert-danger"
+    }, formErrors.email), showPostcode && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      className: "form-group form-row"
+    }, /*#__PURE__*/React.createElement("label", {
+      htmlFor: "postcode"
+    }, "Postcode:"), /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      id: "postcode",
+      className: "form-control",
+      value: userDetails.postcode,
+      onChange: e => setUserDetails({
+        ...userDetails,
+        postcode: e.target.value
+      })
+    })), formErrors.postcode && /*#__PURE__*/React.createElement("div", {
+      className: "alert alert-danger"
+    }, formErrors.postcode)), showSuburb && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      className: "form-group form-row"
+    }, /*#__PURE__*/React.createElement("label", {
+      htmlFor: "suburb"
+    }, "Suburb:"), /*#__PURE__*/React.createElement("input", {
+      type: "text",
+      id: "suburb",
+      className: "form-control",
+      value: userDetails.suburb,
+      onChange: e => setUserDetails({
+        ...userDetails,
+        suburb: e.target.value
+      })
+    })), formErrors.suburb && /*#__PURE__*/React.createElement("div", {
+      className: "alert alert-danger"
+    }, formErrors.suburb)), showComments && /*#__PURE__*/React.createElement("div", {
+      className: "form-group form-row"
+    }, /*#__PURE__*/React.createElement("label", {
+      htmlFor: "comments"
+    }, "Comments:"), /*#__PURE__*/React.createElement("textarea", {
+      id: "comments",
+      className: "form-control",
+      value: userDetails.comments,
+      onChange: e => setUserDetails({
+        ...userDetails,
+        comments: e.target.value
+      })
+    }))));
+  };
+  const renderBookingSummary = () => {
+    if (!summary || !summary.property_summaries) {
+      return null;
+    }
+    return /*#__PURE__*/React.createElement("div", {
+      className: "bookitfast-container"
+    }, /*#__PURE__*/React.createElement("h3", {
+      className: "aligncenter centered"
+    }, "Property Booking Summary"), Object.entries(summary.property_summaries).map(([propertyId, property]) => /*#__PURE__*/React.createElement("div", {
+      key: propertyId,
+      className: "property_summary_item"
+    }, /*#__PURE__*/React.createElement("h4", {
+      className: "property_summary_item_title"
+    }, property.name), /*#__PURE__*/React.createElement("div", {
+      className: "property_summary_item_body"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "property_summary_detail_row property_summary_item_body_section"
+    }, /*#__PURE__*/React.createElement("div", null, "Subtotal:"), /*#__PURE__*/React.createElement("div", null, "$", property.sub_total)), property.mandatory_extras?.length > 0 && /*#__PURE__*/React.createElement("div", {
+      className: "bookitfast_extras"
+    }, /*#__PURE__*/React.createElement("h4", {
+      className: "property_summary_sub_heading property_summary_item_body_section"
+    }, "Mandatory Extras Included"), property.mandatory_extras.map(extra => /*#__PURE__*/React.createElement("div", {
+      key: extra.id,
+      className: "property_summary_detail_row property_summary_item_body_section"
+    }, /*#__PURE__*/React.createElement("div", null, extra.description), /*#__PURE__*/React.createElement("div", null, "$", extra.amount)))), property.optional_extras?.length > 0 && /*#__PURE__*/React.createElement("div", {
+      className: "optional_extras"
+    }, /*#__PURE__*/React.createElement("h4", {
+      className: "property_summary_sub_heading property_summary_item_body_section"
+    }, "Optional Extras Included"), property.optional_extras.map(optionalExtra => /*#__PURE__*/React.createElement("div", {
+      key: optionalExtra.id,
+      className: "property_summary_detail_row property_summary_item_body_section"
+    }, /*#__PURE__*/React.createElement("div", null, optionalExtra.description), /*#__PURE__*/React.createElement("div", null, "$", optionalExtra.amount)))), (property.last_minute_discount > 0 || property.discount_code_rate_applies) && /*#__PURE__*/React.createElement("div", {
+      className: "discounts"
+    }, /*#__PURE__*/React.createElement("h4", {
+      className: "property_summary_sub_heading property_summary_item_body_section"
+    }, "Discounts"), property.last_minute_discount > 0 && /*#__PURE__*/React.createElement("div", {
+      className: "property_summary_detail_row property_summary_item_body_section"
+    }, /*#__PURE__*/React.createElement("div", null, "Last Minute Discount"), /*#__PURE__*/React.createElement("div", null, "-$", property.last_minute_discount)), property.discount_code_rate_applies && /*#__PURE__*/React.createElement("div", {
+      className: "property_summary_detail_row property_summary_item_body_section"
+    }, /*#__PURE__*/React.createElement("div", null, "Discount Code"), /*#__PURE__*/React.createElement("div", null, "-$", property.discount_code_discount))), /*#__PURE__*/React.createElement("div", {
+      className: "property_summary_detail_row bookitfast_total_cost property_summary_item_body_section"
+    }, /*#__PURE__*/React.createElement("div", null, "Total Cost"), /*#__PURE__*/React.createElement("div", null, "$", property.grand_total))))));
+  };
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "bookitfast-container"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "form-inline",
+    id: "bookitfastbooking"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/React.createElement("label", null, "Check-In Date:"), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    value: form.date,
+    onChange: e => {
+      const newDate = e.target.value;
+      console.log("New selected date:", newDate);
+      setForm({
+        ...form,
+        date: newDate
+      });
+    },
+    className: "form-control"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/React.createElement("label", null, "Number of Nights:"), /*#__PURE__*/React.createElement("select", {
+    value: form.nights,
+    onChange: e => setForm({
+      ...form,
+      nights: parseInt(e.target.value)
+    }),
+    className: "form-control"
+  }, [...Array(14).keys()].map(n => /*#__PURE__*/React.createElement("option", {
+    key: n,
+    value: n + 1
+  }, n + 1, " night", n + 1 > 1 ? 's' : '')))), /*#__PURE__*/React.createElement("div", {
+    className: "form-group bif-availability-button-container"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "btn btn-success",
+    onClick: fetchAvailability,
+    disabled: !form.date || loading
+  }, loading ? 'Checking...' : 'Check Availability'))), error && /*#__PURE__*/React.createElement("p", {
+    className: "alert alert-danger"
+  }, error)), availability && renderAvailabilityTable(), summary && renderDiscountCode(), summary && renderGiftCertificateSection(), summary && renderBookingSummary(), summary && renderCustomerForm(), summary && renderTermsCheckbox(), summary && !showPaymentForm && /*#__PURE__*/React.createElement("div", {
+    className: "payment-options"
+  }, Object.keys(formErrors).length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "alert alert-danger"
+  }, "Please rectify the highlighted errors before proceeding with payment."), gcResult && gcResult.valid ? /*#__PURE__*/React.createElement("div", {
+    className: "gift-certificate-payment-option"
+  }, summary.order_payable_now === 0 ? /*#__PURE__*/React.createElement("button", {
+    className: "btn btn-success btn-rounded",
+    onClick: submitOrderNoPayment
+  }, "Pay in full with Gift Certificate") : /*#__PURE__*/React.createElement("button", {
+    className: "btn btn-success btn-rounded",
+    onClick: () => handlePaymentOption("gift")
+  }, "Apply Gift Certificate and Pay $", summary.order_payable_now)) : null, (!gcResult || !gcResult.valid) && (summary.order_deposit_amount > 0 ? /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
+    className: "btn btn-primary mr-6",
+    onClick: () => handlePaymentOption("deposit")
+  }, "Pay Deposit ($", summary.order_deposit_amount, ")"), /*#__PURE__*/React.createElement("button", {
+    className: "btn btn-primary",
+    onClick: () => handlePaymentOption("full")
+  }, "Pay In Full ($", summary.order_payable_now, ")")) : /*#__PURE__*/React.createElement("button", {
+    className: "btn btn-primary",
+    onClick: () => handlePaymentOption("full")
+  }, "Pay Now ($", summary.order_payable_now, ")")), summary.order_surcharge > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "surcharge-info"
+  }, /*#__PURE__*/React.createElement("p", null, "Please note a credit card surcharge applies of", summary.order_deposit_surcharge > 0 ? /*#__PURE__*/React.createElement(React.Fragment, null, " $", summary.order_deposit_surcharge, " for deposit or ") : null, "$", summary.order_surcharge, " for the full payment."))), stripePromise && summary && showPaymentForm && /*#__PURE__*/React.createElement("div", {
+    className: "bookitfast-container"
+  }, /*#__PURE__*/React.createElement(_stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__.Elements, {
+    stripe: stripePromise
+  }, /*#__PURE__*/React.createElement(PaymentForm, {
+    summary: summary,
+    propertyIds: typeof propertyIds === 'string' ? propertyIds.split(',').map(id => parseInt(id.trim())) : propertyIds,
+    userDetails: userDetails,
+    paymentType: selectedPaymentOption,
+    giftCertificate: selectedPaymentOption === "gift" ? gcResult : null
+  }))));
+};
+const PaymentForm = ({
+  summary,
+  propertyIds,
+  userDetails,
+  paymentType,
+  giftCertificate
+}) => {
+  const stripe = (0,_stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__.useStripe)();
+  const elements = (0,_stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__.useElements)();
+  const [loading, setLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+  const [paymentSuccess, setPaymentSuccess] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [receiptUrl, setReceiptUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+  const handleSubmitPayment = async event => {
+    event.preventDefault();
+    if (!stripe || !elements) {
+      console.error("Stripe.js has not loaded yet.");
+      return;
+    }
+    setLoading(true);
+    setError("");
+    const cardElement = elements.getElement(_stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__.CardElement);
+    try {
+      const {
+        paymentMethod,
+        error
+      } = await stripe.createPaymentMethod({
+        type: "card",
+        card: cardElement
+      });
+      if (error) {
+        console.error(error);
+        setError(error.message);
+        setLoading(false);
+        return;
+      }
+
+      // Determine the amount based on the payment type
+      const amount = paymentType === "deposit" ? summary.order_deposit_amount : summary.order_payable_now;
+
+      // Build the payload
+      const payload = {
+        stripePaymentMethodId: paymentMethod.id,
+        amount: amount,
+        currency: "AUD",
+        summary: summary,
+        propertyIds: typeof propertyIds === 'string' ? propertyIds.split(',').map(id => parseInt(id.trim())) : propertyIds,
+        userDetails: userDetails,
+        paymentType: paymentType
+      };
+
+      // If paying with a gift certificate (partial payment), include its details
+      if (paymentType === "gift" && giftCertificate) {
+        payload.giftCertificateApplied = true;
+        payload.giftCertificate = giftCertificate;
+      }
+      const response = await fetch(`${API_BASE}/bookitfast/v1/process-payment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json();
+      if (result.success) {
+        console.log("Payment successful:", result);
+        setReceiptUrl(result.data.charge);
+        setPaymentSuccess(true);
+      } else {
+        throw new Error(result.message || "Payment failed.");
+      }
+    } catch (err) {
+      console.error("Payment error:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "payment-container"
+  }, /*#__PURE__*/React.createElement("h3", null, "Payment Details"), error && /*#__PURE__*/React.createElement("p", {
+    className: "alert alert-danger"
+  }, error), paymentSuccess ? /*#__PURE__*/React.createElement("div", {
+    className: "alert alert-success"
+  }, /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Payment Successful!")), receiptUrl && /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("a", {
+    href: receiptUrl,
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "Click here to view your receipt."))) : /*#__PURE__*/React.createElement("form", {
+    onSubmit: handleSubmitPayment
+  }, /*#__PURE__*/React.createElement(_stripe_react_stripe_js__WEBPACK_IMPORTED_MODULE_2__.CardElement, {
+    options: {
+      hidePostalCode: true,
+      style: {
+        base: {
+          fontSize: "16px",
+          color: "#424770",
+          "::placeholder": {
+            color: "#aab7c4"
+          }
+        },
+        invalid: {
+          color: "#9e2146"
+        }
+      }
+    }
+  }), /*#__PURE__*/React.createElement("button", {
+    type: "submit",
+    disabled: !stripe || loading,
+    className: "btn btn-primary"
+  }, loading ? "Processing..." : "Pay Now")));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MultiEmbedForm);
 
 /***/ }),
 
 /***/ "@wordpress/block-editor":
-/*!*********************************!*\
-  !*** external "wp.blockEditor" ***!
-  \*********************************/
+/*!*************************************!*\
+  !*** external ["wp","blockEditor"] ***!
+  \*************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = wp.blockEditor;
+module.exports = window["wp"]["blockEditor"];
 
 /***/ }),
 
 /***/ "@wordpress/blocks":
-/*!****************************!*\
-  !*** external "wp.blocks" ***!
-  \****************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = wp.blocks;
-
-/***/ }),
-
-/***/ "@wordpress/components":
 /*!********************************!*\
-  !*** external "wp.components" ***!
+  !*** external ["wp","blocks"] ***!
   \********************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = wp.components;
+module.exports = window["wp"]["blocks"];
+
+/***/ }),
+
+/***/ "@wordpress/components":
+/*!************************************!*\
+  !*** external ["wp","components"] ***!
+  \************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = window["wp"]["components"];
 
 /***/ }),
 
@@ -103,7 +2599,7 @@ module.exports = wp.components;
 /***/ ((module) => {
 
 "use strict";
-module.exports = React;
+module.exports = window["React"];
 
 /***/ })
 
@@ -175,11 +2671,172 @@ module.exports = React;
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/index.js");
-/******/ 	
+var __webpack_exports__ = {};
+// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
+(() => {
+"use strict";
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_MultiEmbedForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/MultiEmbedForm */ "./src/components/MultiEmbedForm.js");
+/* harmony import */ var _components_GiftCertificateBlock__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/GiftCertificateBlock */ "./src/components/GiftCertificateBlock.js");
+/* harmony import */ var _components_GiftCertificate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/GiftCertificate */ "./src/components/GiftCertificate.js");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
+
+
+
+const {
+  useState,
+  useEffect
+} = wp.element;
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.registerBlockType)("bookitfast/multi-embed", {
+  title: "Book It Fast Availability",
+  description: "A multi-property booking embed for WordPress.",
+  icon: "calendar",
+  category: "widgets",
+  attributes: {
+    propertyIds: {
+      type: "string",
+      default: "" // Store selected IDs as a comma-separated string
+    },
+    showDiscount: {
+      type: "boolean",
+      default: false
+    },
+    showSuburb: {
+      type: "boolean",
+      default: false
+    },
+    showPostcode: {
+      type: "boolean",
+      default: false
+    },
+    showRedeemGiftCertificate: {
+      type: "boolean",
+      default: false
+    },
+    showComments: {
+      type: "boolean",
+      default: false
+    }
+  },
+  edit: ({
+    attributes,
+    setAttributes
+  }) => {
+    const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.useBlockProps)();
+    const [properties, setProperties] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    useEffect(() => {
+      // Fetch properties from the existing WP function
+      wp.apiFetch({
+        path: "/bookitfast/v1/properties"
+      }).then(data => {
+        if (data.success) {
+          setProperties(data.properties);
+        } else {
+          setError("Failed to fetch properties.");
+        }
+      }).catch(err => {
+        console.error("API Fetch Error:", err);
+        setError("Error fetching properties.");
+      }).finally(() => setLoading(false));
+    }, []);
+
+    // Handle Multi-Select Property Change
+    const handlePropertyChange = selected => {
+      const formattedIds = selected.join(","); // Convert array to comma-separated string
+      setAttributes({
+        propertyIds: formattedIds
+      });
+    };
+    return /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.InspectorControls, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
+      title: "Settings",
+      initialOpen: true
+    }, loading ? /*#__PURE__*/React.createElement("p", null, "Loading properties...") : error ? /*#__PURE__*/React.createElement("p", {
+      style: {
+        color: "red"
+      }
+    }, error) : /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.SelectControl, {
+      multiple: true,
+      label: "Select Properties",
+      value: attributes.propertyIds ? attributes.propertyIds.split(",") : [],
+      options: properties.map(property => ({
+        label: property.title,
+        value: property.id.toString()
+      })),
+      onChange: handlePropertyChange
+    }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToggleControl, {
+      label: "Show Discount Field",
+      checked: attributes.showDiscount,
+      onChange: value => setAttributes({
+        showDiscount: value
+      })
+    }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToggleControl, {
+      label: "Show Suburb Field",
+      checked: attributes.showSuburb,
+      onChange: value => setAttributes({
+        showSuburb: value
+      })
+    }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToggleControl, {
+      label: "Show Postcode Field",
+      checked: attributes.showPostcode,
+      onChange: value => setAttributes({
+        showPostcode: value
+      })
+    }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToggleControl, {
+      label: "Show Redeem Gift Certificate Section",
+      checked: attributes.showRedeemGiftCertificate,
+      onChange: value => setAttributes({
+        showRedeemGiftCertificate: value
+      })
+    }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.ToggleControl, {
+      label: "Show Comments Field",
+      checked: attributes.showComments,
+      onChange: value => setAttributes({
+        showComments: value
+      })
+    }))), /*#__PURE__*/React.createElement(_components_MultiEmbedForm__WEBPACK_IMPORTED_MODULE_0__["default"], {
+      propertyIds: attributes.propertyIds,
+      showDiscount: attributes.showDiscount,
+      showSuburb: attributes.showSuburb,
+      showPostcode: attributes.showPostcode,
+      showRedeemGiftCertificate: attributes.showRedeemGiftCertificate,
+      showComments: attributes.showComments
+    }));
+  },
+  save: () => null // Dynamic rendering via PHP
+});
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.registerBlockType)("bookitfast/gift-certificate", {
+  title: "Gift Certificate",
+  description: "A gift certificate purchase form.",
+  icon: "gift",
+  category: "widgets",
+  attributes: {
+    buttonColor: {
+      type: 'string',
+      default: '#00a80f'
+    },
+    previewContent: {
+      type: 'string',
+      default: 'Gift Certificate Purchase Form'
+    }
+  },
+  edit: _components_GiftCertificate__WEBPACK_IMPORTED_MODULE_2__["default"],
+  save: () => null // Dynamic rendering via PHP
+});
+})();
+
 /******/ })()
 ;
+//# sourceMappingURL=editor.js.map

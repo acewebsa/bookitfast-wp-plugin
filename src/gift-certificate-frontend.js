@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { registerBlockType } from '@wordpress/blocks';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl } from '@wordpress/components';
-import MultiEmbedForm from './components/MultiEmbedForm';
+import '../assets/frontend.css';
+// Gift certificate frontend functionality only
 
 // Form validation function
 function validateForm() {
@@ -142,43 +140,43 @@ function GiftCertificatePaymentForm({ stripePk, totalAmount, surcharge, onPaymen
         }
     };
 
-    return (
-        <div className="payment-container">
-            <h3>Payment Details</h3>
-            <div className="amount-summary">
-                <p>
-                    <strong>Total Payable:</strong> ${parseFloat(totalAmount).toFixed(2)}
-                </p>
-                <p>
-                    <strong>Includes Processing Surcharge:</strong> ${parseFloat(surcharge).toFixed(2)}
-                </p>
-            </div>
-            {error && <p className="alert alert-danger">{error}</p>}
-            {success && <p className="alert alert-success">{success}</p>}
-            <form onSubmit={handleSubmit}>
-                <CardElement
-                    options={{
-                        hidePostalCode: true,
-                        style: {
-                            base: { fontSize: "16px", color: "#424770", "::placeholder": { color: "#aab7c4" } },
-                            invalid: { color: "#9e2146" },
-                        },
-                    }}
-                />
-                <button type="submit" disabled={!stripe || loading || success} className="btn btn-primary stripe-payment-button">
-                    {loading ? "Processing..." : success ? "Payment Complete" : "Pay Now"}
-                </button>
-            </form>
-        </div>
+    return React.createElement('div', { className: 'payment-container' },
+        React.createElement('h3', null, 'Payment Details'),
+        React.createElement('div', { className: 'amount-summary' },
+            React.createElement('p', null,
+                React.createElement('strong', null, 'Total Payable:'),
+                ' $', parseFloat(totalAmount).toFixed(2)
+            ),
+            React.createElement('p', null,
+                React.createElement('strong', null, 'Includes Processing Surcharge:'),
+                ' $', parseFloat(surcharge).toFixed(2)
+            )
+        ),
+        error && React.createElement('p', { className: 'alert alert-danger' }, error),
+        success && React.createElement('p', { className: 'alert alert-success' }, success),
+        React.createElement('form', { onSubmit: handleSubmit },
+            React.createElement(CardElement, {
+                options: {
+                    hidePostalCode: true,
+                    style: {
+                        base: { fontSize: "16px", color: "#424770", "::placeholder": { color: "#aab7c4" } },
+                        invalid: { color: "#9e2146" },
+                    },
+                }
+            }),
+            React.createElement('button', {
+                type: 'submit',
+                disabled: !stripe || loading || success,
+                className: 'btn btn-primary stripe-payment-button'
+            }, loading ? "Processing..." : success ? "Payment Complete" : "Pay Now")
+        )
     );
 }
 
 // Main front-end logic.
 function GiftCertificateFrontend() {
-    console.log("GiftCertificateFrontend");
-    const container = document.querySelector(".bookitfast-certificate-form");
+    const container = document.querySelector(".bif-bookitfast-certificate-form");
     if (!container) return;
-    console.log('GiftCertificatePaymentForm');
     const stripePk = container.getAttribute("data-stripe-pk");
     const surchargeRate = parseFloat(container.getAttribute("data-surcharge-rate"));
 
@@ -212,7 +210,7 @@ function GiftCertificateFrontend() {
 
         proceedButton.disabled = true;
 
-        console.log(`Amount: $${amount.toFixed(2)}, Surcharge: $${calculatedSurcharge.toFixed(2)}, Total: $${totalAmount.toFixed(2)}`);
+        // Amount calculation complete
 
         // Create a container for the Stripe payment form.
         const paymentContainer = document.createElement("div");
@@ -220,20 +218,20 @@ function GiftCertificateFrontend() {
         container.querySelector("form").appendChild(paymentContainer);
 
         // Render the React payment form.
-        const App = () => (
-            <Elements stripe={loadStripe(stripePk)}>
-                <GiftCertificatePaymentForm
-                    stripePk={stripePk}
-                    totalAmount={totalAmount}
-                    surcharge={calculatedSurcharge.toFixed(2)}
-                    onPaymentSuccess={(result) => {
-                        console.log("Payment completed:", result);
+        ReactDOM.render(
+            React.createElement(Elements, { stripe: loadStripe(stripePk) },
+                React.createElement(GiftCertificatePaymentForm, {
+                    stripePk: stripePk,
+                    totalAmount: totalAmount,
+                    surcharge: calculatedSurcharge.toFixed(2),
+                    onPaymentSuccess: (result) => {
+                        // Payment completed successfully
                         // You can redirect or update the UI here.
-                    }}
-                />
-            </Elements>
+                    }
+                })
+            ),
+            paymentContainer
         );
-        ReactDOM.render(<App />, paymentContainer);
     });
 }
 
@@ -241,75 +239,4 @@ document.addEventListener("DOMContentLoaded", () => {
     GiftCertificateFrontend();
 });
 
-registerBlockType('bookitfast/multi-embed', {
-    title: 'Book It Fast Multi Embed',
-    icon: 'calendar',
-    category: 'widgets',
-    attributes: {
-        propertyIds: {
-            type: 'string',
-            default: ''
-        },
-        showDiscount: {
-            type: 'boolean',
-            default: false
-        },
-        showSuburb: {
-            type: 'boolean',
-            default: false
-        },
-        showPostcode: {
-            type: 'boolean',
-            default: false
-        },
-        showRedeemGiftCertificate: {
-            type: 'boolean',
-            default: false
-        },
-        showComments: {
-            type: 'boolean',
-            default: false
-        }
-    },
-
-    edit: ({ attributes, setAttributes }) => {
-        const blockProps = useBlockProps();
-
-        return (
-            <div {...blockProps}>
-                <InspectorControls>
-                    <PanelBody title="Settings">
-                        <ToggleControl
-                            label="Show Discount"
-                            checked={attributes.showDiscount}
-                            onChange={(val) => setAttributes({ showDiscount: val })}
-                        />
-                        <ToggleControl
-                            label="Show Suburb"
-                            checked={attributes.showSuburb}
-                            onChange={(val) => setAttributes({ showSuburb: val })}
-                        />
-                        <ToggleControl
-                            label="Show Postcode"
-                            checked={attributes.showPostcode}
-                            onChange={(val) => setAttributes({ showPostcode: val })}
-                        />
-                        <ToggleControl
-                            label="Show Gift Certificate"
-                            checked={attributes.showRedeemGiftCertificate}
-                            onChange={(val) => setAttributes({ showRedeemGiftCertificate: val })}
-                        />
-                        <ToggleControl
-                            label="Show Comments"
-                            checked={attributes.showComments}
-                            onChange={(val) => setAttributes({ showComments: val })}
-                        />
-                    </PanelBody>
-                </InspectorControls>
-                <MultiEmbedForm {...attributes} />
-            </div>
-        );
-    },
-
-    save: () => null // Dynamic block
-});
+// Frontend initialization complete

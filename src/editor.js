@@ -2,6 +2,7 @@ import MultiEmbedForm from "./components/MultiEmbedForm";
 import { registerBlockType } from "@wordpress/blocks";
 import { useBlockProps, InspectorControls } from "@wordpress/block-editor";
 import { PanelBody, ToggleControl, SelectControl } from "@wordpress/components";
+import '../assets/editor.css';
 const { useState, useEffect } = wp.element;
 
 registerBlockType("bookitfast/multi-embed", {
@@ -70,6 +71,8 @@ registerBlockType("bookitfast/multi-embed", {
 									value: property.id.toString(),
 								}))}
 								onChange={handlePropertyChange}
+								__next40pxDefaultSize={true}
+								__nextHasNoMarginBottom={true}
 							/>
 						)}
 
@@ -77,26 +80,31 @@ registerBlockType("bookitfast/multi-embed", {
 							label="Show Discount Field"
 							checked={attributes.showDiscount}
 							onChange={(value) => setAttributes({ showDiscount: value })}
+							__nextHasNoMarginBottom={true}
 						/>
 						<ToggleControl
 							label="Show Suburb Field"
 							checked={attributes.showSuburb}
 							onChange={(value) => setAttributes({ showSuburb: value })}
+							__nextHasNoMarginBottom={true}
 						/>
 						<ToggleControl
 							label="Show Postcode Field"
 							checked={attributes.showPostcode}
 							onChange={(value) => setAttributes({ showPostcode: value })}
+							__nextHasNoMarginBottom={true}
 						/>
 						<ToggleControl
 							label="Show Redeem Gift Certificate Section"
 							checked={attributes.showRedeemGiftCertificate}
 							onChange={(value) => setAttributes({ showRedeemGiftCertificate: value })}
+							__nextHasNoMarginBottom={true}
 						/>
 						<ToggleControl
 							label="Show Comments Field"
 							checked={attributes.showComments}
 							onChange={(value) => setAttributes({ showComments: value })}
+							__nextHasNoMarginBottom={true}
 						/>
 					</PanelBody>
 				</InspectorControls>

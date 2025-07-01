@@ -1,94 +1,105 @@
-.bookitfast-container .form-group {
+.bif-bookitfast-container .bif-form-group {
 	display: flex;
 	flex-wrap: wrap;
 	width:100%;
 	padding:10px;
 }
-.discount-code-container {margin-top:0.5em}
-.discount-code-row {
+.bif-discount-code-container {margin-top:0.4rem; margin-bottom:0.4rem;}
+.bif-discount-code-row {
 	display: flex;
 	flex-flow: row;
 	align-items: center;
 }
-.discount-code-row .form-group { flex-basis:50%;width:100%;}
-.discount-code-row .form-group input{ padding:4px;}
-.discount-label {flex-basis:50%}
-.bookitfast-container #bookitfastbooking{display: flex;
-	flex-flow: row;
+.bif-discount-code-row .bif-form-group { flex-basis:50%;width:100%;}
+.bif-discount-code-row .bif-form-group input{ padding:0.6rem;border-radius:0.25rem 0 0 0.25rem;}
+.bif-discount-label {flex-basis:50%}
+.bif-discount-code-row .bif-apply-discount-btn {border-radius:0 0.25rem 0.25rem 0;margin-bottom:0;}
+.bif-bookitfast-container #bookitfastbooking{display: flex;
+	flex-flow: row wrap;
+	gap: 10px;
 }
 
-.bookitfast-container{width:100%; box-sizing:border-box;border-radius:5px;}
-.bookitfast-container .bif-availability-button-container {align-self: flex-end;}
-.bookitfast-container .form-control, .bookitfast-emulate-form-control, .bookitfast-container .btn.btn-success {
+.bif-bookitfast-container{width:100%; box-sizing:border-box;border-radius:5px;}
+.bif-bookitfast-container .bif-availability-button-container {align-self: flex-end;}
+.bif-bookitfast-container .bif-form-control, .bookitfast-emulate-form-control, .bif-bookitfast-container .bif-btn.bif-btn-success {
 	width: 100%;
-	padding:6px;
-	font-size: 14px;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	padding:0.6rem;
+	font-size: 1rem;
+border:1px solid #ced4da;
+	border-radius: 0.25rem;
 }
-.stripe-payment-button {
+.bif-stripe-payment-button {
 	margin-top:12px;
 }
-.bookitfast-text {
+.bif-bookitfast-text {
 	font-size: 16px;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
 }
-.terms-checkbox {margin-top:0.5em;margin-bottom:0.5em;}
-.bookitfast-container .btn.btn-success {
+.bif-terms-checkbox {margin-top:0.5em;margin-bottom:0.5em;}
+.bif-bookitfast-container .bif-btn.bif-btn-success {
 	align-self: flex-end;
 	padding:8px;
 	line-height:1.3em;
 	border-radius: 4px;
 }
-.bookitfast-container label {font-size:1rem;}
-.bookitfast-property-list {
+.bif-bookitfast-container label {font-size:1rem;}
+.bif-bookitfast-property-list {
 	list-style: none;
 	padding: 0;
 }
-.availability_table {
-	width:100%; border: 1px solid #ddd;border-collapse: collapse; background-color:white;;
+.bif-availability_table {
+	width:100%; border: 1px solid #ddd;border-collapse: collapse; background-color:white;
 }
-.availability_table thead {
+
+.bif-availability_table_wrapper {
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+.bif-availability_table thead {
 	text-align:left;
 	font-weight: normal;
 }
-.availability_table thead th, .availability_table tbody td {
+.bif-availability_table thead th, .bif-availability_table tbody td {
 	text-align:left;
 	padding:6px;
 	font-weight: normal;
 	font-size: 16px;
 }
-.availability_table tbody td {border-bottom:#FFF solid 1px;}
-.availability_table thead th:last-child, .availability_table tbody tr td:last-child {
+.bif-availability_table tbody td {border-bottom:#FFF solid 1px;}
+.bif-availability_table thead th:last-child, .bif-availability_table tbody tr td:last-child {
 	text-align:right; padding-right:10px;
 }
-.bookitfast-property-item {
+.bif-bookitfast-property-item {
 	margin-bottom: 20px;
 	padding: 10px;
 	border: 1px solid #ddd;
 	border-radius: 5px;
 }
 
-.bookitfast-property-title {
+.bif-bookitfast-property-title {
 	font-weight: bold;
 	font-size: 1.2em;
 }
-.bookitfast-container {
+.bif-bookitfast-container {
 	padding: 10px;
 	border: 1px solid #ddd;
 	background: #f9f9f9;
 }
-.form-inline {
+.bif-form-inline {
 	display: flex;
 	gap: 10px;
 	align-items: center;
+	flex-wrap: wrap;
 }
-.form-group {
+.bif-form-group {
 	margin-right: 20px;
+	flex: 1;
+	min-width: 200px;
 }
-.mr-6 {
+.bif-mr-6 {
 	margin-right: 6px;
 }
-.btn {
+.bif-btn {
 	background-color: #28a745;
 	color: #fff;
 	border: none;
@@ -96,11 +107,13 @@
 	cursor: pointer;
 	margin-bottom:4px;
 }
-.btn-danger {
+
+
+.bif-btn-danger {
 	background-color: #ff4141;
 }
-.btn-rounded {border-radius:4px;}
-.alert {
+.bif-btn-rounded {border-radius:0.25rem;}
+.bif-alert {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	margin-top: 20px;
 	padding: 10px;
@@ -110,7 +123,7 @@
 	font-size: 14px;
 }
 
-.alert.alert-success {
+.bif-alert.bif-alert-success {
 	margin-top: 20px;
 	padding: 4px 10px;
 	font-size: 14px;
@@ -118,20 +131,19 @@
 	color:#3d9140;
 	border: 1px solid #3d9140;
 }
-.availability-results {
+.bif-availability-results {
 	margin-top: 20px;
 }
-.availability-item {
+.bif-availability-item {
 	margin-bottom: 10px;
-	padding: 10px;
+	padding: 0.4rem;
 	border: 1px solid #ccc;
-	border-radius: 5px;
+	border-radius: 0.25rem;
 }
-.bookitfast_availability_grid_div {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+.bif-bookitfast_availability_grid_div {
 	margin-bottom: 20px;
 	margin-top: 12px;
-	padding:10px;
+	padding:0.4rem;
 	border: 1px solid #ddd;
 	border-radius: 5px;
 	background-color: #fbfbfb;
@@ -142,9 +154,9 @@
 	width: 100%;
 	align-items: center;
 }
-.bookitfast_availability_grid_div .inner_div {padding:10px; width:100%;}
+.bif-bookitfast_availability_grid_div .inner_div {padding:10px; width:100%;}
 
-.user-details-form, .bookitfast-certificate-form {
+.bif-user-details-form, .bif-bookitfast-certificate-form {
 	margin-bottom: 20px;
 	margin-top: 12px;
 	padding: 10px;
@@ -155,35 +167,35 @@
 	width: 100%;
 	align-items: center;
 }
-.bookitfast_availability_grid_div h3 {
+.bif-bookitfast_availability_grid_div h3 {
 	flex-basis: 50%;
 	box-sizing: border-box;
 	line-height: 1.3em;
 	text-align: left;
 }
 
-.bookitfast_availability_grid_div .availability_button {
+.bif-bookitfast_availability_grid_div .availability_button {
 	flex-basis: 50%;
 	box-sizing: border-box;
 	line-height: 1.3em;
 	text-align: right;
 }
 
-.bookitfast_availability_grid_div .availability_button .btn {
+.bif-bookitfast_availability_grid_div .availability_button .bif-btn {
 	border-radius: 4px;
 	padding: 8px 16px;
 }
 
-.property_heading_container h2 {
+.bif-property_heading_container h2 {
 	font-size: 1.4em;
 	margin: 0;
 }
 
 
-.bookitfast_day {
+.bif-bookitfast_day {
 	font-size:14px;
 }
-.bookitfast_day_cell {
+.bif-bookitfast_day_cell {
 	display: inline-block;
 	width: 100px;
 	height: 100px;
@@ -193,40 +205,39 @@
 	border-radius: 5px;
 }
 
-.cell_date_available {
+.bif-cell_date_available {
 	background-color: #e0f7e0;
 	border-color: #3d9140;
 	width:100%;
 }
 
-.cell_date_unavailable {
+.bif-cell_date_unavailable {
 	background-color: #f9e0e0;
 	border-color: #ff4136;
 }
 
-.mandatory_extras,
-.optional_extras {
+.bif-mandatory_extras,
+.bif-optional_extras {
 	margin-top: 10px;
 }
 
-.mandatory_extras h4,
-.optional_extras h4 {
+.bif-mandatory_extras h4,
+.bif-optional_extras h4 {
 	font-size: 1.2em;
 	margin-bottom: 5px;
 }
 
-.btn {
+.bif-btn {
 	padding: 5px 10px;
-	font-size: 0.6em;
 }
 
-.availability_grid {
+.bif-availability_grid {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 4px;
 }
 
-.bookitfast_day_cell {
+.bif-bookitfast_day_cell {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -242,7 +253,7 @@
 	font-size:14px;
 }
 
-.bookitfast_day_cell:hover {
+.bif-bookitfast_day_cell:hover {
 	transform: scale(1.05);
 }
 
@@ -256,77 +267,182 @@
 	border-color: #ff4136;
 }
 
-.bookitfast_availability_cell {
+.bif-bookitfast_availability_cell {
 	margin-top: 5px;
 
 }
-.avail_rate {
+.bif-avail_rate {
 	width:100%;
 	color: #333;
 }
-.property_summary_item {
+.bif-property_summary_item {
 	margin-top:10px;
 	border: #ddd solid 1px;
 	border-radius: 5px;
 }
-.property_summary_item_title {background-color:green;color:#FFF;margin:0;padding:10px; border-radius: 4px 4px 0 0;}
-.property_summary_item_body {margin:0;font-size:0.8em; }
-.property_summary_sub_heading {margin:0;line-height:1em;}
-.property_summary_item_body .property_summary_item_body_section {
+.bif-property_summary_item_title {background-color:green;color:#FFF;margin:0;padding:10px; border-radius: 4px 4px 0 0;}
+.bif-property_summary_item_body {margin:0; }
+.bif-property_summary_sub_heading {margin:0;line-height:1em;}
+.bif-property_summary_item_body .bif-property_summary_item_body_section {
 	padding:0.4em;
 	box-sizing: border-box;
 	border-radius:  0 0 4px 4px;
 }
-.property_summary_item_body p{margin:0; flex-basis:50%; flex-grow:1;}
+.bif-property_summary_item_body p{margin:0; flex-basis:50%; flex-grow:1;}
 
-.property_summary_detail_row, .user-details-form .form-group, .bookitfast-certificate-form .form-group {display:flex; width:100%; flex-direction: row; border-bottom: 1px solid #ddd;}
-.property_summary_detail_row div {flex-basis:50%;}
-.property_summary_sub_heading {background-color: #c7c7c7;
+.bif-property_summary_detail_row, .bif-user-details-form .bif-form-group, .bif-bookitfast-certificate-form .bif-form-group {display:flex; width:100%; flex-direction: row; border-bottom: 1px solid #ddd;}
+.bif-property_summary_detail_row div {flex-basis:50%;}
+.bif-property_summary_sub_heading {background-color: #c7c7c7;
 }
 
-.user-details-form .form-row, .bookitfast-certificate-form .form-row {
+.bif-user-details-form .bif-form-row, .bif-bookitfast-certificate-form .bif-form-row {
 	display: flex;
 	justify-content: flex-end;
 	padding: .5em;
 	font-size:14px;
 	box-sizing: border-box;
 }
-.user-details-form .form-row > label, .bookitfast-certificate-form .form-row > label {
+.bif-user-details-form .bif-form-row > label, .bif-bookitfast-certificate-form .bif-form-row > label {
 	padding: .5em;
 	flex: 1;
 }
-.user-details-form .form-row > input, .user-details-form .form-row > textarea, .bookitfast-certificate-form .form-row > input, .bookitfast-certificate-form .form-row > select{
+.bif-user-details-form .bif-form-row > input, .bif-user-details-form .bif-form-row > textarea, .bif-bookitfast-certificate-form .bif-form-row > input, .bif-bookitfast-certificate-form .bif-form-row > select{
 	flex: 2;
+	border-radius: 0.25rem;
 }
-.user-details-form .form-row:last-child {
+.bif-user-details-form .bif-form-row:last-child {
 	border: none;
 }
-.user-details-form .form-row > textarea {padding:6px;font-size:14px;}
-.bookitfast_total_cost {background-color:green; color:white;padding-right:0;padding-left:0;}
+.bif-user-details-form .bif-form-row > textarea {padding:6px;font-size:14px;}
+.bif-bookitfast_total_cost {background-color:green; color:white;padding-right:0;padding-left:0;}
 
-.payment-container {margin-top:12px;}
-.surcharge-info {
+.bif-payment-container {margin-top:12px;}
+.bif-surcharge-info {
     margin-top: 10px;
     font-size: 0.8em;
     color: #666;
     font-style: italic;
 }
-.optional_extras {
+.bif-optional_extras {
 	width: 100%;
 }
-.optional_extras h4 {
-	font-size: 0.8em;
+.bif-optional_extras h4 {
+
 	margin-top:4px;
 }
-.optional_extras .bookitfast_optional_extra {
+.bif-optional_extras .bif-bookitfast_optional_extra {
 	display: flex;
 	width: 100%;
 	flex-direction: row;
 }
-.optional_extras .bookitfast_optional_extra div
+.bif-optional_extras .bif-bookitfast_optional_extra div
 {
 	flex-basis: 50%;
-	font-size:0.8em;
+
 	font-weight:normal;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+	.bif-bookitfast-container #bookitfastbooking {
+		flex-direction: column;
+		gap: 15px;
+	}
+
+	.bif-form-inline {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 15px;
+	}
+
+	.bif-form-group {
+		margin-right: 0;
+		min-width: auto;
+		width: 100%;
+	}
+
+	.bif-form-group label {
+		display: block;
+		margin-bottom: 5px;
+		font-weight: bold;
+	}
+
+	.bif-availability_table {
+		font-size: 14px;
+	}
+
+	.bif-availability_table thead th,
+	.bif-availability_table tbody td {
+		padding: 4px;
+		font-size: 14px;
+	}
+
+	.bif-bookitfast_availability_grid_div {
+		flex-direction: column;
+		text-align: center;
+	}
+
+	.bif-bookitfast_availability_grid_div h3 {
+		flex-basis: 100%;
+		text-align: center;
+		margin-bottom: 10px;
+	}
+
+	.bif-bookitfast_availability_grid_div .availability_button {
+		flex-basis: 100%;
+		text-align: center;
+	}
+
+	.bif-property_summary_detail_row {
+		flex-direction: column;
+	}
+
+	.bif-property_summary_detail_row div {
+		flex-basis: 100%;
+		padding: 5px 0;
+	}
+
+	.bif-user-details-form .bif-form-row,
+	.bif-bookitfast-certificate-form .bif-form-row {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.bif-user-details-form .bif-form-row > label,
+	.bif-bookitfast-certificate-form .bif-form-row > label {
+		flex: none;
+		margin-bottom: 5px;
+		font-weight: bold;
+	}
+
+	.bif-user-details-form .bif-form-row > input,
+	.bif-user-details-form .bif-form-row > textarea,
+	.bif-user-details-form .bif-form-row > select,
+	.bif-bookitfast-certificate-form .bif-form-row > input,
+	.bif-bookitfast-certificate-form .bif-form-row > select {
+		flex: none;
+		width: 100%;
+	}
+}
+
+@media (max-width: 480px) {
+	.bif-bookitfast-container {
+		padding: 5px;
+	}
+
+	.bif-availability_table {
+		font-size: 12px;
+	}
+
+	.bif-availability_table thead th,
+	.bif-availability_table tbody td {
+		padding: 2px;
+		font-size: 12px;
+	}
+
+	.bif-btn {
+		padding: 8px 12px;
+		font-size: 14px;
+	}
 }
 
