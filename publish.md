@@ -1,349 +1,245 @@
-# Book It Fast Plugin - Publishing Guide
+# BookItFast WordPress Plugin - Publishing Guide
 
-This guide outlines how to prepare and deploy the Book It Fast WordPress plugin to another site.
+## 📦 **Distribution Zip Contents**
 
-## 🏗️ Build Process
+### ✅ **Files & Folders TO INCLUDE:**
 
-Before packaging, ensure all assets are built:
+#### **Essential Plugin Files**
 
-```bash
-# Install dependencies (if not already installed)
-npm install
+- `bookitfast.php` - Main plugin file with headers and activation logic
+- `readme.txt` - WordPress plugin repository description and metadata
 
-# Build production assets
-npm run build
+#### **Compiled Assets** (from `npm run build`)
 
-# Optional: WordPress-specific tasks
-npm run i18n        # Generate translation files
-npm run readme      # Convert readme.txt to README.md
-```
+- `build/` folder **ENTIRE CONTENTS**:
+    - `build/editor.js` + `build/editor.asset.php` - Block editor functionality
+    - `build/frontend.js` + `build/frontend.asset.php` - Frontend booking form
+    - `build/gift-certificate-frontend.js` + `build/gift-certificate-frontend.asset.php` - Gift certificate form
+    - `build/gift-certificate.js` + `build/gift-certificate.asset.php` - Gift certificate block editor
+    - `build/editor.css` + `build/editor-rtl.css` - Editor styles
+    - `build/frontend.css` + `build/frontend-rtl.css` - Frontend styles
+    - `build/gift-certificate-frontend.css` + `build/gift-certificate-frontend-rtl.css` - GC styles
 
-## 📦 Files to Include in Distribution
+#### **PHP Backend Functionality**
 
-### ✅ Required Files & Folders
+- `includes/` folder **ENTIRE CONTENTS**:
+    - `includes/admin-menu.php` - WordPress admin interface
+    - `includes/api.php` - REST API endpoints and booking logic
+    - `includes/blocks.php` - Gutenberg block registration and rendering
+    - `includes/gift-certificate.php` - Gift certificate functionality
+    - `includes/components/` - Any PHP component files (if present)
 
-**Core Plugin Files:**
+#### **Optional (if present)**
 
-- `bookitfast.php` - Main plugin file
-- `readme.txt` - WordPress plugin readme
-- `index.php` - Security file (if exists)
+- `languages/` folder - Translation files (.po, .pot, .mo files)
 
-**PHP Includes:**
+---
 
-- `includes/` - All PHP files
-    - `includes/admin-menu.php`
-    - `includes/api.php`
-    - `includes/blocks.php`
-    - `includes/gift-certificate.php`
+### ❌ **Files & Folders TO EXCLUDE:**
 
-**Built Assets:**
+#### **Development Source Code**
 
-- `build/` - All compiled JavaScript and CSS files
-    - `build/editor.js`
-    - `build/editor.css`
-    - `build/frontend.js`
-    - `build/frontend.css`
-    - `build/gift-certificate.js`
-    - `build/gift-certificate-frontend.js`
-    - `build/*.asset.php` files
+- `src/` folder - React/JavaScript source files (compiled into `build/`)
+- `assets/` folder - CSS/JS source files (compiled into `build/`)
+- `components/` folder - React component source files
 
-**Static Assets:**
+#### **Node.js Development**
 
-- `assets/` - CSS and JavaScript files
-    - `assets/editor.css`
-    - `assets/frontend.css`
-    - `assets/frontend.js`
-    - `assets/admin.css`
-    - `assets/js/` (if any)
-
-**Components (if used in frontend):**
-
-- `components/` - React components used in frontend
-    - `components/MultiEmbedForm.js`
-
-### ❌ Files to EXCLUDE from Distribution
-
-**Development Files:**
-
-- `src/` - Source files (these get compiled into build/)
-- `node_modules/` - NPM dependencies
+- `node_modules/` folder - NPM dependencies
 - `package.json` - NPM configuration
 - `package-lock.json` - NPM lock file
-- `webpack.config.js` - Webpack configuration (extends @wordpress/scripts)
-- `Gruntfile.js` - Grunt configuration (used for WordPress i18n tasks)
+- `webpack.config.js` - Build configuration
 
-**Development Tools:**
+#### **Development Tools**
 
-- `.git/` - Git repository
-- `.gitignore` - Git ignore file
-- `publish.md` - This publishing guide
+- `bin/` folder - Development scripts
+- `tests/` folder - PHPUnit tests
 - `phpunit.xml.dist` - Testing configuration
-- `tests/` - Test files
-- `bin/` - Development scripts
-- `releases/` - Release folders (for development organization only)
 
-**Temporary Files:**
+#### **Documentation & Meta**
 
-- Any `.log` files
-- Any `.tmp` files
-- Any editor temporary files
+- `publish.md` - **THIS FILE** (publishing instructions)
+- `.git/` folder - Git repository
+- `.gitignore` - Git ignore rules
 
-## 📁 Release Management
+#### **Backup/Release Folders**
 
-### Folder Structure:
+- `bundle/` folder - Previous bundles
+- `releases/` folder - Version archives
 
-```
-bookitfast/
-├── releases/
-│   ├── 0.1.0/
-│   │   ├── bookitfast/          # Plugin folder (ready to zip)
-│   │   │   ├── bookitfast.php
-│   │   │   ├── readme.txt
-│   │   │   ├── includes/
-│   │   │   ├── build/
-│   │   │   ├── assets/
-│   │   │   └── components/
-│   │   ├── bookitfast-0.1.0.zip # Distribution ZIP
-│   │   └── release-notes.md     # Optional: specific release notes
-│   ├── 0.1.1/
-│   │   ├── bookitfast/
-│   │   ├── bookitfast-0.1.1.zip
-│   │   └── release-notes.md
-│   └── latest/                  # Symlink to current version
-├── src/                         # Development source files
-├── node_modules/                # Dev dependencies
-├── package.json                 # Dev config
-├── publish.md                   # This publishing guide
-└── ... (other dev files)
+---
+
+## 🚀 **Step-by-Step Publishing Process**
+
+### **1. Pre-Publishing Checklist**
+
+- [ ] All features tested and working
+- [ ] Gift certificate functionality fully tested (both scenarios)
+- [ ] Frontend styles loading correctly
+- [ ] No console errors in browser
+- [ ] API endpoints responding correctly
+
+### **2. Build Assets**
+
+```bash
+npm run build
 ```
 
-### Release Process:
+**Verify:** Check that `build/` folder contains all expected files with recent timestamps.
 
-1. **Prepare Version:**
+### **3. Version Management**
 
-    ```bash
-    # Create release folder
-    mkdir releases/0.1.0
-    mkdir releases/0.1.0/bookitfast
+- [ ] Update version in `bookitfast.php` header:
+    ```php
+    * Version: X.X.X
     ```
-
-2. **Copy Distribution Files:**
-
-    ```bash
-    # Copy all required files (see checklist above)
-    cp bookitfast.php releases/0.1.0/bookitfast/
-    cp readme.txt releases/0.1.0/bookitfast/
-    cp -r includes/ releases/0.1.0/bookitfast/
-    cp -r build/ releases/0.1.0/bookitfast/
-    cp -r assets/ releases/0.1.0/bookitfast/
-    cp -r components/ releases/0.1.0/bookitfast/
+- [ ] Update version in `readme.txt`:
     ```
-
-3. **Create ZIP:**
-
-    ```bash
-    cd releases/0.1.0/
-    zip -r bookitfast-0.1.0.zip bookitfast/
-    cd ../../
+    Stable tag: X.X.X
     ```
+- [ ] Add changelog entry to `readme.txt`
 
-4. **Test & Distribute:**
-    - Test the ZIP file on a clean WordPress install
-    - Upload `bookitfast-0.1.0.zip` to target sites
+### **4. Create Distribution Zip**
 
-## 📋 Distribution Checklist
+#### **Method 1: Manual Selection**
 
-### Pre-Build Steps:
+1. Create new folder: `bookitfast-vX.X.X/`
+2. Copy files following the inclusion list above
+3. Compress folder to `bookitfast-vX.X.X.zip`
 
-- [ ] Pull latest changes from git
-- [ ] Update version number in `bookitfast.php`
-- [ ] Update changelog in `readme.txt`
-- [ ] Test plugin functionality locally
+#### **Method 2: Command Line (Windows)**
 
-### Build Steps:
+```powershell
+# Create temporary directory
+mkdir temp-build
+cd temp-build
 
-- [ ] Run `npm install` (if dependencies changed)
-- [ ] Run `npm run build` (uses @wordpress/scripts)
-- [ ] Verify `build/` folder contains all compiled assets
-- [ ] Test that built assets work correctly
-- [ ] Optional: Run `npm run i18n` for translation files
+# Copy required files
+copy ..\bookitfast.php .
+copy ..\readme.txt .
+xcopy ..\build build\ /E /I
+xcopy ..\includes includes\ /E /I
+xcopy ..\languages languages\ /E /I
 
-### Package Steps:
+# Create zip
+Compress-Archive -Path * -DestinationPath ..\bookitfast-vX.X.X.zip
 
-- [ ] Create release folder: `releases/[VERSION]/`
-- [ ] Create plugin folder: `releases/[VERSION]/bookitfast/`
-- [ ] Copy all required files (see list above)
-- [ ] Verify no development files included
-- [ ] Create ZIP: `bookitfast-[VERSION].zip`
+# Cleanup
+cd ..
+rmdir temp-build /S /Q
+```
 
-### Final Steps:
+### **5. Quality Assurance Testing**
 
-- [ ] Test ZIP extraction and folder structure
-- [ ] Test installation on staging site
-- [ ] Verify all functionality works
-- [ ] Document any configuration needed
-- [ ] Update latest release reference
+- [ ] Install zip on clean WordPress site
+- [ ] Test booking form functionality
+- [ ] Test gift certificate redemption (both scenarios)
+- [ ] Verify all styles load correctly
+- [ ] Test in Gutenberg block editor
+- [ ] Check for PHP errors in debug log
 
-## 🗂️ Folder Structure for Distribution
+### **6. File Size Verification**
+
+- **Target:** Under 5MB (preferably under 2MB)
+- **Current estimate:** ~500KB-1MB (very reasonable)
+
+---
+
+## 📂 **Final Zip Structure**
 
 ```
-bookitfast/
+bookitfast-vX.X.X.zip
 ├── bookitfast.php
 ├── readme.txt
+├── build/
+│   ├── editor.js
+│   ├── editor.asset.php
+│   ├── editor.css
+│   ├── editor-rtl.css
+│   ├── frontend.js
+│   ├── frontend.asset.php
+│   ├── frontend.css
+│   ├── frontend-rtl.css
+│   ├── gift-certificate-frontend.js
+│   ├── gift-certificate-frontend.asset.php
+│   ├── gift-certificate-frontend.css
+│   ├── gift-certificate-frontend-rtl.css
+│   ├── gift-certificate.js
+│   └── gift-certificate.asset.php
 ├── includes/
 │   ├── admin-menu.php
 │   ├── api.php
 │   ├── blocks.php
-│   └── gift-certificate.php
-├── build/
-│   ├── editor.js
-│   ├── editor.css
-│   ├── frontend.js
-│   ├── frontend.css
-│   ├── gift-certificate.js
-│   ├── gift-certificate-frontend.js
-│   └── *.asset.php
-├── assets/
-│   ├── editor.css
-│   ├── frontend.css
-│   ├── frontend.js
-│   ├── admin.css
-│   └── js/
-└── components/
-    └── MultiEmbedForm.js
+│   ├── gift-certificate.php
+│   └── components/ (if exists)
+└── languages/ (if exists)
 ```
 
-## 🚀 Deployment Instructions
+---
 
-### For WordPress Admin Upload:
+## 🔧 **Troubleshooting Common Issues**
 
-1. Zip the `bookitfast/` folder
-2. Go to WordPress Admin → Plugins → Add New → Upload Plugin
-3. Upload the ZIP file
-4. Activate the plugin
+### **Missing Styles on Frontend**
 
-### For FTP/Manual Upload:
+- ✅ **Fixed:** `includes/blocks.php` now references `build/` folder instead of `assets/`
+- **Test:** Check browser network tab for 404 errors on CSS files
 
-1. Extract the ZIP file
-2. Upload the `bookitfast/` folder to `/wp-content/plugins/`
-3. Go to WordPress Admin → Plugins
-4. Activate "Book It Fast"
+### **JavaScript Errors**
 
-### For WordPress.org Distribution:
+- **Check:** All `.asset.php` files are included in zip
+- **Check:** WordPress dependencies are properly loaded
 
-1. Follow WordPress.org plugin submission guidelines
-2. Ensure all files follow WordPress coding standards
-3. Include proper plugin headers and documentation
+### **Gift Certificate Issues**
 
-## ⚙️ Post-Installation Configuration
+- **Test both scenarios:** Full coverage (order_payable_now = 0) and partial coverage
+- **Verify:** API responses match expected format
+- **Check:** Weekly discount logic working correctly
 
-After installing on a new site, users need to:
+---
 
-1. **Login Setup:**
+## 📋 **Release Checklist**
 
-    - Go to WordPress Admin → Book It Fast → Login Settings
-    - Enter Book It Fast account credentials
-    - Verify connection is successful
+### **Before Creating Zip:**
 
-2. **API Configuration:**
+- [ ] `npm run build` completed successfully
+- [ ] Version numbers updated in both files
+- [ ] Changelog updated
+- [ ] All features tested
 
-    - Plugin should auto-set API URL to `https://bookitfast.app`
-    - Verify in the debug information if needed
+### **Zip Creation:**
 
-3. **Test Functionality:**
-    - Check that admin dashboard loads user information
-    - Test Gutenberg blocks work properly
-    - Verify booking calendar displays correctly
+- [ ] Only includes files from inclusion list
+- [ ] Excludes all development files
+- [ ] Proper folder structure maintained
+- [ ] File size under 5MB
 
-## 🔧 Troubleshooting
+### **Post-Creation Testing:**
 
-**Common Issues:**
+- [ ] Install on clean WordPress site
+- [ ] Test booking form end-to-end
+- [ ] Test gift certificate redemption
+- [ ] Verify no console errors
+- [ ] Check all styles load correctly
 
-- **"Failed to fetch user information"**: Check login credentials and API connectivity
-- **Blocks not loading**: Verify build assets are included and properly enqueued
-- **Styling issues**: Ensure CSS files are included and loading
+### **Distribution:**
 
-**Debug Mode:**
+- [ ] Upload to WordPress.org (if applicable)
+- [ ] Tag release in Git repository
+- [ ] Update documentation if needed
 
-- Enable WordPress debug logging: `WP_DEBUG = true` and `WP_DEBUG_LOG = true`
-- Check error logs for detailed information
-- Use browser developer tools to check for JavaScript errors
+---
 
-## 📝 Version Management
+## 🎯 **Key Success Metrics**
 
-**Before Each Release:**
+- ✅ **Booking form works end-to-end**
+- ✅ **Gift certificates handle both scenarios correctly**
+- ✅ **Frontend styles load properly**
+- ✅ **No JavaScript console errors**
+- ✅ **Proper WordPress coding standards**
+- ✅ **Clean, minimal file size**
 
-1. Update version in `bookitfast.php` header
-2. Update `readme.txt` changelog
-3. Tag the release in git
-4. Test thoroughly on clean WordPress installation
-5. Create release notes
+---
 
-**Version Numbering:**
-
-- Use semantic versioning: `MAJOR.MINOR.PATCH`
-- Current version: Check `bookitfast.php` header
-
-**Git Integration:**
-
-```bash
-# Tag the release
-git tag v0.1.0
-git push origin v0.1.0
-
-# Create release branch (optional)
-git checkout -b release/0.1.0
-git push origin release/0.1.0
-```
-
-## 🛠️ Automation Ideas
-
-**Build Script Example:**
-
-```bash
-#!/bin/bash
-# build-release.sh
-
-VERSION=$1
-if [ -z "$VERSION" ]; then
-  echo "Usage: ./build-release.sh 0.1.0"
-  exit 1
-fi
-
-echo "Building release $VERSION..."
-
-# Build assets
-npm run build
-
-# Generate translation files (optional)
-npm run i18n
-
-# Create release directory
-mkdir -p "releases/$VERSION/bookitfast"
-
-# Copy files
-cp bookitfast.php "releases/$VERSION/bookitfast/"
-cp readme.txt "releases/$VERSION/bookitfast/"
-cp -r includes/ "releases/$VERSION/bookitfast/"
-cp -r build/ "releases/$VERSION/bookitfast/"
-cp -r assets/ "releases/$VERSION/bookitfast/"
-cp -r components/ "releases/$VERSION/bookitfast/"
-
-# Create ZIP
-cd "releases/$VERSION"
-zip -r "bookitfast-$VERSION.zip" bookitfast/
-cd ../..
-
-echo "Release $VERSION created successfully!"
-echo "Files available in: releases/$VERSION/"
-```
-
-## 🎯 Pro Tips
-
-1. **Add releases/ to .gitignore** - Don't commit built releases to git
-2. **Version consistency**: Ensure version matches across all files
-3. **Testing matrix**: Test on different WordPress versions
-4. **Documentation**: Keep release notes for each version
-5. **Backup strategy**: Always keep previous working versions
-6. **Security**: Scan files before distribution
-7. **Performance**: Optimize assets for production builds
+**Last Updated:** $(date)
+**Plugin Version:** Check `bookitfast.php` for current version
+**WordPress Compatibility:** 5.0+ (uses Gutenberg blocks)
