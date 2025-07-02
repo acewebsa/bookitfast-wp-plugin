@@ -8,16 +8,16 @@ import '../assets/frontend.css';
 // Form validation function
 function validateForm() {
     const fields = [
-        { id: 'gc_amount', name: 'Amount' },
-        { id: 'gc_to', name: 'To' },
-        { id: 'gc_from', name: 'From' },
-        { id: 'gc_message', name: 'Message' },
-        { id: 'recipient_first_name', name: 'Recipient First Name' },
-        { id: 'recipient_last_name', name: 'Recipient Last Name' },
-        { id: 'customer_first_name', name: 'Your First Name' },
-        { id: 'customer_last_name', name: 'Your Last Name' },
-        { id: 'customer_phone', name: 'Your Phone' },
-        { id: 'customer_email', name: 'Your Email' },
+        { id: 'bif-gc_amount', name: 'Amount' },
+        { id: 'bif-gc_to', name: 'To' },
+        { id: 'bif-gc_from', name: 'From' },
+        { id: 'bif-gc_message', name: 'Message' },
+        { id: 'bif-recipient_first_name', name: 'Recipient First Name' },
+        { id: 'bif-recipient_last_name', name: 'Recipient Last Name' },
+        { id: 'bif-customer_first_name', name: 'Your First Name' },
+        { id: 'bif-customer_last_name', name: 'Your Last Name' },
+        { id: 'bif-customer_phone', name: 'Your Phone' },
+        { id: 'bif-customer_email', name: 'Your Email' },
     ];
 
     let isValid = true;
@@ -25,6 +25,10 @@ function validateForm() {
 
     fields.forEach(field => {
         const element = document.getElementById(field.id);
+        if (!element) {
+            console.error(`Element with ID ${field.id} not found`);
+            return;
+        }
         if (!element.value.trim()) {
             isValid = false;
             errorMessages.push(`${field.name} is required.`);
@@ -35,18 +39,24 @@ function validateForm() {
     });
 
     // Additional validation for email and phone
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(document.getElementById('customer_email').value.trim())) {
-        isValid = false;
-        errorMessages.push('Please enter a valid email address.');
-        document.getElementById('customer_email').classList.add('is-invalid');
+    const emailElement = document.getElementById('bif-customer_email');
+    if (emailElement) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailElement.value.trim())) {
+            isValid = false;
+            errorMessages.push('Please enter a valid email address.');
+            emailElement.classList.add('is-invalid');
+        }
     }
 
-    const phoneRegex = /^\+?[0-9]{10,14}$/;
-    if (!phoneRegex.test(document.getElementById('customer_phone').value.trim())) {
-        isValid = false;
-        errorMessages.push('Please enter a valid phone number.');
-        document.getElementById('customer_phone').classList.add('is-invalid');
+    const phoneElement = document.getElementById('bif-customer_phone');
+    if (phoneElement) {
+        const phoneRegex = /^\+?[0-9]{10,14}$/;
+        if (!phoneRegex.test(phoneElement.value.trim())) {
+            isValid = false;
+            errorMessages.push('Please enter a valid phone number.');
+            phoneElement.classList.add('is-invalid');
+        }
     }
 
     return { isValid, errorMessages };
@@ -80,16 +90,16 @@ function GiftCertificatePaymentForm({ stripePk, totalAmount, surcharge, onPaymen
             }
 
             // Retrieve additional form fields from the DOM.
-            const gcAmount = document.getElementById("gc_amount").value;
-            const gcTo = document.getElementById("gc_to").value;
-            const gcFrom = document.getElementById("gc_from").value;
-            const gcMessage = document.getElementById("gc_message").value;
-            const recipientFirstName = document.getElementById("recipient_first_name").value;
-            const recipientLastName = document.getElementById("recipient_last_name").value;
-            const customerFirstName = document.getElementById("customer_first_name").value;
-            const customerLastName = document.getElementById("customer_last_name").value;
-            const customerPhone = document.getElementById("customer_phone").value;
-            const customerEmail = document.getElementById("customer_email").value;
+            const gcAmount = document.getElementById("bif-gc_amount").value;
+            const gcTo = document.getElementById("bif-gc_to").value;
+            const gcFrom = document.getElementById("bif-gc_from").value;
+            const gcMessage = document.getElementById("bif-gc_message").value;
+            const recipientFirstName = document.getElementById("bif-recipient_first_name").value;
+            const recipientLastName = document.getElementById("bif-recipient_last_name").value;
+            const customerFirstName = document.getElementById("bif-customer_first_name").value;
+            const customerLastName = document.getElementById("bif-customer_last_name").value;
+            const customerPhone = document.getElementById("bif-customer_phone").value;
+            const customerEmail = document.getElementById("bif-customer_email").value;
 
             // Build the payload.
             const payload = {
@@ -140,20 +150,24 @@ function GiftCertificatePaymentForm({ stripePk, totalAmount, surcharge, onPaymen
         }
     };
 
-    return React.createElement('div', { className: 'payment-container' },
+    return React.createElement('div', { className: 'bif-payment-container' },
         React.createElement('h3', null, 'Payment Details'),
-        React.createElement('div', { className: 'amount-summary' },
+        React.createElement('div', { className: 'bif-amount-summary' },
             React.createElement('p', null,
-                React.createElement('strong', null, 'Total Payable:'),
-                ' $', parseFloat(totalAmount).toFixed(2)
+                React.createElement('span', null, 'Subtotal:'),
+                React.createElement('strong', null, '$', parseFloat(totalAmount - surcharge).toFixed(2))
             ),
             React.createElement('p', null,
-                React.createElement('strong', null, 'Includes Processing Surcharge:'),
-                ' $', parseFloat(surcharge).toFixed(2)
+                React.createElement('span', null, 'Processing Surcharge:'),
+                React.createElement('strong', null, '$', parseFloat(surcharge).toFixed(2))
+            ),
+            React.createElement('p', null,
+                React.createElement('span', null, 'Total Payable:'),
+                React.createElement('strong', null, '$', parseFloat(totalAmount).toFixed(2))
             )
         ),
-        error && React.createElement('p', { className: 'alert alert-danger' }, error),
-        success && React.createElement('p', { className: 'alert alert-success' }, success),
+        error && React.createElement('div', { className: 'bif-alert bif-alert-danger' }, error),
+        success && React.createElement('div', { className: 'bif-alert bif-alert-success' }, success),
         React.createElement('form', { onSubmit: handleSubmit },
             React.createElement(CardElement, {
                 options: {
@@ -167,48 +181,80 @@ function GiftCertificatePaymentForm({ stripePk, totalAmount, surcharge, onPaymen
             React.createElement('button', {
                 type: 'submit',
                 disabled: !stripe || loading || success,
-                className: 'btn btn-primary stripe-payment-button'
-            }, loading ? "Processing..." : success ? "Payment Complete" : "Pay Now")
+                className: 'bif-stripe-payment-button'
+            }, loading ? "Processing..." : success ? "Payment Complete" : `Pay Now - $${parseFloat(totalAmount).toFixed(2)}`)
         )
     );
 }
 
 // Main front-end logic.
 function GiftCertificateFrontend() {
+    console.log('GiftCertificateFrontend: Starting initialization');
+
     const container = document.querySelector(".bif-bookitfast-certificate-form");
-    if (!container) return;
+    if (!container) {
+        console.error('GiftCertificateFrontend: Container .bif-bookitfast-certificate-form not found');
+        return;
+    }
+
+    console.log('GiftCertificateFrontend: Container found', container);
+
     const stripePk = container.getAttribute("data-stripe-pk");
     const surchargeRate = parseFloat(container.getAttribute("data-surcharge-rate"));
 
+    console.log('GiftCertificateFrontend: Stripe PK:', stripePk);
+    console.log('GiftCertificateFrontend: Surcharge rate:', surchargeRate);
+
     // Listen for the "Proceed to Payment" button click.
-    const proceedButton = document.getElementById("gc-proceed-button");
-    if (!proceedButton) return;
+    const proceedButton = document.getElementById("bif-gc-proceed-button");
+    if (!proceedButton) {
+        console.error('GiftCertificateFrontend: Button #bif-gc-proceed-button not found');
+        return;
+    }
+
+    console.log('GiftCertificateFrontend: Button found, adding click listener', proceedButton);
 
     proceedButton.addEventListener("click", () => {
+        console.log('GiftCertificateFrontend: Make Payment button clicked');
+
         const { isValid, errorMessages } = validateForm();
+        console.log('GiftCertificateFrontend: Form validation result:', { isValid, errorMessages });
 
         if (!isValid) {
             // Display error messages
-            const errorContainer = document.getElementById('gc-error-container');
-            errorContainer.innerHTML = errorMessages.map(msg => `<p>${msg}</p>`).join('');
-            errorContainer.style.display = 'block';
+            const errorContainer = document.getElementById('bif-gc-error-container');
+            if (errorContainer) {
+                errorContainer.innerHTML = errorMessages.map(msg => `<p>${msg}</p>`).join('');
+                errorContainer.style.display = 'block';
+            } else {
+                console.error('GiftCertificateFrontend: Error container #bif-gc-error-container not found');
+            }
             return;
         }
 
         // Clear any previous error messages
-        document.getElementById('gc-error-container').style.display = 'none';
+        const errorContainer = document.getElementById('bif-gc-error-container');
+        if (errorContainer) {
+            errorContainer.style.display = 'none';
+        }
 
         // Get the entered amount.
-        const amountField = container.querySelector("#gc_amount");
+        const amountField = container.querySelector("#bif-gc_amount");
         let amount = parseFloat(amountField.value);
         if (isNaN(amount)) amount = 0;
+
+        console.log('GiftCertificateFrontend: Amount:', amount);
 
         // Calculate surcharge if applicable:
         // Formula: ((amount + 0.3) / (1 - (surchargeRate/100))) - amount
         const calculatedSurcharge = (((amount + 0.3) / (1 - (surchargeRate / 100))) - amount);
         const totalAmount = parseFloat((amount + calculatedSurcharge).toFixed(2));
 
+        console.log('GiftCertificateFrontend: Calculated surcharge:', calculatedSurcharge);
+        console.log('GiftCertificateFrontend: Total amount:', totalAmount);
+
         proceedButton.disabled = true;
+        console.log('GiftCertificateFrontend: Button disabled, proceeding with payment form');
 
         // Amount calculation complete
 
@@ -216,6 +262,8 @@ function GiftCertificateFrontend() {
         const paymentContainer = document.createElement("div");
         paymentContainer.id = "gift-certificate-payment-form-container";
         container.querySelector("form").appendChild(paymentContainer);
+
+        console.log('GiftCertificateFrontend: Payment container created, rendering React form');
 
         // Render the React payment form.
         ReactDOM.render(
@@ -225,6 +273,7 @@ function GiftCertificateFrontend() {
                     totalAmount: totalAmount,
                     surcharge: calculatedSurcharge.toFixed(2),
                     onPaymentSuccess: (result) => {
+                        console.log('GiftCertificateFrontend: Payment completed successfully', result);
                         // Payment completed successfully
                         // You can redirect or update the UI here.
                     }
@@ -236,7 +285,22 @@ function GiftCertificateFrontend() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    GiftCertificateFrontend();
+    console.log('Gift Certificate Frontend: DOMContentLoaded event fired');
+    console.log('Gift Certificate Frontend: Document ready state:', document.readyState);
+
+    // Add a small delay to ensure all elements are rendered
+    setTimeout(() => {
+        console.log('Gift Certificate Frontend: Initializing after timeout');
+        GiftCertificateFrontend();
+    }, 100);
 });
+
+// Also try immediate initialization if DOM is already loaded
+if (document.readyState === 'loading') {
+    console.log('Gift Certificate Frontend: Document still loading, waiting for DOMContentLoaded');
+} else {
+    console.log('Gift Certificate Frontend: Document already loaded, initializing immediately');
+    GiftCertificateFrontend();
+}
 
 // Frontend initialization complete

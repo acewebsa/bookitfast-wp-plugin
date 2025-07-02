@@ -212,25 +212,16 @@ const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onChe
 
 // Booking Summary Component - Streamlined version
 const BookingSummary = ({ selectedProperties, selectedExtras, nights, total, discountCode, onDiscountCodeChange, onApplyDiscount, checkInDate, summary }) => {
-	const [discountApplied, setDiscountApplied] = useState(false);
-
 	const extrasTotal = Object.values(selectedExtras).flat().reduce((sum, extra) => sum + (extra.amount || 0), 0);
+
+			// Check if discount is actually applied based on summary data
+	const isDiscountApplied = summary && parseFloat(summary.order_discount_code_total || 0) > 0;
 
 	const applyDiscount = () => {
 		if (discountCode.trim()) {
 			onApplyDiscount(discountCode);
-			setDiscountApplied(true);
 		}
 	};
-
-	// Debug: Log summary when it changes
-	console.log('BookingSummary - Summary object:', summary);
-	console.log('BookingSummary - Discount fields:', {
-		order_discount_amount: summary?.order_discount_amount,
-		discount_amount: summary?.discount_amount,
-		discountCode: discountCode,
-		discountApplied: discountApplied
-	});
 
 	if (!selectedProperties || selectedProperties.length === 0) return null;
 
@@ -261,7 +252,7 @@ const BookingSummary = ({ selectedProperties, selectedExtras, nights, total, dis
 							<div className="bif-property-total">
 								<div className="bif-total-row">
 									<span>Property Subtotal</span>
-									<span>${propertySubtotal}</span>
+									<span>${parseFloat(propertySubtotal).toFixed(2)}</span>
 								</div>
 							</div>
 
@@ -272,7 +263,7 @@ const BookingSummary = ({ selectedProperties, selectedExtras, nights, total, dis
 									{property.mandatory_extras.map((extra) => (
 										<div key={extra.id} className="bif-total-row" style={{ fontSize: '0.875rem', color: '#dc2626' }}>
 											<span>{extra.description}</span>
-											<span>${extra.amount}</span>
+											<span>${parseFloat(extra.amount).toFixed(2)}</span>
 										</div>
 									))}
 								</div>
@@ -282,7 +273,7 @@ const BookingSummary = ({ selectedProperties, selectedExtras, nights, total, dis
 							<div className="bif-property-total">
 								<div className="bif-total-row bif-subtotal">
 									<span>Property Total</span>
-									<span>${propertyTotal}</span>
+									<span>${parseFloat(propertyTotal).toFixed(2)}</span>
 								</div>
 							</div>
 
@@ -290,12 +281,12 @@ const BookingSummary = ({ selectedProperties, selectedExtras, nights, total, dis
 							{selectedExtras[property.id] && selectedExtras[property.id].length > 0 && (
 								<div className="bif-optional-extras-summary">
 									<h4 className="bif-daily-breakdown-title">Selected Optional Extras</h4>
-									{selectedExtras[property.id].map((extra) => (
-										<div key={extra.id} className="bif-total-row" style={{ fontSize: '0.875rem', color: '#92400e' }}>
-											<span>{extra.description}</span>
-											<span>${extra.amount}</span>
-										</div>
-									))}
+														{selectedExtras[property.id].map((extra) => (
+						<div key={extra.id} className="bif-total-row" style={{ fontSize: '0.875rem', color: '#92400e' }}>
+							<span>{extra.description}</span>
+							<span>${parseFloat(extra.amount).toFixed(2)}</span>
+						</div>
+					))}
 								</div>
 							)}
 						</div>
@@ -319,26 +310,23 @@ const BookingSummary = ({ selectedProperties, selectedExtras, nights, total, dis
 							Apply
 						</button>
 					</div>
-					{discountApplied && (
+					{isDiscountApplied && (
 						<div className="bif-discount-applied">
 							Discount code applied
 						</div>
 					)}
 				</div>
 
-				{/* Grand Total */}
+								{/* Grand Total */}
 				<div className="bif-grand-total">
 					<div className="bif-total-main">
 						<span>Total Cost</span>
-						<span className="bif-total-amount">${total}</span>
+						<span className="bif-total-amount">${parseFloat(total).toFixed(2)}</span>
 					</div>
-										{/* Show discount if applied */}
-					{summary && (parseFloat(summary.order_discount_amount || summary.discount_amount || 0) > 0) && (
-						<div className="bif-total-breakdown">
-							<div className="bif-breakdown-row">
-								<span>Discount Applied</span>
-								<span>-${parseFloat(summary.order_discount_amount || summary.discount_amount || 0).toFixed(2)}</span>
-							</div>
+										{/* Show discount text if applied */}
+					{summary && parseFloat(summary.order_discount_code_total || 0) > 0 && (
+						<div className="bif-discount-text">
+							Includes discount of ${parseFloat(summary.order_discount_code_total || 0).toFixed(2)}
 						</div>
 					)}
 				</div>
@@ -764,6 +752,15 @@ const MultiEmbedForm = ({
 									</div>
 								)}
 
+																{summary.order_surcharge > 0 && (
+									<div className="bif-surcharge-info">
+										<p>
+											Please note a credit card surcharge applies of {summary.order_deposit_surcharge > 0 && ` $${summary.order_deposit_surcharge} for deposit or `}
+											 ${summary.order_surcharge} for the full payment.
+										</p>
+									</div>
+								)}
+
 								{summary.order_deposit_amount > 0 ? (
 									<div className="bif-payment-buttons">
 										<button
@@ -786,16 +783,6 @@ const MultiEmbedForm = ({
 									>
 										💳 Complete Booking - ${summary.order_payable_now}
 									</button>
-								)}
-
-								{summary.order_surcharge > 0 && (
-									<div className="bif-surcharge-info">
-										<p>
-											Please note a credit card surcharge applies of
-											{summary.order_deposit_surcharge > 0 && ` $${summary.order_deposit_surcharge} for deposit or `}
-											${summary.order_surcharge} for the full payment.
-										</p>
-									</div>
 								)}
 							</div>
 						)}
