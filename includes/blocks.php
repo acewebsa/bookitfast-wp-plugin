@@ -43,9 +43,9 @@ add_action('init', function () {
 	// Register the frontend styles
 	wp_register_style(
 		'bookitfast-multi-embed-styles',
-		plugins_url('../assets/frontend.css', __FILE__),
+		plugins_url('../build/frontend.css', __FILE__),
 		[],
-		filemtime(plugin_dir_path(__FILE__) . '../assets/frontend.css')
+		filemtime(plugin_dir_path(__FILE__) . '../build/frontend.css')
 	);
 
 	// Register the multi-embed block
@@ -77,18 +77,15 @@ add_action('wp_enqueue_scripts', function () {
 	$has_multi_embed = has_block('bookitfast/multi-embed');
 	$has_gift_certificate = has_block('bookitfast/gift-certificate');
 
-	// Always enqueue styles if either block is present
-	if ($has_multi_embed || $has_gift_certificate) {
-		wp_enqueue_style('bookitfast-multi-embed-styles');
-	}
-
-	// Enqueue multi-embed script if that block is present
+	// Enqueue multi-embed styles and script if that block is present
 	if ($has_multi_embed) {
+		wp_enqueue_style('bookitfast-multi-embed-styles');
 		wp_enqueue_script('bookitfast-multi-embed-frontend');
 	}
 
-	// Enqueue gift certificate script if that block is present
+	// Enqueue gift certificate styles and script if that block is present
 	if ($has_gift_certificate) {
+		wp_enqueue_style('bookitfast-gc-styles');
 		wp_enqueue_script('bookitfast-gc-frontend');
 	}
 });
@@ -143,10 +140,19 @@ function bookitfast_register_gift_certificate_block()
 		true
 	);
 
+	// Register gift certificate frontend styles
+	wp_register_style(
+		'bookitfast-gc-styles',
+		plugins_url('../build/gift-certificate-frontend.css', __FILE__),
+		[],
+		filemtime(plugin_dir_path(__FILE__) . '../build/gift-certificate-frontend.css')
+	);
+
 	// Register the block
 	register_block_type('bookitfast/gift-certificate', array(
 		'editor_script' => 'bookitfast-gc-editor',
 		'script' => 'bookitfast-gc-frontend',
+		'style' => 'bookitfast-gc-styles',
 		'render_callback' => 'bookitfast_render_gift_certificate_block',
 		'attributes' => array(
 			'buttonColor' => array(
