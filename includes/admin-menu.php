@@ -109,7 +109,7 @@ function bookitfast_api_login_settings_page()
 				<form method="post" class="bookitfast-login-form">
 					<?php wp_nonce_field('bookitfast_login', 'bookitfast_login_nonce'); ?>
 					<?php
-					if (isset($_POST['bookitfast_login_nonce']) && wp_verify_nonce(wp_unslash($_POST['bookitfast_login_nonce']), 'bookitfast_login')) {
+					if (isset($_POST['bookitfast_login_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['bookitfast_login_nonce'])), 'bookitfast_login')) {
 						if (isset($_POST['email']) && isset($_POST['password'])) {
 							$email = sanitize_email(wp_unslash($_POST['email']));
 							$password = sanitize_text_field(wp_unslash($_POST['password']));
