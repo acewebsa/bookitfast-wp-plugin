@@ -211,7 +211,25 @@ const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onChe
 };
 
 // Booking Summary Component - Streamlined version
-const BookingSummary = ({ selectedProperties, selectedExtras, nights, total, discountCode, onDiscountCodeChange, onApplyDiscount, checkInDate, summary }) => {
+const BookingSummary = ({
+	selectedProperties,
+	selectedExtras,
+	nights,
+	total,
+	discountCode,
+	onDiscountCodeChange,
+	onApplyDiscount,
+	checkInDate,
+	summary,
+	showRedeemGiftCertificate = false,
+	giftCertificate,
+	onGiftCertificateChange,
+	showGiftCertificateForm,
+	onTriggerShowGiftCertificate,
+	onApplyGiftCertificate,
+	gcResult,
+	gcLoading = false
+}) => {
 	const extrasTotal = Object.values(selectedExtras).flat().reduce((sum, extra) => sum + (extra.amount || 0), 0);
 
 			// Check if discount is actually applied based on summary data
@@ -317,13 +335,120 @@ const BookingSummary = ({ selectedProperties, selectedExtras, nights, total, dis
 					)}
 				</div>
 
+				{/* Gift Certificate */}
+				{showRedeemGiftCertificate && summary && (
+					<div className="bif-summary-section">
+						<div className="bif-gift-certificate-section">
+							{!showGiftCertificateForm ? (
+								<button
+									className="bif-btn bif-btn-secondary"
+									onClick={onTriggerShowGiftCertificate}
+								>
+									Apply Gift Certificate
+								</button>
+							) : (
+								<div className="bif-gift-certificate-form">
+									<div className="bif-form-row">
+										<div className="bif-form-field">
+											<label>Certificate Number:</label>
+											<input
+												type="text"
+												value={giftCertificate.number}
+												onChange={(e) => onGiftCertificateChange({
+													...giftCertificate,
+													number: e.target.value
+												})}
+												className="bif-form-control"
+												placeholder="Enter certificate number"
+												disabled={gcLoading}
+											/>
+										</div>
+										<div className="bif-form-field">
+											<label>Pin:</label>
+											<input
+												type="number"
+												value={giftCertificate.pin}
+												onChange={(e) => onGiftCertificateChange({
+													...giftCertificate,
+													pin: e.target.value
+												})}
+												className="bif-form-control"
+												placeholder="Enter pin"
+												disabled={gcLoading}
+											/>
+										</div>
+									</div>
+									<button
+										className="bif-btn bif-btn-secondary"
+										onClick={onApplyGiftCertificate}
+										disabled={gcLoading}
+									>
+										{gcLoading ? 'Applying...' : 'Apply'}
+									</button>
+								</div>
+							)}
+							{gcResult && gcResult.valid && (
+								<div className="bif-gift-certificate-success">
+									<p>✅ Successfully Applied Gift Certificate</p>
+									<p>{gcResult.result}</p>
+									{(parseFloat(gcResult.total) - parseFloat(gcResult.gc_amount_applied)) === 0 ? (
+										<p><strong>🎉 Your gift certificate covers the full amount! No additional payment required.</strong></p>
+									) : (
+										<>
+											<p>Remaining balance to pay: <strong>${(parseFloat(gcResult.total) - parseFloat(gcResult.gc_amount_applied)).toFixed(2)}</strong></p>
+											<p style={{fontSize: '0.875rem', color: '#6b7280'}}>*Credit card surcharge will be added at payment</p>
+										</>
+									)}
+									<p>Gift Certificate balance after order: <strong>${parseFloat(gcResult.gc_balance_after_order).toFixed(2)}</strong></p>
+								</div>
+							)}
+						</div>
+					</div>
+				)}
+
 								{/* Grand Total */}
 				<div className="bif-grand-total">
-					<div className="bif-total-main">
-						<span>Total Cost</span>
-						<span className="bif-total-amount">${parseFloat(total).toFixed(2)}</span>
+					{/* Show original total if gift certificate applied */}
+					{gcResult && gcResult.valid && (
+						<div className="bif-total-row">
+							<span>Order Total</span>
+							<span>${parseFloat(gcResult.total || summary.order_grand_total).toFixed(2)}</span>
+						</div>
+					)}
+
+					{/* Show gift certificate deduction */}
+					{gcResult && gcResult.valid && (
+						<div className="bif-total-row" style={{color: '#059669'}}>
+							<span>Gift Certificate Applied</span>
+							<span>-${parseFloat(gcResult.gc_amount_applied).toFixed(2)}</span>
+						</div>
+					)}
+
+										<div className="bif-total-main">
+												<span>
+							{gcResult && gcResult.valid && (parseFloat(gcResult.total) - parseFloat(gcResult.gc_amount_applied)) === 0
+								? "Total Paid by Gift Certificate"
+								: gcResult && gcResult.valid
+								? "Balance Due"
+								: "Total Cost"
+							}
+						</span>
+						<span className="bif-total-amount">
+							${gcResult && gcResult.valid
+								? (parseFloat(gcResult.total) - parseFloat(gcResult.gc_amount_applied)).toFixed(2)
+								: parseFloat(total).toFixed(2)
+							}
+						</span>
 					</div>
-										{/* Show discount text if applied */}
+
+					{/* Show note about surcharge being added at payment if there's a remaining balance */}
+					{gcResult && gcResult.valid && (parseFloat(gcResult.total) - parseFloat(gcResult.gc_amount_applied)) > 0 && summary && summary.order_has_surcharge && (
+						<div className="bif-surcharge-note" style={{fontSize: '0.875rem', color: '#6b7280', marginTop: '0.5rem'}}>
+							*Credit card surcharge will be added at payment
+						</div>
+					)}
+
+					{/* Show discount text if applied */}
 					{summary && parseFloat(summary.order_discount_code_total || 0) > 0 && (
 						<div className="bif-discount-text">
 							Includes discount of ${parseFloat(summary.order_discount_code_total || 0).toFixed(2)}
@@ -475,6 +600,7 @@ const MultiEmbedForm = ({
 	const [giftCertificate, setGiftCertificate] = useState({ number: "", pin: "" });
 	const [showGiftCertificateForm, setShowGiftCertificateForm] = useState(false);
 	const [gcResult, setGcResult] = useState(null);
+	const [gcLoading, setGcLoading] = useState(false);
 	const [selectedOptionalExtras, setSelectedOptionalExtras] = useState({});
 	const [showProperties, setShowProperties] = useState(false);
 
@@ -615,6 +741,115 @@ const MultiEmbedForm = ({
 		}
 	};
 
+	// Trigger display of gift certificate form
+	const triggerShowGiftCertificate = () => {
+		setShowGiftCertificateForm(true);
+	};
+
+	// Apply gift certificate via POST request
+	const applyGiftCertificate = async (e) => {
+		e.preventDefault();
+		console.log('Gift Certificate: Apply button clicked');
+		console.log('Gift Certificate Data:', giftCertificate);
+		console.log('Current Summary:', summary);
+
+		if (gcLoading) {
+			console.log('Gift Certificate: Already processing, ignoring click');
+			return;
+		}
+
+		if (!summary) {
+			console.error('Gift Certificate: No summary available');
+			return;
+		}
+
+		if (!giftCertificate.number || !giftCertificate.pin) {
+			console.error('Gift Certificate: Missing number or pin');
+			alert('Please enter both certificate number and pin');
+			return;
+		}
+
+		setGcLoading(true);
+		console.log('Gift Certificate: Setting loading state to true');
+
+				// Prepare summary for gift certificate application
+		// If there are weekly discounts applied, we need to adjust the totals
+		// so the gift certificate is applied to the correct base amount
+		let summaryForGiftCertificate = { ...summary };
+
+				// If there are weekly discounts applied, adjust the summary
+		if (summary.order_weekly_discount > 0) {
+			console.log('Gift Certificate: Weekly discount detected, adjusting summary for gift certificate calculation');
+			console.log('Gift Certificate: Original order_grand_total:', summary.order_grand_total);
+			console.log('Gift Certificate: Order weekly discount:', summary.order_weekly_discount);
+			console.log('Gift Certificate: Order surcharge:', summary.order_surcharge);
+
+			// Calculate the total before weekly discount was applied (excluding surcharge)
+			// Surcharge should only be applied at payment time, not when calculating gift certificate
+			const totalBeforeWeeklyDiscount = parseFloat(summary.order_sub_total) + parseFloat(summary.order_mandatory_extras_total);
+			console.log('Gift Certificate: Total before weekly discount (excluding surcharge):', totalBeforeWeeklyDiscount);
+
+			// Adjust the summary to show totals before weekly discount and without surcharge
+			summaryForGiftCertificate = {
+				...summary,
+				order_grand_total: totalBeforeWeeklyDiscount.toString(),
+				order_total_before_surcharge: totalBeforeWeeklyDiscount,
+				order_payable_now: totalBeforeWeeklyDiscount.toString(),
+				order_surcharge: 0, // Remove surcharge for gift certificate calculation
+				order_has_surcharge: false, // Temporarily disable surcharge for gift certificate calculation
+				// Note: We keep the weekly discount info so the API knows about it
+				// but adjust the base totals for gift certificate calculation
+			};
+
+			console.log('Gift Certificate: Adjusted summary for gift certificate:', summaryForGiftCertificate);
+		}
+
+		const data = {
+			certificate: giftCertificate,
+			summary: summaryForGiftCertificate
+		};
+
+		console.log('Gift Certificate: Sending request with data:', data);
+
+		try {
+			const response = await fetch(`${API_BASE}/bookitfast/v1/apply-gift-certificate`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(data)
+			});
+
+			console.log('Gift Certificate: Response status:', response.status);
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+					const responseData = await response.json();
+		console.log('Gift Certificate: Response data:', responseData);
+
+		if (responseData.valid) {
+			setGcResult(responseData);
+			if (responseData.summary) {
+				setSummary(responseData.summary);
+				console.log('Gift Certificate: Updated summary:', responseData.summary);
+			}
+			console.log('Gift Certificate: Application successful');
+			console.log('Gift Certificate: Order payable now:', responseData.order_payable_now);
+		} else {
+			console.error('Gift Certificate: API returned error:', responseData);
+			alert(responseData.message || 'Failed to apply gift certificate');
+		}
+		} catch (err) {
+			console.error("Gift Certificate: Error applying certificate:", err);
+			alert('Error applying gift certificate. Please try again.');
+		} finally {
+			setGcLoading(false);
+			console.log('Gift Certificate: Setting loading state to false');
+		}
+	};
+
 	const validateCustomerDetails = () => {
 		const errors = {};
 		if (!userDetails.firstName.trim()) errors.firstName = 'First name is required';
@@ -707,6 +942,14 @@ const MultiEmbedForm = ({
 						onApplyDiscount={applyDiscountCode}
 						checkInDate={form.date}
 						summary={summary}
+						showRedeemGiftCertificate={showRedeemGiftCertificate}
+						giftCertificate={giftCertificate}
+						onGiftCertificateChange={setGiftCertificate}
+						showGiftCertificateForm={showGiftCertificateForm}
+						onTriggerShowGiftCertificate={triggerShowGiftCertificate}
+						onApplyGiftCertificate={applyGiftCertificate}
+						gcResult={gcResult}
+						gcLoading={gcLoading}
 					/>
 				)}
 
@@ -752,37 +995,62 @@ const MultiEmbedForm = ({
 									</div>
 								)}
 
-																{summary.order_surcharge > 0 && (
-									<div className="bif-surcharge-info">
-										<p>
-											Please note a credit card surcharge applies of {summary.order_deposit_surcharge > 0 && ` $${summary.order_deposit_surcharge} for deposit or `}
-											 ${summary.order_surcharge} for the full payment.
-										</p>
-									</div>
-								)}
-
-								{summary.order_deposit_amount > 0 ? (
-									<div className="bif-payment-buttons">
+								{/* Check if gift certificate covers full amount */}
+								{gcResult && gcResult.valid && (parseFloat(gcResult.total) - parseFloat(gcResult.gc_amount_applied)) === 0 ? (
+									<div className="bif-gift-certificate-payment">
+										<div className="bif-gift-certificate-full-coverage">
+											<p>🎉 <strong>Your gift certificate covers the full booking amount!</strong></p>
+											<p>No additional payment required.</p>
+										</div>
 										<button
-											className="bif-btn bif-btn-primary"
-											onClick={() => handlePaymentOption("deposit")}
+											className="bif-btn bif-btn-primary bif-btn-large"
+											onClick={() => handlePaymentOption("gift")}
 										>
-											💳 Pay Deposit (${summary.order_deposit_amount})
-										</button>
-										<button
-											className="bif-btn bif-btn-primary"
-											onClick={() => handlePaymentOption("full")}
-										>
-											💳 Pay In Full (${summary.order_payable_now})
+											🎁 Complete Booking with Gift Certificate
 										</button>
 									</div>
 								) : (
-									<button
+									<>
+										{/* Show surcharge info only if there's a remaining balance to pay with credit card */}
+										{summary.order_surcharge > 0 && parseFloat(summary.order_payable_now || 0) > 0 && (
+											<div className="bif-surcharge-info">
+												<p>
+													Please note a credit card surcharge applies of {summary.order_deposit_surcharge > 0 && ` $${summary.order_deposit_surcharge} for deposit or `}
+													 ${summary.order_surcharge} for the full payment.
+												</p>
+											</div>
+										)}
+
+										{summary.order_deposit_amount > 0 ? (
+											<div className="bif-payment-buttons">
+												<button
+													className="bif-btn bif-btn-primary"
+													onClick={() => handlePaymentOption("deposit")}
+												>
+													💳 Pay Deposit (${summary.order_deposit_amount})
+												</button>
+																								<button
+													className="bif-btn bif-btn-primary"
+													onClick={() => handlePaymentOption("full")}
+												>
+													💳 Pay In Full (${gcResult && gcResult.valid
+														? parseFloat(gcResult.order_payable_now).toFixed(2)
+														: summary.order_payable_now
+													})
+												</button>
+											</div>
+																		) : (
+																		<button
 										className="bif-btn bif-btn-primary bif-btn-large"
 										onClick={() => handlePaymentOption("full")}
 									>
-										💳 Complete Booking - ${summary.order_payable_now}
+										💳 Complete Booking - ${gcResult && gcResult.valid
+											? parseFloat(gcResult.order_payable_now).toFixed(2)
+											: summary.order_payable_now
+										}
 									</button>
+								)}
+									</>
 								)}
 							</div>
 						)}
@@ -790,17 +1058,27 @@ const MultiEmbedForm = ({
 				)}
 
 				{/* Payment Form */}
-				{stripePromise && summary && showPaymentForm && (
+				{summary && showPaymentForm && (
 					<div className="bif-payment-form-container">
-						<Elements stripe={stripePromise}>
+						{selectedPaymentOption === "gift" ? (
 							<PaymentForm
 								summary={summary}
 								propertyIds={propertyIdsString.split(',').map(id => parseInt(id.trim()))}
 								userDetails={userDetails}
 								paymentType={selectedPaymentOption}
-								giftCertificate={selectedPaymentOption === "gift" ? gcResult : null}
+								giftCertificate={gcResult}
 							/>
-						</Elements>
+						) : stripePromise && (
+							<Elements stripe={stripePromise}>
+								<PaymentForm
+									summary={summary}
+									propertyIds={propertyIdsString.split(',').map(id => parseInt(id.trim()))}
+									userDetails={userDetails}
+									paymentType={selectedPaymentOption}
+									giftCertificate={gcResult}
+								/>
+							</Elements>
+						)}
 					</div>
 				)}
 			</div>
@@ -820,33 +1098,12 @@ const PaymentForm = ({ summary, propertyIds, userDetails, paymentType, giftCerti
 	const handleSubmitPayment = async (event) => {
 		event.preventDefault();
 
-		if (!stripe || !elements) {
-			console.error("Stripe.js has not loaded yet.");
-			return;
-		}
-
 		setLoading(true);
 		setError("");
 
-		const cardElement = elements.getElement(CardElement);
 		try {
-			const { paymentMethod, error } = await stripe.createPaymentMethod({
-				type: "card",
-				card: cardElement,
-			});
-
-			if (error) {
-				console.error(error);
-				setError(error.message);
-				setLoading(false);
-				return;
-			}
-
-			const amount = paymentType === "deposit" ? summary.order_deposit_amount : summary.order_payable_now;
-
-			const payload = {
-				stripePaymentMethodId: paymentMethod.id,
-				amount: amount,
+			let payload = {
+				amount: paymentType === "deposit" ? summary.order_deposit_amount : summary.order_payable_now,
 				currency: "AUD",
 				summary: summary,
 				propertyIds: typeof propertyIds === 'string' ? propertyIds.split(',').map(id => parseInt(id.trim())) : propertyIds,
@@ -854,9 +1111,38 @@ const PaymentForm = ({ summary, propertyIds, userDetails, paymentType, giftCerti
 				paymentType: paymentType,
 			};
 
+			// Handle gift certificate payment (no Stripe needed)
 			if (paymentType === "gift" && giftCertificate) {
 				payload.giftCertificateApplied = true;
 				payload.giftCertificate = giftCertificate;
+				payload.amount = 0; // No credit card payment needed
+			} else {
+				// Handle credit card payment (Stripe required)
+				if (!stripe || !elements) {
+					console.error("Stripe.js has not loaded yet.");
+					return;
+				}
+
+				const cardElement = elements.getElement(CardElement);
+				const { paymentMethod, error } = await stripe.createPaymentMethod({
+					type: "card",
+					card: cardElement,
+				});
+
+				if (error) {
+					console.error(error);
+					setError(error.message);
+					setLoading(false);
+					return;
+				}
+
+				payload.stripePaymentMethodId = paymentMethod.id;
+
+				// If gift certificate is partially applied, include it in the payload
+				if (giftCertificate && giftCertificate.valid) {
+					payload.giftCertificateApplied = true;
+					payload.giftCertificate = giftCertificate;
+				}
 			}
 
 			const response = await fetch(`${API_BASE}/bookitfast/v1/process-payment`, {
@@ -886,7 +1172,7 @@ const PaymentForm = ({ summary, propertyIds, userDetails, paymentType, giftCerti
 
 	return (
 		<div className="bif-payment-container">
-			<h3>💳 Payment Details</h3>
+			<h3>{paymentType === "gift" ? "🎁 Gift Certificate Payment" : "💳 Payment Details"}</h3>
 			{error && <div className="bif-error-message">{error}</div>}
 			{paymentSuccess ? (
 				<div className="bif-success-message">
@@ -898,6 +1184,21 @@ const PaymentForm = ({ summary, propertyIds, userDetails, paymentType, giftCerti
 							</a>
 						</p>
 					)}
+				</div>
+			) : paymentType === "gift" ? (
+				<div className="bif-gift-certificate-payment-form">
+					<div className="bif-gift-certificate-summary">
+						<p>🎁 <strong>Paying with Gift Certificate</strong></p>
+						<p>Amount: <strong>${parseFloat(giftCertificate.gc_amount_applied || 0).toFixed(2)}</strong></p>
+						<p>No credit card required - your gift certificate will be charged automatically.</p>
+					</div>
+					<button
+						onClick={handleSubmitPayment}
+						disabled={loading}
+						className="bif-btn bif-btn-primary bif-btn-large"
+					>
+						{loading ? "Processing..." : "Complete Booking"}
+					</button>
 				</div>
 			) : (
 				<form onSubmit={handleSubmitPayment} className="bif-stripe-form">

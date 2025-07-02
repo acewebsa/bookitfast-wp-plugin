@@ -1709,3 +1709,72 @@ border:1px solid #ced4da;
 	}
 }
 
+/* Gift Certificate Section */
+.bif-gift-certificate-section {
+	margin-top: 1rem;
+}
+
+.bif-gift-certificate-form {
+	background: #f8fafc;
+	border-radius: 0.5rem;
+	padding: 1rem;
+	margin-top: 1rem;
+	border: 1px solid #e2e8f0;
+}
+
+.bif-gift-certificate-form .bif-form-row {
+	display: flex;
+	gap: 1rem;
+	margin-bottom: 1rem;
+}
+
+.bif-gift-certificate-form .bif-form-field {
+	flex: 1;
+}
+
+.bif-gift-certificate-form .bif-form-field label {
+	display: block;
+	font-weight: 500;
+	color: #374151;
+	margin-bottom: 0.25rem;
+	font-size: 0.875rem;
+}
+
+.bif-gift-certificate-form .bif-form-control {
+	width: 100%;
+	padding: 0.5rem;
+	border: 1px solid #d1d5db;
+	border-radius: 0.375rem;
+	font-size: 0.875rem;
+}
+
+.bif-gift-certificate-form .bif-form-control:focus {
+	outline: none;
+	border-color: #2563eb;
+	box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.bif-gift-certificate-success {
+	background: #f0fdf4;
+	color: #16a34a;
+	border: 1px solid #bbf7d0;
+	border-radius: 0.5rem;
+	padding: 1rem;
+	margin-top: 1rem;
+}
+
+.bif-gift-certificate-success p {
+	margin: 0.25rem 0;
+}
+
+.bif-gift-certificate-success p:first-child {
+	font-weight: 600;
+}
+
+@media (max-width: 768px) {
+	.bif-gift-certificate-form .bif-form-row {
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+}
+
