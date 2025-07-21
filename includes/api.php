@@ -66,8 +66,8 @@ function bookitfast_fetch_user_data($token)
 	$body = wp_remote_retrieve_body($response);
 	$data = json_decode($body, true);
 
-	if (isset($data['id'])) {
-		return $data; // User information
+	if (isset($data['user']['id'])) {
+		return $data['user']; // User information
 	}
 
 	return new WP_Error('user_data_error', 'Failed to fetch user information.');
