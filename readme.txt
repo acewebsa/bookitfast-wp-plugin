@@ -49,32 +49,10 @@ When users interact with booking forms, the following data is transmitted to Boo
 * Active Book It Fast account required (sign up at https://bookitfast.app)
 * Valid API credentials for service authentication
 
-**Source Code and Build Information:**
-This plugin uses webpack and @wordpress/scripts for building JavaScript and CSS assets. All source code is available in the following locations:
+**Source Code:**
+The complete source code for this plugin is available at: https://github.com/acewebsa/bookitfast-wp-plugin
 
-* **JavaScript Source Files:** Located in the `src/` directory
-  - `src/editor.js` - Block editor components
-  - `src/frontend.js` - Frontend JavaScript functionality
-  - `src/gift-certificate-frontend.js` - Gift certificate form functionality
-  - `src/components/` - React components
-
-* **Built Files:** Located in the `build/` directory (generated from source)
-  - `build/editor.js` - Compiled editor scripts
-  - `build/frontend.js` - Compiled frontend scripts
-  - `build/gift-certificate-frontend.js` - Compiled gift certificate scripts
-  - CSS files with RTL support
-
-**Build Instructions:**
-To rebuild the assets from source code:
-1. Install Node.js (version 16 or higher recommended)
-2. Run `npm install` to install dependencies
-3. Run `npm run build` to build production assets
-4. Run `npm run start` for development mode with file watching
-
-The plugin uses the following dependencies:
-* @wordpress/scripts - WordPress build tools
-* @stripe/react-stripe-js - Stripe payment integration
-* @stripe/stripe-js - Stripe JavaScript SDK
+All JavaScript and CSS files in the `build/` directory are compiled from source files in the `src/` directory using @wordpress/scripts and webpack. Build instructions and development setup details are available in the GitHub repository.
 
 == Installation ==
 
