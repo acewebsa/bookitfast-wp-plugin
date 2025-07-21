@@ -33,9 +33,19 @@ add_action('admin_menu', function () {
  * Enqueue admin styles for Book It Fast
  */
 add_action('admin_enqueue_scripts', function ($hook) {
-	if (strpos($hook, 'bookitfast') !== false) {
-		wp_enqueue_style('bookitfast-admin-styles', plugins_url('assets/admin.css', dirname(__FILE__)), array(), '1.0.0');
-	}
+        if (strpos($hook, 'bookitfast') !== false) {
+                wp_enqueue_style('bookitfast-admin-styles', plugins_url('assets/admin.css', dirname(__FILE__)), array(), '1.0.0');
+
+                // Register and enqueue a lightweight admin script for inline additions
+                wp_register_script('bookitfast-admin-script', '', array(), '1.0.0', true);
+                wp_enqueue_script('bookitfast-admin-script');
+
+                // If a successful login just occurred, trigger a page reload
+                if (get_transient('bookitfast_login_reload')) {
+                        wp_add_inline_script('bookitfast-admin-script', 'setTimeout(function(){ window.location.reload(); }, 2000);');
+                        delete_transient('bookitfast_login_reload');
+                }
+        }
 });
 
 /**
@@ -117,11 +127,11 @@ function bookitfast_api_login_settings_page()
 
 							if (is_wp_error($token)) {
 								echo '<div class="notice notice-error inline"><p><strong>Login failed:</strong> ' . esc_html($token->get_error_message()) . '</p></div>';
-							} else {
-								bookitfast_store_token($token);
-								echo '<div class="notice notice-success inline"><p><strong>Success!</strong> Login successful! Your token has been stored securely.</p></div>';
-								echo '<script>setTimeout(function() { window.location.reload(); }, 2000);</script>';
-							}
+                                                        } else {
+                                                                bookitfast_store_token($token);
+                                                                set_transient('bookitfast_login_reload', true, 30);
+                                                                echo '<div class="notice notice-success inline"><p><strong>Success!</strong> Login successful! Your token has been stored securely.</p></div>';
+                                                        }
 						}
 					}
 					?>
