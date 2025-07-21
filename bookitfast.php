@@ -6,7 +6,7 @@
  * Description:     Connect your WordPress site with Book It Fast to display booking calendars, manage property availability, and handle reservations directly from your website.
  * Author:          book-it-fast
  * Author URI:      https://bookitfast.app
- * Text Domain:     bookitfast
+ * Text Domain:     book-it-fast
  * Domain Path:     /languages
  * Version:         0.1.0
  * Requires at least: 5.0
@@ -61,39 +61,16 @@ function bookitfast_activate()
 
 // Register REST API routes
 add_action('rest_api_init', function () {
-	// Register the properties endpoint
-	register_rest_route('bookitfast/v1', '/properties', array(
-		'methods' => 'GET',
-		'callback' => 'bookitfast_get_user_properties',
-		'permission_callback' => '__return_true',
-	));
-
-	// Register the availability endpoint
-	register_rest_route('bookitfast/v1', '/availability', array(
-		'methods' => 'POST',
-		'callback' => 'bookitfast_check_availability',
-		'permission_callback' => '__return_true',
-	));
-
-	// Register the availability summary endpoint
-	register_rest_route('bookitfast/v1', '/availability/summary', array(
-		'methods' => 'POST',
-		'callback' => 'bookitfast_get_availability_summary',
-		'permission_callback' => '__return_true',
-	));
-
-	// Register the apply-discount endpoint
-	register_rest_route('bookitfast/v1', '/multi/availability/apply-discount', array(
-		'methods' => 'POST',
-		'callback' => 'bookitfast_apply_discount',
-		'permission_callback' => '__return_true',
-	));
-
-	// Register the apply-gift-certificate endpoint
+	/**
+	 * Register the apply-gift-certificate endpoint
+	 * This endpoint is intentionally PUBLIC to allow guests to apply gift certificates
+	 * during the booking process without requiring authentication.
+	 * Security: Input validation and sanitization is performed in the callback function.
+	 */
 	register_rest_route('bookitfast/v1', '/apply-gift-certificate', array(
 		'methods' => 'POST',
 		'callback' => 'bookitfast_apply_gift_certificate',
-		'permission_callback' => '__return_true',
+		'permission_callback' => '__return_true', // Intentionally public for guest bookings
 	));
 });
 
@@ -154,6 +131,13 @@ function bookitfast_enqueue_gift_certificate_frontend()
 			array('wp-element'),
 			filemtime(plugin_dir_path(__FILE__) . 'build/gift-certificate-frontend.js'),
 			true
+		);
+
+		wp_enqueue_style(
+			'bookitfast-gc-frontend',
+			plugins_url('assets/gift-certificate.css', __FILE__),
+			array(),
+			filemtime(plugin_dir_path(__FILE__) . 'assets/gift-certificate.css')
 		);
 	}
 }

@@ -18,6 +18,7 @@ function validateForm() {
         { id: 'bif-customer_last_name', name: 'Your Last Name' },
         { id: 'bif-customer_phone', name: 'Your Phone' },
         { id: 'bif-customer_email', name: 'Your Email' },
+        { id: 'bif-consent-data-sharing', name: 'Data Sharing Consent', type: 'checkbox' },
     ];
 
     let isValid = true;
@@ -29,12 +30,23 @@ function validateForm() {
             console.error(`Element with ID ${field.id} not found`);
             return;
         }
-        if (!element.value.trim()) {
-            isValid = false;
-            errorMessages.push(`${field.name} is required.`);
-            element.classList.add('is-invalid');
+
+        if (field.type === 'checkbox') {
+            if (!element.checked) {
+                isValid = false;
+                errorMessages.push(`${field.name} is required.`);
+                element.classList.add('is-invalid');
+            } else {
+                element.classList.remove('is-invalid');
+            }
         } else {
-            element.classList.remove('is-invalid');
+            if (!element.value.trim()) {
+                isValid = false;
+                errorMessages.push(`${field.name} is required.`);
+                element.classList.add('is-invalid');
+            } else {
+                element.classList.remove('is-invalid');
+            }
         }
     });
 

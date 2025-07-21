@@ -1,5 +1,8 @@
 <?php
 
+// Exit if accessed directly
+if (! defined('ABSPATH')) exit;
+
 /**
  * Fetch user properties from Laravel API.
  *
@@ -100,14 +103,7 @@ function bookitfast_fetch_gift_certificate_settings($token)
 	return new WP_Error('gc_settings_error', 'Failed to fetch gift certificate settings.');
 }
 
-// Add new endpoint for applying gift certificate
-add_action('rest_api_init', function () {
-	register_rest_route('bookitfast/v1', '/apply-gift-certificate', array(
-		'methods' => 'POST',
-		'callback' => 'bookitfast_apply_gift_certificate',
-		'permission_callback' => '__return_true',
-	));
-});
+// Apply gift certificate endpoint is registered in bookitfast.php to avoid duplication
 
 function bookitfast_apply_gift_certificate(WP_REST_Request $request)
 {
@@ -137,10 +133,17 @@ function bookitfast_apply_gift_certificate(WP_REST_Request $request)
 }
 
 add_action('rest_api_init', function () {
+	/**
+	 * Register the process-gift-certificate endpoint
+	 * This endpoint is intentionally PUBLIC to allow guests to purchase gift certificates
+	 * without requiring user registration or authentication.
+	 * Security: All input data is sanitized and validated in the callback function.
+	 * Payment processing is handled securely through the external Book It Fast API.
+	 */
 	register_rest_route('bookitfast/v1', '/process-gift-certificate', array(
 		'methods'             => 'POST',
 		'callback'            => 'bookitfast_process_gift_certificate',
-		'permission_callback' => '__return_true', // For production, add proper permission checks.
+		'permission_callback' => '__return_true', // Intentionally public for guest bookings
 	));
 });
 
@@ -262,21 +265,21 @@ function bookitfast_get_token()
 	return false;
 }
 
-// Add new endpoint for availability
+// Add new endpoint for availability - PUBLIC endpoint for frontend booking forms
 add_action('rest_api_init', function () {
 	register_rest_route('bookitfast/v1', '/availability', array(
 		'methods' => 'POST',
 		'callback' => 'bookitfast_get_availability',
-		'permission_callback' => '__return_true',
+		'permission_callback' => '__return_true', // Intentionally public for booking forms
 	));
 });
 
-// Add new endpoint for availability summary
+// Add new endpoint for availability summary - PUBLIC endpoint for frontend booking forms
 add_action('rest_api_init', function () {
 	register_rest_route('bookitfast/v1', '/availability/summary', array(
 		'methods' => 'POST',
 		'callback' => 'bookitfast_get_availability_summary',
-		'permission_callback' => '__return_true',
+		'permission_callback' => '__return_true', // Intentionally public for booking forms
 	));
 });
 
@@ -440,7 +443,7 @@ add_action('rest_api_init', function () {
 	register_rest_route('bookitfast/v1', '/process-payment', array(
 		'methods' => 'POST',
 		'callback' => 'bookitfast_process_payment',
-		'permission_callback' => '__return_true',
+		'permission_callback' => '__return_true', // Intentionally public for guest bookings
 	));
 });
 
@@ -448,7 +451,9 @@ add_action('rest_api_init', function () {
 	register_rest_route('bookitfast/v1', '/properties', [
 		'methods' => 'GET',
 		'callback' => 'bookitfast_get_user_properties',
-		'permission_callback' => '__return_true',
+		'permission_callback' => function () {
+			return current_user_can('read');
+		},
 	]);
 });
 // ... rest of the code ...

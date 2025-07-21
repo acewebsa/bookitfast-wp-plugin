@@ -1,5 +1,8 @@
 <?php
 
+// Exit if accessed directly
+if (! defined('ABSPATH')) exit;
+
 function bookitfast_sanitize_and_validate_gc_data($data)
 {
     $errors = [];
@@ -70,301 +73,19 @@ function bookitfast_render_gift_certificate_block($attributes)
 
     $surchargeRate = 1.75; // percent
 
+    // Add inline CSS custom properties for dynamic theming
+    wp_add_inline_style('bookitfast-gc-frontend', "
+        .bif-bookitfast-certificate-form {
+            --bif-button-color: {$buttonColor};
+            --bif-button-color-alpha: {$buttonColor}dd;
+            --bif-button-color-focus: {$buttonColor}1a;
+            --bif-button-color-shadow: {$buttonColor}4d;
+            --bif-button-color-shadow-hover: {$buttonColor}66;
+        }
+    ");
+
     ob_start();
 ?>
-    <style>
-        .bif-bookitfast-certificate-form {
-            margin: 0 auto;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            overflow: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-        }
-
-        .bif-form-header {
-            background: linear-gradient(135deg, <?php echo esc_attr($buttonColor); ?> 0%, <?php echo esc_attr($buttonColor); ?>dd 100%);
-            color: white;
-            padding: 32px;
-            text-align: center;
-        }
-
-        .bif-form-header h3 {
-            font-size: 28px;
-            font-weight: 700;
-            margin: 0;
-            letter-spacing: -0.025em;
-        }
-
-        .bif-form-content {
-            padding: 32px;
-        }
-
-        .bif-alert {
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 24px;
-            font-weight: 500;
-        }
-
-        .bif-alert-danger {
-            background: #fef2f2;
-            color: #dc2626;
-            border: 1px solid #fecaca;
-        }
-
-        .bif-alert-success {
-            background: #f0fdf4;
-            color: #16a34a;
-            border: 1px solid #bbf7d0;
-        }
-
-        .bif-section {
-            margin-bottom: 40px;
-        }
-
-        .bif-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .bif-section h4 {
-            font-size: 20px;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 20px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #e5e7eb;
-        }
-
-        .bif-form-group {
-            margin-bottom: 20px;
-        }
-
-        .bif-form-group label {
-            display: block;
-            font-weight: 500;
-            color: #374151;
-            margin-bottom: 6px;
-            font-size: 14px;
-        }
-
-        .bif-form-control {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 16px;
-            color: #1f2937;
-            background: white;
-            transition: all 0.2s ease;
-        }
-
-        .bif-form-control:focus {
-            outline: none;
-            border-color: <?php echo esc_attr($buttonColor); ?>;
-            box-shadow: 0 0 0 3px <?php echo esc_attr($buttonColor); ?>1a;
-        }
-
-        .bif-form-control:hover {
-            border-color: #d1d5db;
-        }
-
-        select.bif-form-control {
-            cursor: pointer;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 12px center;
-            background-repeat: no-repeat;
-            background-size: 16px;
-            padding-right: 40px;
-            appearance: none;
-        }
-
-        .bif-form-row {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .bif-user-details-form {
-            padding: 0;
-        }
-
-        .bif-payment-container {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 24px;
-            margin-top: 32px;
-            border: 1px solid #e2e8f0;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .bif-payment-container h3 {
-            font-size: 20px;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 20px;
-        }
-
-        .bif-amount-summary {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 24px;
-            border: 1px solid #e5e7eb;
-        }
-
-        .bif-amount-summary p {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .bif-amount-summary p:last-child {
-            margin-bottom: 0;
-            padding-top: 8px;
-            border-top: 1px solid #e5e7eb;
-            font-weight: 600;
-            color: #1f2937;
-        }
-
-        .bif-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 14px 28px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            min-height: 48px;
-        }
-
-        .bif-btn-primary {
-            background: linear-gradient(135deg, <?php echo esc_attr($buttonColor); ?> 0%, <?php echo esc_attr($buttonColor); ?>dd 100%);
-            color: white;
-            box-shadow: 0 4px 6px -1px <?php echo esc_attr($buttonColor); ?>4d;
-        }
-
-        .bif-btn-primary:hover:not(:disabled) {
-            background: linear-gradient(135deg, <?php echo esc_attr($buttonColor); ?>dd 0%, <?php echo esc_attr($buttonColor); ?> 100%);
-            box-shadow: 0 8px 12px -1px <?php echo esc_attr($buttonColor); ?>66;
-            transform: translateY(-1px);
-        }
-
-        .bif-btn-primary:active {
-            transform: translateY(0);
-        }
-
-        .bif-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        .bif-btn-rounded {
-            border-radius: 24px;
-        }
-
-        .bif-stripe-payment-button {
-            width: 100%;
-            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-            color: white;
-            font-weight: 600;
-            padding: 16px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.3);
-        }
-
-        .bif-stripe-payment-button:hover {
-            background: linear-gradient(135deg, #047857 0%, #059669 100%);
-            box-shadow: 0 8px 12px -1px rgba(5, 150, 105, 0.4);
-            transform: translateY(-1px);
-        }
-
-        .bif-stripe-payment-button:active {
-            transform: translateY(0);
-        }
-
-        .bif-button-container {
-            text-align: center;
-            margin-top: 32px;
-        }
-
-        .StripeElement {
-            background: white;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 12px 16px;
-            transition: border-color 0.2s ease;
-        }
-
-        .StripeElement--focus {
-            border-color: <?php echo esc_attr($buttonColor); ?>;
-            box-shadow: 0 0 0 3px <?php echo esc_attr($buttonColor); ?>1a;
-        }
-
-        .StripeElement--invalid {
-            border-color: #dc2626;
-        }
-
-        .StripeElement iframe {
-            height: 20px;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .bif-form-header {
-                padding: 24px;
-            }
-
-            .bif-form-header h3 {
-                font-size: 24px;
-            }
-
-            .bif-form-content {
-                padding: 24px;
-            }
-
-            .bif-payment-container {
-                padding: 20px;
-                margin-top: 24px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .bif-form-header {
-                padding: 20px;
-            }
-
-            .bif-form-content {
-                padding: 20px;
-            }
-
-            .bif-section {
-                margin-bottom: 32px;
-            }
-        }
-    </style>
-
     <div class="bif-bookitfast-certificate-form"
         data-allow-custom="<?php echo $allowCustom ? 'true' : 'false'; ?>"
         data-surcharge-rate="<?php echo esc_attr($surchargeRate); ?>"
@@ -444,6 +165,18 @@ function bookitfast_render_gift_certificate_block($attributes)
                     </div>
                 </div>
 
+                <!-- Privacy and Terms Consent -->
+                <div class="bif-section">
+                    <div class="bif-form-group">
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" id="bif-consent-data-sharing" name="consent_data_sharing" required>
+                            <span>I consent to my personal information being transmitted to and processed by Book It Fast
+                                (<a href="https://bookitfast.app/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>)
+                                for gift certificate processing and payment purposes.</span>
+                        </label>
+                    </div>
+                </div>
+
                 <!-- Stripe Payment Container -->
                 <div id="bif-stripe-gc-payment">
                     <!-- Stripe Elements container will be injected here if a payment is required -->
@@ -463,10 +196,18 @@ function bookitfast_render_gift_certificate_block($attributes)
 
 
 add_action('rest_api_init', function () {
+    /**
+     * Register the gift certificate settings endpoint
+     * This endpoint is intentionally PUBLIC to allow the frontend gift certificate
+     * form to fetch necessary configuration settings (pricing, limits, etc.) without
+     * requiring user authentication.
+     * Security: Only non-sensitive configuration data is returned. Private keys and
+     * sensitive data are filtered out in the callback function.
+     */
     register_rest_route('bookitfast/v1', '/gc-settings', array(
         'methods'             => 'GET',
         'callback'            => 'bookitfast_get_gc_settings',
-        'permission_callback' => '__return_true',
+        'permission_callback' => '__return_true', // Intentionally public for frontend gift certificate display
     ));
 });
 
@@ -485,10 +226,4 @@ function bookitfast_get_gc_settings(WP_REST_Request $request)
     return rest_ensure_response($settings);
 }
 
-add_action('rest_api_init', function () {
-    register_rest_route('bookitfast/v1', '/process-gift-certificate', array(
-        'methods'             => 'POST',
-        'callback'            => 'bookitfast_process_gift_certificate',
-        'permission_callback' => '__return_true', // For production, add proper permission checks.
-    ));
-});
+// Process gift certificate endpoint is registered in includes/api.php to avoid duplication

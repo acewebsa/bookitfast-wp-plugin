@@ -592,6 +592,7 @@ const MultiEmbedForm = ({
 		comments: "",
 	});
 	const [agreeToTerms, setAgreeToTerms] = useState(false);
+	const [consentToDataSharing, setConsentToDataSharing] = useState(false);
 	const [discountCode, setDiscountCode] = useState(discountCodeFromUrl);
 	const [discountMessage, setDiscountMessage] = useState(null);
 	const [showPaymentForm, setShowPaymentForm] = useState(false);
@@ -857,6 +858,7 @@ const MultiEmbedForm = ({
 		if (!userDetails.email.trim()) errors.email = 'Email is required';
 		if (!userDetails.phone.trim()) errors.phone = 'Phone is required';
 		if (!agreeToTerms) errors.agreeToTerms = 'You must agree to the terms and conditions';
+		if (!consentToDataSharing) errors.consentToDataSharing = 'You must consent to data sharing with Book It Fast service';
 
 		setFormErrors(errors);
 		return Object.keys(errors).length === 0;
@@ -985,6 +987,21 @@ const MultiEmbedForm = ({
 								))}
 							</label>
 							{formErrors.agreeToTerms && <div className="bif-field-error">{formErrors.agreeToTerms}</div>}
+						</div>
+
+						<div className="bif-privacy-consent">
+							<input
+								type="checkbox"
+								id="consentToDataSharing"
+								checked={consentToDataSharing}
+								onChange={() => setConsentToDataSharing(!consentToDataSharing)}
+							/>
+							<label htmlFor="consentToDataSharing">
+								I consent to my personal information being transmitted to and processed by Book It Fast (
+								<a href="https://bookitfast.app/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+								) for booking and payment processing purposes.
+							</label>
+							{formErrors.consentToDataSharing && <div className="bif-field-error">{formErrors.consentToDataSharing}</div>}
 						</div>
 
 						{!showPaymentForm && (

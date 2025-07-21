@@ -1,4 +1,8 @@
 <?php
+
+// Exit if accessed directly
+if (! defined('ABSPATH')) exit;
+
 include_once(plugin_dir_path(__FILE__) . 'gift-certificate.php');
 /**
  * Register all Gutenberg blocks

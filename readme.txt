@@ -13,24 +13,68 @@ Connect your WordPress site with Book It Fast to display booking calendars and m
 
 == Description ==
 
-Book It Fast integrates your WordPress website with the Book It Fast booking platform, allowing you to:
+Book It Fast integrates your WordPress website with the Book It Fast booking platform (https://bookitfast.app), a Software as a Service (SaaS) solution that provides comprehensive property booking and reservation management functionality.
 
-* Display interactive booking calendars on your website
-* Manage property availability and reservations
-* Handle gift certificate purchases and redemptions
-* Process payments through secure integration
-* Synchronize booking data between your website and Book It Fast dashboard
+**External Service Integration:**
+This plugin connects to the Book It Fast API service to provide:
+* Property availability checking and calendar display
+* Secure payment processing through integrated payment gateways
+* Gift certificate creation, validation, and redemption
+* Booking data synchronization and management
+* Real-time reservation updates
 
-The plugin provides Gutenberg blocks for easy integration and connects to your Book It Fast account through secure API authentication.
+**Data Transmission:**
+When users interact with booking forms, the following data is transmitted to Book It Fast servers:
+* Customer details (name, email, phone, address) for booking purposes
+* Payment information for secure transaction processing
+* Booking preferences and special requests
+* Gift certificate information when applicable
+
+**Service Terms and Privacy:**
+* Book It Fast Terms of Service: https://bookitfast.app/terms-of-service
+* Book It Fast Privacy Policy: https://bookitfast.app/privacy-policy
+* Data is processed according to Book It Fast's privacy policy and applicable data protection laws
 
 **Key Features:**
 
 * Multi-property booking calendar display
 * Gift certificate management system
-* Secure payment processing
+* Secure payment processing via Book It Fast service
 * Real-time availability updates
 * Customizable booking forms
 * Admin dashboard for account management
+* Gutenberg blocks for easy content integration
+
+**Prerequisites:**
+* Active Book It Fast account required (sign up at https://bookitfast.app)
+* Valid API credentials for service authentication
+
+**Source Code and Build Information:**
+This plugin uses webpack and @wordpress/scripts for building JavaScript and CSS assets. All source code is available in the following locations:
+
+* **JavaScript Source Files:** Located in the `src/` directory
+  - `src/editor.js` - Block editor components
+  - `src/frontend.js` - Frontend JavaScript functionality
+  - `src/gift-certificate-frontend.js` - Gift certificate form functionality
+  - `src/components/` - React components
+
+* **Built Files:** Located in the `build/` directory (generated from source)
+  - `build/editor.js` - Compiled editor scripts
+  - `build/frontend.js` - Compiled frontend scripts
+  - `build/gift-certificate-frontend.js` - Compiled gift certificate scripts
+  - CSS files with RTL support
+
+**Build Instructions:**
+To rebuild the assets from source code:
+1. Install Node.js (version 16 or higher recommended)
+2. Run `npm install` to install dependencies
+3. Run `npm run build` to build production assets
+4. Run `npm run start` for development mode with file watching
+
+The plugin uses the following dependencies:
+* @wordpress/scripts - WordPress build tools
+* @stripe/react-stripe-js - Stripe payment integration
+* @stripe/stripe-js - Stripe JavaScript SDK
 
 == Installation ==
 
@@ -38,13 +82,18 @@ The plugin provides Gutenberg blocks for easy integration and connects to your B
 2. Activate the plugin through the 'Plugins' screen in WordPress.
 3. Navigate to Book It Fast in your WordPress admin menu.
 4. Go to Login Settings and enter your Book It Fast account credentials.
-5. Once authenticated, you can use the Book It Fast blocks in the Gutenberg editor to display booking calendars on your pages and posts.
+5. Configure data sharing preferences in the plugin settings.
+6. Once authenticated, you can use the Book It Fast blocks in the Gutenberg editor to display booking calendars on your pages and posts.
 
 == Frequently Asked Questions ==
 
 = Do I need a Book It Fast account to use this plugin? =
 
 Yes, you need an active Book It Fast account to use this plugin. You can sign up at https://bookitfast.app
+
+= What data is shared with Book It Fast? =
+
+When customers make bookings, their contact information, booking details, and payment data are securely transmitted to Book It Fast for processing. This data is handled according to Book It Fast's privacy policy.
 
 = How do I connect my WordPress site to Book It Fast? =
 

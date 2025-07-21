@@ -1778,3 +1778,39 @@ border:1px solid #ced4da;
 	}
 }
 
+/* Privacy consent checkboxes */
+.bif-privacy-consent {
+	margin: 1rem 0;
+	padding: 1rem;
+	background: #f8f9fa;
+	border-radius: 0.5rem;
+	border: 1px solid #e2e8f0;
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5rem;
+}
+
+.bif-privacy-consent input[type="checkbox"] {
+	margin-right: 0;
+	transform: scale(1.2);
+	flex-shrink: 0;
+	margin-top: 0.1rem;
+}
+
+.bif-privacy-consent label {
+	line-height: 1.4;
+	font-size: 0.9rem;
+	color: #4a5568;
+	cursor: pointer;
+	flex: 1;
+}
+
+.bif-privacy-consent a {
+	color: #3182ce;
+	text-decoration: none;
+}
+
+.bif-privacy-consent a:hover {
+	text-decoration: underline;
+}
+
