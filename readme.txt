@@ -44,6 +44,7 @@ When users interact with booking forms, the following data is transmitted to Boo
 * Customizable booking forms
 * Admin dashboard for account management
 * Gutenberg blocks for easy content integration
+* Sensitive REST endpoints accept requests only from the same origin for added security
 
 **Prerequisites:**
 * Active Book It Fast account required (sign up at https://bookitfast.app)
