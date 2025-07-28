@@ -60,19 +60,6 @@ function bookitfast_activate()
 }
 
 // Register REST API routes
-add_action('rest_api_init', function () {
-	/**
-	 * Register the apply-gift-certificate endpoint
-	 * This endpoint is intentionally PUBLIC to allow guests to apply gift certificates
-	 * during the booking process without requiring authentication.
-	 * Security: Input validation and sanitization is performed in the callback function.
-	 */
-	register_rest_route('bookitfast/v1', '/apply-gift-certificate', array(
-		'methods' => 'POST',
-		'callback' => 'bookitfast_apply_gift_certificate',
-		'permission_callback' => '__return_true', // Intentionally public for guest bookings
-	));
-});
 
 // Function to authenticate with Laravel API
 function bookitfast_api_authenticate($email, $password)
