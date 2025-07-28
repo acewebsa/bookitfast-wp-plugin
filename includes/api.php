@@ -1,7 +1,38 @@
 <?php
 
 // Exit if accessed directly
-if (! defined('ABSPATH')) exit;
+if (! defined('ABSPATH')) {
+    exit;
+}
+
+/**
+ * Verify REST requests originate from this site.
+ *
+ * Checks the HTTP referer header or a valid REST nonce to ensure the request
+ * was initiated from the same WordPress site, preventing cross-site requests.
+ *
+ * @param WP_REST_Request|null $request Current request object.
+ * @return bool True if request is local, false otherwise.
+ */
+function bookitfast_only_local($request = null)
+{
+        $home = home_url();
+        if (isset($_SERVER['HTTP_REFERER'])) {
+                $ref = esc_url_raw($_SERVER['HTTP_REFERER']);
+                if (strpos($ref, $home) === 0) {
+                        return true;
+                }
+        }
+
+        if ($request instanceof WP_REST_Request) {
+                $nonce = $request->get_header('X-WP-Nonce');
+                if ($nonce && wp_verify_nonce($nonce, 'wp_rest')) {
+                        return true;
+                }
+        }
+
+        return false;
+}
 
 /**
  * Fetch user properties from Laravel API.
@@ -140,11 +171,11 @@ add_action('rest_api_init', function () {
 	 * Security: All input data is sanitized and validated in the callback function.
 	 * Payment processing is handled securely through the external Book It Fast API.
 	 */
-	register_rest_route('bookitfast/v1', '/process-gift-certificate', array(
-		'methods'             => 'POST',
-		'callback'            => 'bookitfast_process_gift_certificate',
-		'permission_callback' => '__return_true', // Intentionally public for guest bookings
-	));
+       register_rest_route('bookitfast/v1', '/process-gift-certificate', array(
+               'methods'             => 'POST',
+               'callback'            => 'bookitfast_process_gift_certificate',
+               'permission_callback' => 'bookitfast_only_local', // Restrict to same-origin requests
+       ));
 });
 
 function bookitfast_process_gift_certificate(WP_REST_Request $request)
@@ -440,11 +471,11 @@ function bookitfast_process_payment(WP_REST_Request $request)
 }
 
 add_action('rest_api_init', function () {
-	register_rest_route('bookitfast/v1', '/process-payment', array(
-		'methods' => 'POST',
-		'callback' => 'bookitfast_process_payment',
-		'permission_callback' => '__return_true', // Intentionally public for guest bookings
-	));
+       register_rest_route('bookitfast/v1', '/process-payment', array(
+               'methods' => 'POST',
+               'callback' => 'bookitfast_process_payment',
+               'permission_callback' => 'bookitfast_only_local', // Restrict to same-origin requests
+       ));
 });
 
 add_action('rest_api_init', function () {
