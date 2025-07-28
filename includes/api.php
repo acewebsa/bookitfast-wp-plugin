@@ -131,7 +131,22 @@ function bookitfast_fetch_gift_certificate_settings($token)
 		return $data['settings'];
 	}
 
-	return new WP_Error('gc_settings_error', 'Failed to fetch gift certificate settings.');
+        return new WP_Error('gc_settings_error', 'Failed to fetch gift certificate settings.');
+}
+
+function bookitfast_get_gc_settings(WP_REST_Request $request)
+{
+        $token = bookitfast_get_token();
+        if (! $token) {
+                return new WP_Error('no_token', 'No API token found.', ['status' => 401]);
+        }
+
+        $settings = bookitfast_fetch_gc_settings($token);
+        if (is_wp_error($settings)) {
+                return $settings;
+        }
+
+        return rest_ensure_response($settings);
 }
 
 // Apply gift certificate endpoint is registered in bookitfast.php to avoid duplication
@@ -174,7 +189,23 @@ add_action('rest_api_init', function () {
        register_rest_route('bookitfast/v1', '/process-gift-certificate', array(
                'methods'             => 'POST',
                'callback'            => 'bookitfast_process_gift_certificate',
-               'permission_callback' => 'bookitfast_only_local', // Restrict to same-origin requests
+               'permission_callback' => 'bookitfast_only_local',
+       ));
+});
+
+add_action('rest_api_init', function () {
+       register_rest_route('bookitfast/v1', '/apply-gift-certificate', array(
+               'methods'             => 'POST',
+               'callback'            => 'bookitfast_apply_gift_certificate',
+               'permission_callback' => 'bookitfast_only_local',
+       ));
+});
+
+add_action('rest_api_init', function () {
+       register_rest_route('bookitfast/v1', '/gc-settings', array(
+               'methods'             => 'GET',
+               'callback'            => 'bookitfast_get_gc_settings',
+               'permission_callback' => 'bookitfast_only_local',
        ));
 });
 
@@ -296,21 +327,21 @@ function bookitfast_get_token()
 	return false;
 }
 
-// Add new endpoint for availability - PUBLIC endpoint for frontend booking forms
+// Add new endpoint for availability
 add_action('rest_api_init', function () {
 	register_rest_route('bookitfast/v1', '/availability', array(
 		'methods' => 'POST',
 		'callback' => 'bookitfast_get_availability',
-		'permission_callback' => '__return_true', // Intentionally public for booking forms
+		'permission_callback' => 'bookitfast_only_local', // Restricted to same-origin requests
 	));
 });
 
-// Add new endpoint for availability summary - PUBLIC endpoint for frontend booking forms
+// Add new endpoint for availability summary
 add_action('rest_api_init', function () {
 	register_rest_route('bookitfast/v1', '/availability/summary', array(
 		'methods' => 'POST',
 		'callback' => 'bookitfast_get_availability_summary',
-		'permission_callback' => '__return_true', // Intentionally public for booking forms
+		'permission_callback' => 'bookitfast_only_local', // Restricted to same-origin requests
 	));
 });
 
@@ -483,7 +514,7 @@ add_action('rest_api_init', function () {
 		'methods' => 'GET',
 		'callback' => 'bookitfast_get_user_properties',
 		'permission_callback' => function () {
-			return current_user_can('read');
+			return current_user_can('manage_options');
 		},
 	]);
 });

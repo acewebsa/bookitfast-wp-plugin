@@ -195,35 +195,5 @@ function bookitfast_render_gift_certificate_block($attributes)
 }
 
 
-add_action('rest_api_init', function () {
-    /**
-     * Register the gift certificate settings endpoint
-     * This endpoint is intentionally PUBLIC to allow the frontend gift certificate
-     * form to fetch necessary configuration settings (pricing, limits, etc.) without
-     * requiring user authentication.
-     * Security: Only non-sensitive configuration data is returned. Private keys and
-     * sensitive data are filtered out in the callback function.
-     */
-    register_rest_route('bookitfast/v1', '/gc-settings', array(
-        'methods'             => 'GET',
-        'callback'            => 'bookitfast_get_gc_settings',
-        'permission_callback' => '__return_true', // Intentionally public for frontend gift certificate display
-    ));
-});
-
-function bookitfast_get_gc_settings(WP_REST_Request $request)
-{
-    // Get the token from your storage
-    $token = bookitfast_get_token();
-    if (! $token) {
-        return new WP_Error('no_token', 'No API token found.', array('status' => 401));
-    }
-
-    $settings = bookitfast_fetch_gc_settings($token);
-    if (is_wp_error($settings)) {
-        return $settings;
-    }
-    return rest_ensure_response($settings);
-}
 
 // Process gift certificate endpoint is registered in includes/api.php to avoid duplication
