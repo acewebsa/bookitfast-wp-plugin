@@ -17,8 +17,8 @@ if (! defined('ABSPATH')) {
 function bookitfast_only_local($request = null)
 {
         $home = home_url();
-        if (isset($_SERVER['HTTP_REFERER'])) {
-                $ref = esc_url_raw($_SERVER['HTTP_REFERER']);
+       if (isset($_SERVER['HTTP_REFERER'])) {
+               $ref = esc_url_raw(wp_unslash($_SERVER['HTTP_REFERER']));
                 if (strpos($ref, $home) === 0) {
                         return true;
                 }
