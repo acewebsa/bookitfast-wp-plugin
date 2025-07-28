@@ -622,12 +622,12 @@ const MultiEmbedForm = ({
 		const formattedStartDate = form.date;
 		const propertyIdsArray = propertyIdsString.split(',').filter(id => id.trim() !== '');
 
-		console.log("Requesting availability with:", {
+		/*console.log("Requesting availability with:", {
 			ids: propertyIdsArray,
 			start: formattedStartDate,
 			nights: nights,
 		});
-
+		*/
 		setLoading(true);
 		setError('');
 		setShowProperties(false);

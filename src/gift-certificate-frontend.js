@@ -201,21 +201,21 @@ function GiftCertificatePaymentForm({ stripePk, totalAmount, surcharge, onPaymen
 
 // Main front-end logic.
 function GiftCertificateFrontend() {
-    console.log('GiftCertificateFrontend: Starting initialization');
+   // console.log('GiftCertificateFrontend: Starting initialization');
 
     const container = document.querySelector(".bif-bookitfast-certificate-form");
     if (!container) {
-        console.error('GiftCertificateFrontend: Container .bif-bookitfast-certificate-form not found');
+      //  console.error('GiftCertificateFrontend: Container .bif-bookitfast-certificate-form not found');
         return;
     }
 
-    console.log('GiftCertificateFrontend: Container found', container);
+    //console.log('GiftCertificateFrontend: Container found', container);
 
     const stripePk = container.getAttribute("data-stripe-pk");
     const surchargeRate = parseFloat(container.getAttribute("data-surcharge-rate"));
 
-    console.log('GiftCertificateFrontend: Stripe PK:', stripePk);
-    console.log('GiftCertificateFrontend: Surcharge rate:', surchargeRate);
+    //console.log('GiftCertificateFrontend: Stripe PK:', stripePk);
+    //console.log('GiftCertificateFrontend: Surcharge rate:', surchargeRate);
 
     // Listen for the "Proceed to Payment" button click.
     const proceedButton = document.getElementById("bif-gc-proceed-button");
@@ -224,13 +224,13 @@ function GiftCertificateFrontend() {
         return;
     }
 
-    console.log('GiftCertificateFrontend: Button found, adding click listener', proceedButton);
+    //console.log('GiftCertificateFrontend: Button found, adding click listener', proceedButton);
 
     proceedButton.addEventListener("click", () => {
-        console.log('GiftCertificateFrontend: Make Payment button clicked');
+        //console.log('GiftCertificateFrontend: Make Payment button clicked');
 
         const { isValid, errorMessages } = validateForm();
-        console.log('GiftCertificateFrontend: Form validation result:', { isValid, errorMessages });
+        //console.log('GiftCertificateFrontend: Form validation result:', { isValid, errorMessages });
 
         if (!isValid) {
             // Display error messages
@@ -255,18 +255,18 @@ function GiftCertificateFrontend() {
         let amount = parseFloat(amountField.value);
         if (isNaN(amount)) amount = 0;
 
-        console.log('GiftCertificateFrontend: Amount:', amount);
+        //console.log('GiftCertificateFrontend: Amount:', amount);
 
         // Calculate surcharge if applicable:
         // Formula: ((amount + 0.3) / (1 - (surchargeRate/100))) - amount
         const calculatedSurcharge = (((amount + 0.3) / (1 - (surchargeRate / 100))) - amount);
         const totalAmount = parseFloat((amount + calculatedSurcharge).toFixed(2));
 
-        console.log('GiftCertificateFrontend: Calculated surcharge:', calculatedSurcharge);
-        console.log('GiftCertificateFrontend: Total amount:', totalAmount);
+        //console.log('GiftCertificateFrontend: Calculated surcharge:', calculatedSurcharge);
+        //console.log('GiftCertificateFrontend: Total amount:', totalAmount);
 
         proceedButton.disabled = true;
-        console.log('GiftCertificateFrontend: Button disabled, proceeding with payment form');
+        //console.log('GiftCertificateFrontend: Button disabled, proceeding with payment form');
 
         // Amount calculation complete
 
@@ -275,7 +275,7 @@ function GiftCertificateFrontend() {
         paymentContainer.id = "gift-certificate-payment-form-container";
         container.querySelector("form").appendChild(paymentContainer);
 
-        console.log('GiftCertificateFrontend: Payment container created, rendering React form');
+        //console.log('GiftCertificateFrontend: Payment container created, rendering React form');
 
         // Render the React payment form.
         ReactDOM.render(
@@ -285,7 +285,7 @@ function GiftCertificateFrontend() {
                     totalAmount: totalAmount,
                     surcharge: calculatedSurcharge.toFixed(2),
                     onPaymentSuccess: (result) => {
-                        console.log('GiftCertificateFrontend: Payment completed successfully', result);
+                        //console.log('GiftCertificateFrontend: Payment completed successfully', result);
                         // Payment completed successfully
                         // You can redirect or update the UI here.
                     }
@@ -297,21 +297,21 @@ function GiftCertificateFrontend() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log('Gift Certificate Frontend: DOMContentLoaded event fired');
-    console.log('Gift Certificate Frontend: Document ready state:', document.readyState);
+    //console.log('Gift Certificate Frontend: DOMContentLoaded event fired');
+    //console.log('Gift Certificate Frontend: Document ready state:', document.readyState);
 
     // Add a small delay to ensure all elements are rendered
     setTimeout(() => {
-        console.log('Gift Certificate Frontend: Initializing after timeout');
+       // console.log('Gift Certificate Frontend: Initializing after timeout');
         GiftCertificateFrontend();
     }, 100);
 });
 
 // Also try immediate initialization if DOM is already loaded
 if (document.readyState === 'loading') {
-    console.log('Gift Certificate Frontend: Document still loading, waiting for DOMContentLoaded');
+   // console.log('Gift Certificate Frontend: Document still loading, waiting for DOMContentLoaded');
 } else {
-    console.log('Gift Certificate Frontend: Document already loaded, initializing immediately');
+   // console.log('Gift Certificate Frontend: Document already loaded, initializing immediately');
     GiftCertificateFrontend();
 }
 
