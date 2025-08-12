@@ -35,7 +35,7 @@ const parseDateFromUrl = (dateString) => {
 };
 
 // Property Card Component
-const PropertyCard = ({ property, isSelected, onToggle, nights, checkInDate }) => {
+const PropertyCard = ({ property, isSelected, onToggle, nights, checkInDate, showPropertyImages, includeIcons }) => {
 	const totalPrice = property.availability?.total_cost || (property.availability?.dates?.reduce((sum, date) => sum + (date.rate || 0), 0) || 0);
 	const isAvailable = property.availability?.available;
 
@@ -64,9 +64,9 @@ const PropertyCard = ({ property, isSelected, onToggle, nights, checkInDate }) =
 			{/* Top Section: Image, Property Info, and Status Badge */}
 			<div className="bif-property-header">
 				{/* Property Image */}
-				{property.image_url && (
+				{showPropertyImages && property.property_image && (
 					<div className="bif-property-image">
-						<img src={property.image_url} alt={property.property_name} />
+						<img src={property.property_image} alt={property.property_name} />
 					</div>
 				)}
 
@@ -75,6 +75,59 @@ const PropertyCard = ({ property, isSelected, onToggle, nights, checkInDate }) =
 					<h3 className="bif-property-name">{property.property_name}</h3>
 					{property.property_description && (
 						<p className="bif-property-description">{property.property_description}</p>
+					)}
+					{/* Icons for property features */}
+					{includeIcons && property.property_features && (
+						<div className="bif-property-icons">
+							{/* WiFi */}
+							{property.property_features.wifi === 1 && (
+								<span className="bif-property-icon" title="WiFi Available">
+									📶 WiFi
+								</span>
+							)}
+							{/* Bed configurations */}
+							{property.property_features.queen_beds > 0 && (
+								<span className="bif-property-icon" title={`${property.property_features.queen_beds} Queen bed${property.property_features.queen_beds > 1 ? 's' : ''}`}>
+									🛏️ {property.property_features.queen_beds} Queen
+								</span>
+							)}
+							{property.property_features.king_beds > 0 && (
+								<span className="bif-property-icon" title={`${property.property_features.king_beds} King bed${property.property_features.king_beds > 1 ? 's' : ''}`}>
+									🛏️ {property.property_features.king_beds} King
+								</span>
+							)}
+							{property.property_features.double_beds > 0 && (
+								<span className="bif-property-icon" title={`${property.property_features.double_beds} Double bed${property.property_features.double_beds > 1 ? 's' : ''}`}>
+									🛏️ {property.property_features.double_beds} Double
+								</span>
+							)}
+							{property.property_features.single_beds > 0 && (
+								<span className="bif-property-icon" title={`${property.property_features.single_beds} Single bed${property.property_features.single_beds > 1 ? 's' : ''}`}>
+									🛏️ {property.property_features.single_beds} Single
+								</span>
+							)}
+							{property.property_features.bunk_beds > 0 && (
+								<span className="bif-property-icon" title={`${property.property_features.bunk_beds} Bunk bed${property.property_features.bunk_beds > 1 ? 's' : ''}`}>
+									🛏️ {property.property_features.bunk_beds} Bunk
+								</span>
+							)}
+							{property.property_features.sofa_beds > 0 && (
+								<span className="bif-property-icon" title={`${property.property_features.sofa_beds} Sofa bed${property.property_features.sofa_beds > 1 ? 's' : ''}`}>
+									🛋️ {property.property_features.sofa_beds} Sofa bed
+								</span>
+							)}
+							{/* Bedrooms and Living Areas */}
+							{property.property_features.bedrooms && (
+								<span className="bif-property-icon" title={`${property.property_features.bedrooms} bedroom${property.property_features.bedrooms > 1 ? 's' : ''}`}>
+									🏠 {property.property_features.bedrooms} Bedroom{property.property_features.bedrooms > 1 ? 's' : ''}
+								</span>
+							)}
+							{property.property_features.living_areas && (
+								<span className="bif-property-icon" title={`${property.property_features.living_areas} living area${property.property_features.living_areas > 1 ? 's' : ''}`}>
+									🛋️ {property.property_features.living_areas} Living Area{property.property_features.living_areas > 1 ? 's' : ''}
+								</span>
+							)}
+						</div>
 					)}
 				</div>
 
@@ -155,7 +208,7 @@ const PropertyCard = ({ property, isSelected, onToggle, nights, checkInDate }) =
 };
 
 // Date Selector Component
-const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onCheckAvailability, isLoading }) => {
+const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onCheckAvailability, isLoading, minNights, maxNights }) => {
 	const today = new Date().toISOString().split('T')[0];
 
 	return (
@@ -181,11 +234,14 @@ const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onChe
 						onChange={(e) => onNightsChange(parseInt(e.target.value))}
 						className="bif-nights-select"
 					>
-						{[...Array(14).keys()].map(n => (
-							<option key={n} value={n + 1}>
-								{n + 1} {n + 1 === 1 ? 'night' : 'nights'}
-							</option>
-						))}
+						{[...Array(maxNights - minNights + 1).keys()].map(i => {
+							const nightCount = minNights + i;
+							return (
+								<option key={nightCount} value={nightCount}>
+									{nightCount} {nightCount === 1 ? 'night' : 'nights'}
+								</option>
+							);
+						})}
 					</select>
 				</div>
 
@@ -565,9 +621,15 @@ const MultiEmbedForm = ({
 	showPostcode = true,
 	showRedeemGiftCertificate = false,
 	showComments = false,
+	buttonColor = '#0073aa',
+	buttonTextColor = '#ffffff',
+	minNights = 1,
+	maxNights = 14,
+	showPropertyImages = false,
+	includeIcons = false,
 }) => {
 	const nightsFromUrl = getQueryParam('nights');
-	const validatedNights = nightsFromUrl && !isNaN(nightsFromUrl) ? parseInt(nightsFromUrl, 10) : 1;
+	const validatedNights = nightsFromUrl && !isNaN(nightsFromUrl) ? Math.max(parseInt(nightsFromUrl, 10), minNights) : minNights;
 
 	const startDateFromUrl = getQueryParam('start');
 	const discountCodeFromUrl = getQueryParam('discount');
@@ -892,7 +954,15 @@ const MultiEmbedForm = ({
 			})) : [];
 
 	return (
-		<div className="bif-booking-container">
+		<div 
+			className="bif-booking-container"
+			style={{
+				'--bif-button-color': buttonColor,
+				'--bif-button-color-hover': `${buttonColor}dd`,
+				'--bif-button-color-active': `${buttonColor}bb`,
+				'--bif-button-text-color': buttonTextColor
+			}}
+		>
 			{/* Remove the header box completely */}
 
 			<div className="bif-booking-steps">
@@ -904,6 +974,8 @@ const MultiEmbedForm = ({
 					onNightsChange={(nights) => setForm(prev => ({ ...prev, nights }))}
 					onCheckAvailability={fetchAvailability}
 					isLoading={loading}
+					minNights={minNights}
+					maxNights={maxNights}
 				/>
 
 				{error && <div className="bif-error-message">{error}</div>}
@@ -926,6 +998,8 @@ const MultiEmbedForm = ({
 									onToggle={() => toggleSelection(propertyId)}
 									nights={form.nights}
 									checkInDate={form.date}
+									showPropertyImages={showPropertyImages}
+									includeIcons={includeIcons}
 								/>
 							))}
 						</div>

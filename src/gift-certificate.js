@@ -1,6 +1,6 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, ColorPicker } from '@wordpress/components';
+import { PanelBody, ColorPalette } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 
 // Gift Certificate API functions
@@ -40,23 +40,45 @@ async function fetchGCSettings() {
 
 // Gift Certificate Block Component
 function GiftCertificateBlock({ attributes, setAttributes }) {
-    const { buttonColor } = attributes;
+    const { buttonColor, buttonTextColor } = attributes;
 
     return (
         <Fragment>
             <InspectorControls>
-                <PanelBody title="Gift Certificate Settings">
-                    <ColorPicker
-                        color={buttonColor}
+                <PanelBody title="Button Style" initialOpen={true}>
+                    <ColorPalette
+                        label="Button Color"
+                        value={buttonColor}
                         onChange={(color) => setAttributes({ buttonColor: color })}
-                        enableAlpha={false}
+                        colors={[
+                            { name: 'Blue', color: '#0073aa' },
+                            { name: 'Green', color: '#46b450' },
+                            { name: 'Red', color: '#dc3232' },
+                            { name: 'Orange', color: '#ff6900' },
+                            { name: 'Purple', color: '#8224e3' },
+                            { name: 'Dark', color: '#333333' }
+                        ]}
+                    />
+                    <ColorPalette
+                        label="Button Text Color"
+                        value={buttonTextColor}
+                        onChange={(color) => setAttributes({ buttonTextColor: color })}
+                        colors={[
+                            { name: 'White', color: '#ffffff' },
+                            { name: 'Black', color: '#000000' },
+                            { name: 'Dark Gray', color: '#333333' },
+                            { name: 'Light Gray', color: '#666666' }
+                        ]}
                     />
                 </PanelBody>
             </InspectorControls>
             <div className="bif-gift-certificate-block">
                 <div
                     className="bif-gift-certificate-button"
-                    style={{ backgroundColor: buttonColor }}
+                    style={{ 
+                        backgroundColor: buttonColor,
+                        color: buttonTextColor 
+                    }}
                 >
                     Gift Certificate
                 </div>
@@ -75,6 +97,10 @@ registerBlockType('bookitfast/gift-certificate', {
         buttonColor: {
             type: 'string',
             default: '#0073aa'
+        },
+        buttonTextColor: {
+            type: 'string',
+            default: '#ffffff'
         }
     },
     edit: GiftCertificateBlock,

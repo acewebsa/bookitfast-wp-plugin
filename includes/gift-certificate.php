@@ -46,8 +46,9 @@ function bookitfast_sanitize_and_validate_gc_data($data)
 
 function bookitfast_render_gift_certificate_block($attributes)
 {
-    // Set a default button color if none is provided.
+    // Set default colors if none are provided.
     $buttonColor = isset($attributes['buttonColor']) ? $attributes['buttonColor'] : '#2563eb';
+    $buttonTextColor = isset($attributes['buttonTextColor']) ? $attributes['buttonTextColor'] : '#ffffff';
     $token = bookitfast_get_token();
     $settings = is_wp_error($token) ? [] : bookitfast_fetch_gift_certificate_settings($token);
 
@@ -81,6 +82,7 @@ function bookitfast_render_gift_certificate_block($attributes)
             --bif-button-color-focus: {$buttonColor}1a;
             --bif-button-color-shadow: {$buttonColor}4d;
             --bif-button-color-shadow-hover: {$buttonColor}66;
+            --bif-button-text-color: {$buttonTextColor};
         }
     ");
 
@@ -183,7 +185,7 @@ function bookitfast_render_gift_certificate_block($attributes)
                 </div>
 
                 <div class="bif-button-container">
-                    <button type="button" id="bif-gc-proceed-button" class="bif-btn bif-btn-primary bif-btn-rounded" style="background: linear-gradient(135deg, <?php echo esc_attr($buttonColor); ?> 0%, <?php echo esc_attr($buttonColor); ?>dd 100%);">
+                    <button type="button" id="bif-gc-proceed-button" class="bif-btn bif-btn-primary bif-btn-rounded" style="background: linear-gradient(135deg, <?php echo esc_attr($buttonColor); ?> 0%, <?php echo esc_attr($buttonColor); ?>dd 100%); color: <?php echo esc_attr($buttonTextColor); ?>;">
                         Make Payment
                     </button>
                 </div>

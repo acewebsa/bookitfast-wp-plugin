@@ -58,6 +58,56 @@ add_action('init', function () {
 		'script' => 'bookitfast-multi-embed-frontend',
 		'style' => 'bookitfast-multi-embed-styles',
 		'render_callback' => 'bookitfast_render_multi_embed_block',
+		'attributes' => [
+			'propertyIds' => [
+				'type' => 'string',
+				'default' => ''
+			],
+			'showDiscount' => [
+				'type' => 'boolean',
+				'default' => false
+			],
+			'showSuburb' => [
+				'type' => 'boolean',
+				'default' => false
+			],
+			'showPostcode' => [
+				'type' => 'boolean',
+				'default' => false
+			],
+			'showRedeemGiftCertificate' => [
+				'type' => 'boolean',
+				'default' => false
+			],
+			'showComments' => [
+				'type' => 'boolean',
+				'default' => false
+			],
+			'buttonColor' => [
+				'type' => 'string',
+				'default' => '#0073aa'
+			],
+			'buttonTextColor' => [
+				'type' => 'string',
+				'default' => '#ffffff'
+			],
+			'minNights' => [
+				'type' => 'number',
+				'default' => 1
+			],
+			'maxNights' => [
+				'type' => 'number',
+				'default' => 14
+			],
+			'showPropertyImages' => [
+				'type' => 'boolean',
+				'default' => false
+			],
+			'includeIcons' => [
+				'type' => 'boolean',
+				'default' => false
+			]
+		]
 	]);
 
 	// Register the gift certificate block
@@ -105,6 +155,40 @@ function bookitfast_render_multi_embed_block($attributes)
 	$showPostcode = !empty($attributes['showPostcode']);
 	$showRedeemGiftCertificate = !empty($attributes['showRedeemGiftCertificate']);
 	$showComments = !empty($attributes['showComments']);
+	$buttonColor = isset($attributes['buttonColor']) ? esc_attr($attributes['buttonColor']) : '#0073aa';
+	$buttonTextColor = isset($attributes['buttonTextColor']) ? esc_attr($attributes['buttonTextColor']) : '#ffffff';
+	$minNights = isset($attributes['minNights']) ? intval($attributes['minNights']) : 1;
+	$maxNights = isset($attributes['maxNights']) ? intval($attributes['maxNights']) : 14;
+	$showPropertyImages = !empty($attributes['showPropertyImages']);
+	$includeIcons = !empty($attributes['includeIcons']);
+
+	// Add inline CSS for button styling
+	wp_add_inline_style('bookitfast-multi-embed-styles', "
+		#bif-book-it-fast-multi-embed {
+			--bif-button-color: {$buttonColor};
+			--bif-button-color-hover: {$buttonColor}dd;
+			--bif-button-color-active: {$buttonColor}bb;
+			--bif-button-text-color: {$buttonTextColor};
+		}
+		#bif-book-it-fast-multi-embed .bif-btn-primary,
+		#bif-book-it-fast-multi-embed .btn-primary {
+			background-color: var(--bif-button-color) !important;
+			border-color: var(--bif-button-color) !important;
+			color: var(--bif-button-text-color) !important;
+		}
+		#bif-book-it-fast-multi-embed .bif-btn-primary:hover,
+		#bif-book-it-fast-multi-embed .btn-primary:hover {
+			background-color: var(--bif-button-color-hover) !important;
+			border-color: var(--bif-button-color-hover) !important;
+			color: var(--bif-button-text-color) !important;
+		}
+		#bif-book-it-fast-multi-embed .bif-btn-primary:active,
+		#bif-book-it-fast-multi-embed .btn-primary:active {
+			background-color: var(--bif-button-color-active) !important;
+			border-color: var(--bif-button-color-active) !important;
+			color: var(--bif-button-text-color) !important;
+		}
+	");
 
 	ob_start();
 ?>
@@ -114,7 +198,13 @@ function bookitfast_render_multi_embed_block($attributes)
 		data-show-suburb="<?php echo esc_attr($showSuburb ? 'true' : 'false'); ?>"
 		data-show-postcode="<?php echo esc_attr($showPostcode ? 'true' : 'false'); ?>"
 		data-show-redeem-gift-certificate="<?php echo esc_attr($showRedeemGiftCertificate ? 'true' : 'false'); ?>"
-		data-show-comments="<?php echo esc_attr($showComments ? 'true' : 'false'); ?>">
+		data-show-comments="<?php echo esc_attr($showComments ? 'true' : 'false'); ?>"
+		data-button-color="<?php echo esc_attr($buttonColor); ?>"
+		data-button-text-color="<?php echo esc_attr($buttonTextColor); ?>"
+		data-min-nights="<?php echo esc_attr($minNights); ?>"
+		data-max-nights="<?php echo esc_attr($maxNights); ?>"
+		data-show-property-images="<?php echo esc_attr($showPropertyImages ? 'true' : 'false'); ?>"
+		data-include-icons="<?php echo esc_attr($includeIcons ? 'true' : 'false'); ?>">
 	</div>
 <?php
 	return ob_get_clean();
@@ -162,6 +252,10 @@ function bookitfast_register_gift_certificate_block()
 			'buttonColor' => array(
 				'type' => 'string',
 				'default' => '#0073aa'
+			),
+			'buttonTextColor' => array(
+				'type' => 'string',
+				'default' => '#ffffff'
 			)
 		)
 	));

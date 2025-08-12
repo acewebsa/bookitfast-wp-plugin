@@ -1,5 +1,6 @@
 /* Modern Booking Interface Styles */
-.bif-bookitfast-container {
+.bif-bookitfast-container,
+.bif-booking-container {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 	max-width: 1200px;
 	margin: 0 auto;
@@ -7,6 +8,11 @@
 	background: #f8f9fa;
 	border-radius: 0.5rem;
 	box-shadow: none;
+	/* CSS custom properties for button colors */
+	--bif-button-color: #0073aa;
+	--bif-button-color-hover: #0073aadd;
+	--bif-button-color-active: #0073aabb;
+	--bif-button-text-color: #ffffff;
 }
 
 .bif-bookitfast-container h3 {
@@ -103,7 +109,23 @@
 	overflow: hidden;
 	position: relative;
 }
-
+/* Override WordPress editor styles with maximum specificity for BIF buttons */
+div.editor-styles-wrapper button.bif-btn,
+div.editor-styles-wrapper button.bif-btn-primary,
+div.editor-styles-wrapper button.bif-btn-secondary,
+div.editor-styles-wrapper button.bif-btn-select,
+div.editor-styles-wrapper button.bif-btn-selected,
+div.editor-styles-wrapper .bif-booking-container button.bif-btn,
+div.editor-styles-wrapper .bif-booking-container button.bif-btn-primary,
+div.editor-styles-wrapper .bif-booking-container button.bif-btn-secondary,
+div.editor-styles-wrapper .bif-booking-container button.bif-btn-select,
+div.editor-styles-wrapper .bif-booking-container button.bif-btn-selected {
+	color: var(--bif-button-text-color, white) !important;
+}
+.bif-check-availability span:before
+{
+	color: var(--bif-button-text-color, white) !important;
+}
 .bif-bookitfast_availability_grid_div:hover {
 	transform: translateY(-4px);
 	box-shadow: 0 12px 30px rgba(0,0,0,0.15);
@@ -386,9 +408,10 @@
 	box-shadow: 0 8px 25px rgba(72, 187, 120, 0.3);
 }
 
-.bif-btn-primary {
-	background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
-	color: white;
+.bif-btn-primary,
+.btn-primary {
+	background: linear-gradient(135deg, var(--bif-button-color, #4299e1) 0%, var(--bif-button-color-hover, #3182ce) 100%);
+	color: var(--bif-button-text-color, white);
 	border: none;
 	padding: 1rem 2rem;
 	border-radius: 12px;
@@ -400,9 +423,11 @@
 	margin-bottom: 1rem;
 }
 
-.bif-btn-primary:hover {
+.bif-btn-primary:hover,
+.btn-primary:hover {
 	transform: translateY(-2px);
-	box-shadow: 0 8px 25px rgba(66, 153, 225, 0.3);
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+	background: linear-gradient(135deg, var(--bif-button-color-hover, #3182ce) 0%, var(--bif-button-color-active, #2b6cb0) 100%);
 }
 
 .bif-btn-rounded {
@@ -993,17 +1018,42 @@ border:1px solid #ced4da;
 }
 
 .bif-btn-primary {
-	background: #3b82f6;
-	color: white;
+	background: var(--bif-button-color, #3b82f6);
+	color: var(--bif-button-text-color, white);
 }
 
 .bif-btn-primary:hover {
-	background: #2563eb;
+	background: var(--bif-button-color-hover, #2563eb);
+	color: var(--bif-button-text-color, white);
 }
 
 .bif-btn-secondary {
 	background: #6b7280;
 	color: white;
+}
+
+/* Property icons styling */
+.bif-property-icons {
+	display: flex;
+	gap: 12px;
+	margin-top: 8px;
+	flex-wrap: wrap;
+}
+
+.bif-property-icon {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 4px 8px;
+	background: #f3f4f6;
+	border-radius: 6px;
+	font-size: 0.875rem;
+	color: #6b7280;
+	border: 1px solid #e5e7eb;
+}
+
+.bif-property-icon:hover {
+	background: #e5e7eb;
 }
 
 .bif-btn-secondary:hover {

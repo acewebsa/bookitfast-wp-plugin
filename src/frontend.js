@@ -15,6 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		const showPostcode = container.dataset.showPostcode === 'true';
 		const showRedeemGiftCertificate = container.dataset.showRedeemGiftCertificate === 'true';
 		const showComments = container.dataset.showComments === 'true';
+		const buttonColor = container.dataset.buttonColor || '#0073aa';
+		const buttonTextColor = container.dataset.buttonTextColor || '#ffffff';
+		const minNights = parseInt(container.dataset.minNights) || 1;
+		const maxNights = parseInt(container.dataset.maxNights) || 14;
+		const showPropertyImages = container.dataset.showPropertyImages === 'true';
+		const includeIcons = container.dataset.includeIcons === 'true';
 
 		ReactDOM.render(
 			React.createElement(MultiEmbedForm, {
@@ -23,7 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
 				showSuburb: showSuburb,
 				showPostcode: showPostcode,
 				showRedeemGiftCertificate: showRedeemGiftCertificate,
-				showComments: showComments
+				showComments: showComments,
+				buttonColor: buttonColor,
+				buttonTextColor: buttonTextColor,
+				minNights: minNights,
+				maxNights: maxNights,
+				showPropertyImages: showPropertyImages,
+				includeIcons: includeIcons
 			}),
 			container
 		);

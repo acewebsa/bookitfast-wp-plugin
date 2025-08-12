@@ -191,3 +191,100 @@
 
 .bif-property_summary_detail_row {display:flex; flex-direction: row;}
 .bif-property_summary_detail_row div {flex-basis:50%; flex-grow:1;}
+
+/* Editor-specific button styling for preview */
+.bif-gift-certificate-block .bif-gift-certificate-button {
+	display: inline-block;
+	padding: 12px 24px;
+	border-radius: 8px;
+	font-weight: 600;
+	text-align: center;
+	cursor: pointer;
+	border: none;
+	font-size: 16px;
+	transition: all 0.2s ease;
+}
+
+.bif-gift-certificate-block .bif-gift-certificate-button:hover {
+	transform: translateY(-1px);
+	opacity: 0.9;
+}
+
+/* Override WordPress editor styles with maximum specificity for BIF buttons */
+div.editor-styles-wrapper button.bif-btn,
+div.editor-styles-wrapper button.bif-btn-primary,
+div.editor-styles-wrapper button.bif-btn-secondary,
+div.editor-styles-wrapper button.bif-btn-select,
+div.editor-styles-wrapper button.bif-btn-selected,
+div.editor-styles-wrapper .bif-booking-container button.bif-btn,
+div.editor-styles-wrapper .bif-booking-container button.bif-btn-primary,
+div.editor-styles-wrapper .bif-booking-container button.bif-btn-secondary,
+div.editor-styles-wrapper .bif-booking-container button.bif-btn-select,
+div.editor-styles-wrapper .bif-booking-container button.bif-btn-selected {
+	color: var(--bif-button-text-color, white) !important;
+}
+
+/* Primary button specific styling */
+div.editor-styles-wrapper button.bif-btn-primary,
+div.editor-styles-wrapper .bif-booking-container button.bif-btn-primary,
+.editor-styles-wrapper .bif-booking-container .bif-btn-primary,
+.bif-booking-container .bif-btn-primary {
+	background: var(--bif-button-color, #0073aa) !important;
+	color: var(--bif-button-text-color, white) !important;
+	padding: 12px 24px;
+	border-radius: 8px;
+	font-weight: 600;
+	border: none;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+/* Primary button hover states */
+div.editor-styles-wrapper button.bif-btn-primary:hover,
+div.editor-styles-wrapper .bif-booking-container button.bif-btn-primary:hover,
+.editor-styles-wrapper .bif-booking-container .bif-btn-primary:hover,
+.bif-booking-container .bif-btn-primary:hover {
+	opacity: 0.9;
+	transform: translateY(-1px);
+	color: var(--bif-button-text-color, white) !important;
+}
+
+/* Secondary button styling */
+div.editor-styles-wrapper button.bif-btn-secondary,
+div.editor-styles-wrapper .bif-booking-container button.bif-btn-secondary,
+.editor-styles-wrapper .bif-btn-secondary {
+	background: #6b7280 !important;
+	color: #fff !important;
+}
+
+/* Select button styling */
+div.editor-styles-wrapper button.bif-btn-select,
+div.editor-styles-wrapper .bif-booking-container button.bif-btn-select,
+.editor-styles-wrapper .bif-btn-select {
+	background: #3b82f6 !important;
+	color: #fff !important;
+}
+
+/* Selected button styling */
+div.editor-styles-wrapper button.bif-btn-selected,
+div.editor-styles-wrapper .bif-booking-container button.bif-btn-selected,
+.editor-styles-wrapper .bif-btn-selected {
+	background: #10b981 !important;
+	color: #fff !important;
+}
+
+/* Generic BIF button styling */
+div.editor-styles-wrapper button.bif-btn,
+div.editor-styles-wrapper .bif-booking-container button.bif-btn,
+.editor-styles-wrapper .bif-btn {
+	color: var(--bif-button-text-color, white) !important;
+}
+
+/* Override any generic button styles in editor that might interfere */
+.block-editor-default-block-appender textarea.block-editor-default-block-appender__content,
+.editor-styles-wrapper,
+div.editor-styles-wrapper input,
+div.editor-styles-wrapper select,
+div.editor-styles-wrapper textarea {
+	color: inherit !important;
+}
