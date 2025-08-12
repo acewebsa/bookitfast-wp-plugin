@@ -1,7 +1,7 @@
 === Book It Fast ===
 Contributors: bookitfast
 Donate link: https://bookitfast.app/
-Tags: booking, calendar, reservation, property, management
+Tags: booking, calendar, reservation, property, management, bnb, short term rental, str, holiday rental, vacation rental, holiday house
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
