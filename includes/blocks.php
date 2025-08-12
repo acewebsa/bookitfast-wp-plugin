@@ -212,8 +212,13 @@ function bookitfast_render_multi_embed_block($attributes)
 			border-color: var(--bif-button-color-active) !important;
 			color: var(--bif-button-text-color) !important;
 		}
-		#bif-book-it-fast-multi-embed .bif-check-availability span:before {
+		#bif-book-it-fast-multi-embed .bif-check-availability:not(.bif-has-icon-preview) span:before {
 			content: '{$iconSymbol}';
+			margin-right: 0.5rem;
+			color: var(--bif-button-text-color);
+			font-weight: bold;
+		}
+		#bif-book-it-fast-multi-embed .bif-check-availability .bif-icon-preview {
 			margin-right: 0.5rem;
 			color: var(--bif-button-text-color);
 			font-weight: bold;

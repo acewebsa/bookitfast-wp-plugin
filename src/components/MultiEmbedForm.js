@@ -457,8 +457,22 @@ const PropertyCard = ({ property, isSelected, onToggle, nights, checkInDate, sho
 };
 
 // Date Selector Component
-const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onCheckAvailability, isLoading, minNights, maxNights }) => {
+const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onCheckAvailability, isLoading, minNights, maxNights, buttonIcon = 'search' }) => {
 	const today = new Date().toISOString().split('T')[0];
+	
+	// Icon mapping for display - the CSS pseudo-element handles frontend, this handles editor
+	const iconMap = {
+		'search': '🔍',
+		'calendar': '📅',
+		'home': '🏠',
+		'mapMarker': '📍',
+		'star': '⭐',
+		'pin': '📌',
+		'pinSmall': '📍',
+		'globe': '🌍'
+	};
+	
+	const iconSymbol = iconMap[buttonIcon] || '🔍';
 
 	return (
 		<div className="bif-date-selector">
@@ -498,7 +512,7 @@ const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onChe
 					<button
 						onClick={onCheckAvailability}
 						disabled={!checkInDate || isLoading}
-						className="bif-btn bif-btn-primary bif-check-availability"
+						className="bif-btn bif-btn-primary bif-check-availability bif-has-icon-preview"
 					>
 						{isLoading ? (
 							<>
@@ -506,7 +520,10 @@ const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onChe
 								<span>Checking...</span>
 							</>
 						) : (
-							<span>Check Availability</span>
+							<>
+								<span className="bif-icon-preview">{iconSymbol}</span>
+								<span>Check Availability</span>
+							</>
 						)}
 					</button>
 				</div>
@@ -526,6 +543,7 @@ const BookingSummary = ({
 	onApplyDiscount,
 	checkInDate,
 	summary,
+	showDiscount = false,
 	showRedeemGiftCertificate = false,
 	giftCertificate,
 	onGiftCertificateChange,
@@ -617,28 +635,30 @@ const BookingSummary = ({
 				})}
 
 				{/* Discount Code */}
-				<div className="bif-summary-section">
-					<div className="bif-discount-form">
-						<input
-							type="text"
-							placeholder="Enter discount code"
-							value={discountCode}
-							onChange={(e) => onDiscountCodeChange(e.target.value)}
-							className="bif-discount-input"
-						/>
-						<button
-							onClick={applyDiscount}
-							className="bif-btn bif-btn-secondary"
-						>
-							Apply
-						</button>
-					</div>
-					{isDiscountApplied && (
-						<div className="bif-discount-applied">
-							Discount code applied
+				{showDiscount && (
+					<div className="bif-summary-section">
+						<div className="bif-discount-form">
+							<input
+								type="text"
+								placeholder="Enter discount code"
+								value={discountCode}
+								onChange={(e) => onDiscountCodeChange(e.target.value)}
+								className="bif-discount-input"
+							/>
+							<button
+								onClick={applyDiscount}
+								className="bif-btn bif-btn-secondary"
+							>
+								Apply
+							</button>
 						</div>
-					)}
-				</div>
+						{isDiscountApplied && (
+							<div className="bif-discount-applied">
+								Discount code applied
+							</div>
+						)}
+					</div>
+				)}
 
 				{/* Gift Certificate */}
 				{showRedeemGiftCertificate && summary && (
@@ -886,6 +906,7 @@ const MultiEmbedForm = ({
 	showPropertyImages = false,
 	includeIcons = false,
 	layoutStyle = 'cards', // 'cards', 'grid', 'rows'
+	buttonIcon = 'search'
 }) => {
 	const nightsFromUrl = getQueryParam('nights');
 	const validatedNights = nightsFromUrl && !isNaN(nightsFromUrl) ? Math.max(parseInt(nightsFromUrl, 10), minNights) : minNights;
@@ -1249,6 +1270,7 @@ const MultiEmbedForm = ({
 					isLoading={loading}
 					minNights={minNights}
 					maxNights={maxNights}
+					buttonIcon={buttonIcon}
 				/>
 
 				{error && <div className="bif-error-message">{error}</div>}
@@ -1302,6 +1324,7 @@ const MultiEmbedForm = ({
 						onApplyDiscount={applyDiscountCode}
 						checkInDate={form.date}
 						summary={summary}
+						showDiscount={showDiscount}
 						showRedeemGiftCertificate={showRedeemGiftCertificate}
 						giftCertificate={giftCertificate}
 						onGiftCertificateChange={setGiftCertificate}
