@@ -2,13 +2,13 @@
 
 /**
  * Plugin Name:     Book It Fast
- * Plugin URI:      https://wordpress.org/plugins/bookitfast/
+ * Plugin URI:      https://wordpress.org/plugins/book-it-fast/
  * Description:     Connect your WordPress site with Book It Fast to display booking calendars, manage property availability, and handle reservations directly from your website.
  * Author:          book-it-fast
  * Author URI:      https://bookitfast.app
  * Text Domain:     book-it-fast
  * Domain Path:     /languages
- * Version:         0.1.0
+ * Version:         1.0.0
  * Requires at least: 5.0
  * Tested up to:      6.4
  * Requires PHP:      7.4
