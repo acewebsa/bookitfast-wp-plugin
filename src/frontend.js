@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		const maxNights = parseInt(container.dataset.maxNights) || 14;
 		const showPropertyImages = container.dataset.showPropertyImages === 'true';
 		const includeIcons = container.dataset.includeIcons === 'true';
+		const layoutStyle = container.dataset.layoutStyle || 'cards';
+		const buttonIcon = container.dataset.buttonIcon || 'search';
 
 		ReactDOM.render(
 			React.createElement(MultiEmbedForm, {
@@ -35,7 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
 				minNights: minNights,
 				maxNights: maxNights,
 				showPropertyImages: showPropertyImages,
-				includeIcons: includeIcons
+				includeIcons: includeIcons,
+				layoutStyle: layoutStyle,
+				buttonIcon: buttonIcon
 			}),
 			container
 		);

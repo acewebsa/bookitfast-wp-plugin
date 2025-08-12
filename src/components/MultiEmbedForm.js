@@ -34,6 +34,258 @@ const parseDateFromUrl = (dateString) => {
 	return null;
 };
 
+// Grid Tile Component
+const PropertyTile = ({ property, isSelected, onToggle, nights, checkInDate, showPropertyImages, includeIcons }) => {
+	const totalPrice = property.availability?.total_cost || (property.availability?.dates?.reduce((sum, date) => sum + (date.rate || 0), 0) || 0);
+	const isAvailable = property.availability?.available;
+
+	const getStatusColor = (available, reason) => {
+		if (available) return 'bif-status-available';
+		switch (reason) {
+			case 'Booked Out': return 'bif-status-booked';
+			case 'No Tariff Set': return 'bif-status-no-rate';
+			case 'Min Nights': return 'bif-status-min-nights';
+			default: return 'bif-status-unavailable';
+		}
+	};
+
+	const getStatusText = (available, reason, minNights) => {
+		if (available) return 'Available';
+		switch (reason) {
+			case 'Booked Out': return 'Booked Out';
+			case 'No Tariff Set': return 'No Rates Set';
+			case 'Min Nights': return `Minimum ${minNights || 2} Nights`;
+			default: return 'Unavailable';
+		}
+	};
+
+	return (
+		<div className={`bif-tile ${isSelected ? 'bif-selected' : ''} ${!isAvailable ? 'is-unavailable' : ''}`}>
+			{/* Hero Image */}
+			{showPropertyImages && property.property_image && (
+				<div className="bif-tile__hero">
+					<img loading="lazy" src={property.property_image} alt={property.property_name} />
+					<span className={`bif-chip ${isAvailable ? '' : 'unavailable'}`}>
+						{getStatusText(isAvailable, property.availability?.availability_reason, property.availability?.min_nights)}
+					</span>
+				</div>
+			)}
+
+			{/* Content */}
+			<div className="bif-tile__content">
+				<h3 className="bif-tile__title">{property.property_name}</h3>
+
+				{/* Amenities/Features */}
+				{includeIcons && property.property_features && (
+					<ul className="bif-amenities bif-amenities--slim">
+						{/* WiFi */}
+						{property.property_features.wifi === 1 && (
+							<li><span>📶 WiFi</span></li>
+						)}
+						{/* Bed configurations */}
+						{property.property_features.queen_beds > 0 && (
+							<li><span>🛏️ {property.property_features.queen_beds} Queen</span></li>
+						)}
+						{property.property_features.king_beds > 0 && (
+							<li><span>🛏️ {property.property_features.king_beds} King</span></li>
+						)}
+						{property.property_features.double_beds > 0 && (
+							<li><span>🛏️ {property.property_features.double_beds} Double</span></li>
+						)}
+						{property.property_features.single_beds > 0 && (
+							<li><span>🛏️ {property.property_features.single_beds} Single</span></li>
+						)}
+						{property.property_features.bunk_beds > 0 && (
+							<li><span>🛏️ {property.property_features.bunk_beds} Bunk</span></li>
+						)}
+						{property.property_features.sofa_beds > 0 && (
+							<li><span>🛋️ {property.property_features.sofa_beds} Sofa bed</span></li>
+						)}
+						{property.property_features.bedrooms && (
+							<li><span>🏠 {property.property_features.bedrooms} Bedroom{property.property_features.bedrooms > 1 ? 's' : ''}</span></li>
+						)}
+						{property.property_features.living_areas && (
+							<li><span>🛋️ {property.property_features.living_areas} Living Area{property.property_features.living_areas > 1 ? 's' : ''}</span></li>
+						)}
+					</ul>
+				)}
+
+				{/* Daily Rates */}
+				{property.availability?.dates && (
+					<div className="bif-tile__rates">
+						{property.availability.dates.map((date, index) => (
+							<div key={index} className={`bif-pill ${date.availability ? 'ok' : 'na'}`}>
+								<span className="bif-pill__date">{date.date_formatted}</span>
+								<strong className="bif-pill__amt">
+									{date.availability ? `$${date.rate}` :
+									 date.availability_reason === 'Booked Out' ? 'Booked' :
+									 date.availability_reason === 'No Tariff Set' ? 'No Rate' : 'N/A'}
+								</strong>
+							</div>
+						))}
+					</div>
+				)}
+
+				{/* Footer */}
+				<div className="bif-tile__footer">
+					{isAvailable ? (
+						<button
+							onClick={onToggle}
+							className={`bif-btn ${isSelected ? 'bif-btn-selected' : 'bif-btn-select'}`}
+						>
+							{isSelected ? '✓ Selected' : 'Select'}
+						</button>
+					) : (
+						<button disabled className="bif-btn bif-btn-disabled">
+							Unavailable
+						</button>
+					)}
+				</div>
+
+				{/* Optional Extras - Only show when property is selected */}
+				{isSelected && property.optional_extras?.length > 0 && (
+					<div className="bif-optional-extras">
+						<h4 className="bif-daily-breakdown-title">Optional Extras</h4>
+						<div className="bif-extras-list">
+							{property.optional_extras.map((extra) => (
+								<div key={extra.id} className="bif-extra-item">
+									<div className="bif-extra-info">
+										<input
+											type="checkbox"
+											checked={property.selectedExtras?.[extra.id] || false}
+											onChange={() => property.onToggleExtra?.(property.id, extra.id)}
+										/>
+										<label>{extra.description}</label>
+									</div>
+									<div className="bif-extra-price">${extra.amount}</div>
+								</div>
+							))}
+						</div>
+					</div>
+				)}
+			</div>
+		</div>
+	);
+};
+
+// Compact Row Component
+const PropertyRow = ({ property, isSelected, onToggle, nights, checkInDate, showPropertyImages, includeIcons }) => {
+	const totalPrice = property.availability?.total_cost || (property.availability?.dates?.reduce((sum, date) => sum + (date.rate || 0), 0) || 0);
+	const isAvailable = property.availability?.available;
+
+	const getStatusColor = (available) => {
+		return available ? 'ok' : 'na';
+	};
+
+	return (
+		<div className={`bif-row ${isSelected ? 'bif-selected' : ''} ${!isAvailable ? 'is-unavailable' : ''} ${!showPropertyImages || !property.property_image ? 'no-image' : ''}`}>
+			{/* Thumbnail */}
+			{showPropertyImages && property.property_image && (
+				<div className="bif-row__thumb">
+					<img loading="lazy" src={property.property_image} alt={property.property_name} />
+				</div>
+			)}
+
+			{/* Main Info */}
+			<div className="bif-row__main">
+				<div className="bif-row__top">
+					<h3 className="bif-row__title">{property.property_name}</h3>
+					<span className={`bif-dot ${getStatusColor(isAvailable)}`} aria-hidden="true"></span>
+				</div>
+
+				{/* Inline Amenities */}
+				{includeIcons && property.property_features && (
+					<ul className="bif-amenities bif-amenities--inline">
+						{/* WiFi */}
+						{property.property_features.wifi === 1 && (
+							<li><span>📶 WiFi</span></li>
+						)}
+						{/* Bed configurations */}
+						{property.property_features.queen_beds > 0 && (
+							<li><span>🛏️ {property.property_features.queen_beds} Queen</span></li>
+						)}
+						{property.property_features.king_beds > 0 && (
+							<li><span>🛏️ {property.property_features.king_beds} King</span></li>
+						)}
+						{property.property_features.double_beds > 0 && (
+							<li><span>🛏️ {property.property_features.double_beds} Double</span></li>
+						)}
+						{property.property_features.single_beds > 0 && (
+							<li><span>🛏️ {property.property_features.single_beds} Single</span></li>
+						)}
+						{property.property_features.bunk_beds > 0 && (
+							<li><span>🛏️ {property.property_features.bunk_beds} Bunk</span></li>
+						)}
+						{property.property_features.sofa_beds > 0 && (
+							<li><span>🛋️ {property.property_features.sofa_beds} Sofa bed</span></li>
+						)}
+						{property.property_features.bedrooms && (
+							<li><span>🏠 {property.property_features.bedrooms} Bedroom{property.property_features.bedrooms > 1 ? 's' : ''}</span></li>
+						)}
+						{property.property_features.living_areas && (
+							<li><span>🛋️ {property.property_features.living_areas} Living Area{property.property_features.living_areas > 1 ? 's' : ''}</span></li>
+						)}
+					</ul>
+				)}
+			</div>
+
+			{/* Rates */}
+			{property.availability?.dates && (
+				<div className="bif-row__rates">
+					{property.availability.dates.map((date, index) => (
+						<div key={index} className={`bif-rmini ${date.availability ? 'ok' : 'na'}`}>
+							<div className="bif-rmini__date">{date.date_formatted}</div>
+							<div className="bif-rmini__amt">
+								{date.availability ? `$${date.rate}` :
+								 date.availability_reason === 'Booked Out' ? 'Booked' :
+								 date.availability_reason === 'No Tariff Set' ? 'No Rate' : 'N/A'}
+							</div>
+						</div>
+					))}
+				</div>
+			)}
+
+			{/* CTA */}
+			<div className="bif-row__cta">
+				{isAvailable ? (
+					<button
+						onClick={onToggle}
+						className={`bif-btn ${isSelected ? 'bif-btn-selected' : 'bif-btn-select'}`}
+					>
+						{isSelected ? '✓ Selected' : 'Select'}
+					</button>
+				) : (
+					<button disabled className="bif-btn bif-btn-disabled">
+						Unavailable
+					</button>
+				)}
+			</div>
+
+			{/* Optional Extras - Only show when property is selected */}
+			{isSelected && property.optional_extras?.length > 0 && (
+				<div className="bif-optional-extras" style={{ gridColumn: '1 / -1', marginTop: '1rem' }}>
+					<h4 className="bif-daily-breakdown-title">Optional Extras</h4>
+					<div className="bif-extras-list">
+						{property.optional_extras.map((extra) => (
+							<div key={extra.id} className="bif-extra-item">
+								<div className="bif-extra-info">
+									<input
+										type="checkbox"
+										checked={property.selectedExtras?.[extra.id] || false}
+										onChange={() => property.onToggleExtra?.(property.id, extra.id)}
+									/>
+									<label>{extra.description}</label>
+								</div>
+								<div className="bif-extra-price">${extra.amount}</div>
+							</div>
+						))}
+					</div>
+				</div>
+			)}
+		</div>
+	);
+};
+
 // Property Card Component
 const PropertyCard = ({ property, isSelected, onToggle, nights, checkInDate, showPropertyImages, includeIcons }) => {
 	const totalPrice = property.availability?.total_cost || (property.availability?.dates?.reduce((sum, date) => sum + (date.rate || 0), 0) || 0);
@@ -131,11 +383,24 @@ const PropertyCard = ({ property, isSelected, onToggle, nights, checkInDate, sho
 					)}
 				</div>
 
-				{/* Status Badge - Top Right */}
+				{/* Status Badge & Action - Top Right */}
 				<div className="bif-property-status-container">
 					<span className={`bif-property-status ${getStatusColor(isAvailable, property.availability?.availability_reason)}`}>
 						{getStatusText(isAvailable, property.availability?.availability_reason, property.availability?.min_nights)}
 					</span>
+					{isAvailable ? (
+						<button
+							onClick={onToggle}
+							className={`bif-btn ${isSelected ? 'bif-btn-selected' : 'bif-btn-select'} bif-header-btn`}
+							style={{ marginLeft: '0.75rem' }}
+						>
+							{isSelected ? '✓ Selected' : 'Select Property'}
+						</button>
+					) : (
+						<button disabled className="bif-btn bif-btn-disabled bif-header-btn" style={{ marginLeft: '0.75rem' }}>
+							{getStatusText(isAvailable, property.availability?.availability_reason, property.availability?.min_nights)}
+						</button>
+					)}
 				</div>
 			</div>
 
@@ -159,28 +424,12 @@ const PropertyCard = ({ property, isSelected, onToggle, nights, checkInDate, sho
 
 					<div className="bif-rate-summary">
 						<div className="bif-summary-row">
-							<span>{nights} {nights === 1 ? 'night' : 'nights'}</span>
 							<span className="bif-total">Total: ${totalPrice}</span>
 						</div>
 					</div>
 				</div>
 			)}
 
-			{/* Select Property Button - Bottom Right */}
-			<div className="bif-property-actions">
-				{isAvailable ? (
-					<button
-						onClick={onToggle}
-						className={`bif-btn ${isSelected ? 'bif-btn-selected' : 'bif-btn-select'}`}
-					>
-						{isSelected ? '✓ Selected' : 'Select Property'}
-					</button>
-				) : (
-					<button disabled className="bif-btn bif-btn-disabled">
-						{getStatusText(isAvailable, property.availability?.availability_reason, property.availability?.min_nights)}
-					</button>
-				)}
-			</div>
 
 			{/* Optional Extras - Only show when property is selected */}
 			{isSelected && property.optional_extras?.length > 0 && (
@@ -517,7 +766,7 @@ const BookingSummary = ({
 };
 
 // Customer Details Component - Remove emoji icons
-const CustomerDetails = ({ userDetails, onUpdateDetails, formErrors }) => {
+const CustomerDetails = ({ userDetails, onUpdateDetails, formErrors, showSuburb = true, showPostcode = true, showComments = false }) => {
 	return (
 		<div className="bif-customer-details">
 			<h2 className="bif-section-title">Your Details</h2>
@@ -575,39 +824,48 @@ const CustomerDetails = ({ userDetails, onUpdateDetails, formErrors }) => {
 					</div>
 				</div>
 
-				<div className="bif-form-row">
-					<div className="bif-form-field">
-						<label>Postcode</label>
-						<input
-							type="text"
-							value={userDetails.postcode}
-							onChange={(e) => onUpdateDetails('postcode', e.target.value)}
-							placeholder="Enter your postcode"
-						/>
-					</div>
+				{(showPostcode || showSuburb) && (
+					<div className="bif-form-row">
+						{showPostcode && (
+							<div className="bif-form-field">
+								<label>Postcode</label>
+								<input
+									type="text"
+									value={userDetails.postcode}
+									onChange={(e) => onUpdateDetails('postcode', e.target.value)}
+									placeholder="Enter your postcode"
+								/>
+							</div>
+						)}
 
-					<div className="bif-form-field">
-						<label>Suburb</label>
-						<input
-							type="text"
-							value={userDetails.suburb}
-							onChange={(e) => onUpdateDetails('suburb', e.target.value)}
-							placeholder="Enter your suburb"
-						/>
+						{showSuburb && (
+							<div className="bif-form-field">
+								<label>Suburb</label>
+								<input
+									type="text"
+									value={userDetails.suburb}
+									onChange={(e) => onUpdateDetails('suburb', e.target.value)}
+									placeholder="Enter your suburb"
+								/>
+							</div>
+						)}
 					</div>
-				</div>
+				)}
 
-				<div className="bif-form-row bif-full-width">
-					<div className="bif-form-field">
-						<label>Comments</label>
-						<textarea
-							value={userDetails.comments}
-							onChange={(e) => onUpdateDetails('comments', e.target.value)}
-							rows={4}
-							placeholder="Any special requests or comments..."
-						/>
+
+				{showComments && (
+					<div className="bif-form-row bif-full-width">
+						<div className="bif-form-field">
+							<label>Comments</label>
+							<textarea
+								value={userDetails.comments}
+								onChange={(e) => onUpdateDetails('comments', e.target.value)}
+								rows={4}
+								placeholder="Any special requests or comments..."
+							/>
+						</div>
 					</div>
-				</div>
+				)}
 			</div>
 		</div>
 	);
@@ -627,6 +885,7 @@ const MultiEmbedForm = ({
 	maxNights = 14,
 	showPropertyImages = false,
 	includeIcons = false,
+	layoutStyle = 'cards', // 'cards', 'grid', 'rows'
 }) => {
 	const nightsFromUrl = getQueryParam('nights');
 	const validatedNights = nightsFromUrl && !isNaN(nightsFromUrl) ? Math.max(parseInt(nightsFromUrl, 10), minNights) : minNights;
@@ -666,6 +925,20 @@ const MultiEmbedForm = ({
 	const [gcLoading, setGcLoading] = useState(false);
 	const [selectedOptionalExtras, setSelectedOptionalExtras] = useState({});
 	const [showProperties, setShowProperties] = useState(false);
+	
+	// Handler for form data changes in DateSelector
+	const handleFormDataChange = (field, value) => {
+		switch (field) {
+			case 'discountCode':
+				setDiscountCode(value);
+				break;
+			case 'suburb':
+			case 'postcode':
+			case 'comments':
+				setUserDetails(prev => ({ ...prev, [field]: value }));
+				break;
+		}
+	};
 
 	useEffect(() => {
 		if (validatedStartDate && validatedNights) {
@@ -984,24 +1257,35 @@ const MultiEmbedForm = ({
 				{showProperties && availability && (
 					<div className="bif-property-list">
 						<h2 className="bif-section-title">Available Properties</h2>
-						<div className="bif-properties">
-							{Object.entries(availability).map(([propertyId, propertyData]) => (
-								<PropertyCard
-									key={propertyId}
-									property={{
+						<div className={`bif-properties bif-properties--${layoutStyle}`}>
+							{Object.entries(availability).map(([propertyId, propertyData]) => {
+								const propertyProps = {
+									key: propertyId,
+									property: {
 										id: propertyId,
 										...propertyData,
 										selectedExtras: selectedOptionalExtras[propertyId],
 										onToggleExtra: toggleOptionalExtra
-									}}
-									isSelected={selectionData[propertyId]}
-									onToggle={() => toggleSelection(propertyId)}
-									nights={form.nights}
-									checkInDate={form.date}
-									showPropertyImages={showPropertyImages}
-									includeIcons={includeIcons}
-								/>
-							))}
+									},
+									isSelected: selectionData[propertyId],
+									onToggle: () => toggleSelection(propertyId),
+									nights: form.nights,
+									checkInDate: form.date,
+									showPropertyImages: showPropertyImages,
+									includeIcons: includeIcons
+								};
+
+								// Render different components based on layout style
+								switch (layoutStyle) {
+									case 'grid':
+										return <PropertyTile {...propertyProps} />;
+									case 'rows':
+										return <PropertyRow {...propertyProps} />;
+									case 'cards':
+									default:
+										return <PropertyCard {...propertyProps} />;
+								}
+							})}
 						</div>
 					</div>
 				)}
@@ -1035,6 +1319,9 @@ const MultiEmbedForm = ({
 						userDetails={userDetails}
 						onUpdateDetails={updateUserDetails}
 						formErrors={formErrors}
+						showSuburb={showSuburb}
+						showPostcode={showPostcode}
+						showComments={showComments}
 					/>
 				)}
 

@@ -1,8 +1,19 @@
 import MultiEmbedForm from "./components/MultiEmbedForm";
 import { registerBlockType } from "@wordpress/blocks";
 import { useBlockProps, InspectorControls } from "@wordpress/block-editor";
-import { PanelBody, ToggleControl, SelectControl, RangeControl } from "@wordpress/components";
+import { PanelBody, ToggleControl, SelectControl, RangeControl, Button } from "@wordpress/components";
 import { ColorPalette } from "@wordpress/components";
+import { Icon } from "@wordpress/components";
+import { 
+	search, 
+	calendar, 
+	home, 
+	mapMarker, 
+	starFilled, 
+	pin, 
+	pinSmall, 
+	globe
+} from "@wordpress/icons";
 import '../assets/editor.css';
 const { useState, useEffect } = wp.element;
 
@@ -46,6 +57,14 @@ registerBlockType("bookitfast/multi-embed", {
 			type: "boolean",
 			default: false
 		},
+		layoutStyle: {
+			type: "string",
+			default: "cards"
+		},
+		buttonIcon: {
+			type: "string",
+			default: "search"
+		},
 	},
 
 	edit: ({ attributes, setAttributes }) => {
@@ -81,7 +100,7 @@ registerBlockType("bookitfast/multi-embed", {
 			<div {...blockProps}>
 				{/* Sidebar Settings */}
 				<InspectorControls>
-					<PanelBody title="Settings" initialOpen={true}>
+					<PanelBody title="Search Options" initialOpen={true}>
 						{loading ? (
 							<p>Loading properties...</p>
 						) : error ? (
@@ -101,6 +120,136 @@ registerBlockType("bookitfast/multi-embed", {
 							/>
 						)}
 
+						<RangeControl
+							label="Minimum Nights"
+							value={attributes.minNights}
+							onChange={(value) => setAttributes({ minNights: value })}
+							min={1}
+							max={30}
+							step={1}
+						/>
+						<RangeControl
+							label="Maximum Nights"
+							value={attributes.maxNights}
+							onChange={(value) => setAttributes({ maxNights: value })}
+							min={attributes.minNights || 1}
+							max={90}
+							step={1}
+						/>
+
+						<ColorPalette
+							label="Button Color"
+							value={attributes.buttonColor}
+							onChange={(color) => setAttributes({ buttonColor: color })}
+							colors={[
+								{ name: 'Blue', color: '#0073aa' },
+								{ name: 'Green', color: '#46b450' },
+								{ name: 'Red', color: '#dc3232' },
+								{ name: 'Orange', color: '#ff6900' },
+								{ name: 'Purple', color: '#8224e3' },
+								{ name: 'Dark', color: '#333333' }
+							]}
+						/>
+						<ColorPalette
+							label="Button Text Color"
+							value={attributes.buttonTextColor}
+							onChange={(color) => setAttributes({ buttonTextColor: color })}
+							colors={[
+								{ name: 'White', color: '#ffffff' },
+								{ name: 'Black', color: '#000000' },
+								{ name: 'Dark Gray', color: '#333333' },
+								{ name: 'Light Gray', color: '#666666' }
+							]}
+						/>
+						
+						{/* Button Icon Selector */}
+						<div style={{ marginBottom: '16px' }}>
+							<label style={{ 
+								display: 'block', 
+								marginBottom: '8px', 
+								fontSize: '11px', 
+								fontWeight: '500', 
+								textTransform: 'uppercase', 
+								color: '#1e1e1e' 
+							}}>
+								Button Icon
+							</label>
+							<div style={{ 
+								display: 'grid', 
+								gridTemplateColumns: 'repeat(4, 1fr)', 
+								gap: '8px', 
+								padding: '8px', 
+								border: '1px solid #ddd', 
+								borderRadius: '4px',
+								backgroundColor: '#fff'
+							}}>
+								{[
+									{ icon: search, name: 'search', label: 'Search' },
+									{ icon: calendar, name: 'calendar', label: 'Calendar' },
+									{ icon: home, name: 'home', label: 'Home' },
+									{ icon: mapMarker, name: 'mapMarker', label: 'Map Marker' },
+									{ icon: starFilled, name: 'star', label: 'Star' },
+									{ icon: pin, name: 'pin', label: 'Pin' },
+									{ icon: pinSmall, name: 'pinSmall', label: 'Pin Small' },
+									{ icon: globe, name: 'globe', label: 'Globe' }
+								].map(({ icon, name, label }) => (
+									<Button
+										key={name}
+										onClick={() => setAttributes({ buttonIcon: name })}
+										variant={attributes.buttonIcon === name ? 'primary' : 'secondary'}
+										style={{
+											width: '48px',
+											height: '48px',
+											padding: '8px',
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'center'
+										}}
+										title={label}
+									>
+										<Icon icon={icon} size={20} />
+									</Button>
+								))}
+							</div>
+							<p style={{ 
+								fontSize: '12px', 
+								color: '#757575', 
+								margin: '8px 0 0 0',
+								fontStyle: 'italic'
+							}}>
+								Select an icon for the search button
+							</p>
+						</div>
+					</PanelBody>
+					<PanelBody title="Results Layout" initialOpen={false}>
+						<SelectControl
+							label="Layout Style"
+							value={attributes.layoutStyle}
+							options={[
+								{ label: 'Card List', value: 'cards' },
+								{ label: 'Grid Tiles', value: 'grid' },
+								{ label: 'Compact Rows', value: 'rows' }
+							]}
+							onChange={(value) => setAttributes({ layoutStyle: value })}
+							help="Choose how property results are displayed"
+							__next40pxDefaultSize={true}
+							__nextHasNoMarginBottom={true}
+						/>
+						<ToggleControl
+							label="Show Property Images"
+							checked={attributes.showPropertyImages}
+							onChange={(value) => setAttributes({ showPropertyImages: value })}
+							__nextHasNoMarginBottom={true}
+						/>
+						<ToggleControl
+							label="Include Icons"
+							checked={attributes.includeIcons}
+							onChange={(value) => setAttributes({ includeIcons: value })}
+							help="Show icons for bed size, inclusions, etc."
+							__nextHasNoMarginBottom={true}
+						/>
+					</PanelBody>
+					<PanelBody title="Form Settings" initialOpen={false}>
 						<ToggleControl
 							label="Show Discount Field"
 							checked={attributes.showDiscount}
@@ -132,63 +281,6 @@ registerBlockType("bookitfast/multi-embed", {
 							__nextHasNoMarginBottom={true}
 						/>
 					</PanelBody>
-					<PanelBody title="Button Style" initialOpen={false}>
-						<ColorPalette
-							label="Button Color"
-							value={attributes.buttonColor}
-							onChange={(color) => setAttributes({ buttonColor: color })}
-							colors={[
-								{ name: 'Blue', color: '#0073aa' },
-								{ name: 'Green', color: '#46b450' },
-								{ name: 'Red', color: '#dc3232' },
-								{ name: 'Orange', color: '#ff6900' },
-								{ name: 'Purple', color: '#8224e3' },
-								{ name: 'Dark', color: '#333333' }
-							]}
-						/>
-						<ColorPalette
-							label="Button Text Color"
-							value={attributes.buttonTextColor}
-							onChange={(color) => setAttributes({ buttonTextColor: color })}
-							colors={[
-								{ name: 'White', color: '#ffffff' },
-								{ name: 'Black', color: '#000000' },
-								{ name: 'Dark Gray', color: '#333333' },
-								{ name: 'Light Gray', color: '#666666' }
-							]}
-						/>
-					</PanelBody>
-					<PanelBody title="Booking Options" initialOpen={false}>
-						<RangeControl
-							label="Minimum Nights"
-							value={attributes.minNights}
-							onChange={(value) => setAttributes({ minNights: value })}
-							min={1}
-							max={30}
-							step={1}
-						/>
-						<RangeControl
-							label="Maximum Nights"
-							value={attributes.maxNights}
-							onChange={(value) => setAttributes({ maxNights: value })}
-							min={attributes.minNights || 1}
-							max={90}
-							step={1}
-						/>
-						<ToggleControl
-							label="Show Property Images"
-							checked={attributes.showPropertyImages}
-							onChange={(value) => setAttributes({ showPropertyImages: value })}
-							__nextHasNoMarginBottom={true}
-						/>
-						<ToggleControl
-							label="Include Icons"
-							checked={attributes.includeIcons}
-							onChange={(value) => setAttributes({ includeIcons: value })}
-							help="Show icons for bed size, inclusions, etc."
-							__nextHasNoMarginBottom={true}
-						/>
-					</PanelBody>
 				</InspectorControls>
 
 				{/* Pass Attributes to MultiEmbedForm */}
@@ -201,10 +293,12 @@ registerBlockType("bookitfast/multi-embed", {
 					showComments={attributes.showComments}
 					buttonColor={attributes.buttonColor}
 					buttonTextColor={attributes.buttonTextColor}
+					buttonIcon={attributes.buttonIcon}
 					minNights={attributes.minNights}
 					maxNights={attributes.maxNights}
 					showPropertyImages={attributes.showPropertyImages}
 					includeIcons={attributes.includeIcons}
+					layoutStyle={attributes.layoutStyle}
 				/>
 			</div>
 		);

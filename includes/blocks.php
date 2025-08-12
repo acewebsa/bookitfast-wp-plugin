@@ -106,6 +106,14 @@ add_action('init', function () {
 			'includeIcons' => [
 				'type' => 'boolean',
 				'default' => false
+			],
+			'layoutStyle' => [
+				'type' => 'string',
+				'default' => 'cards'
+			],
+			'buttonIcon' => [
+				'type' => 'string',
+				'default' => 'search'
 			]
 		]
 	]);
@@ -161,6 +169,22 @@ function bookitfast_render_multi_embed_block($attributes)
 	$maxNights = isset($attributes['maxNights']) ? intval($attributes['maxNights']) : 14;
 	$showPropertyImages = !empty($attributes['showPropertyImages']);
 	$includeIcons = !empty($attributes['includeIcons']);
+	$layoutStyle = isset($attributes['layoutStyle']) ? esc_attr($attributes['layoutStyle']) : 'cards';
+	$buttonIcon = isset($attributes['buttonIcon']) ? esc_attr($attributes['buttonIcon']) : 'search';
+	
+	// Map WordPress icon names to Unicode symbols for CSS content
+	$iconMap = [
+		'search' => '🔍',
+		'calendar' => '📅',
+		'home' => '🏠',
+		'mapMarker' => '📍',
+		'star' => '⭐',
+		'pin' => '📌',
+		'pinSmall' => '📍',
+		'globe' => '🌍'
+	];
+	
+	$iconSymbol = isset($iconMap[$buttonIcon]) ? $iconMap[$buttonIcon] : '🔍';
 
 	// Add inline CSS for button styling
 	wp_add_inline_style('bookitfast-multi-embed-styles', "
@@ -188,6 +212,12 @@ function bookitfast_render_multi_embed_block($attributes)
 			border-color: var(--bif-button-color-active) !important;
 			color: var(--bif-button-text-color) !important;
 		}
+		#bif-book-it-fast-multi-embed .bif-check-availability span:before {
+			content: '{$iconSymbol}';
+			margin-right: 0.5rem;
+			color: var(--bif-button-text-color);
+			font-weight: bold;
+		}
 	");
 
 	ob_start();
@@ -204,7 +234,9 @@ function bookitfast_render_multi_embed_block($attributes)
 		data-min-nights="<?php echo esc_attr($minNights); ?>"
 		data-max-nights="<?php echo esc_attr($maxNights); ?>"
 		data-show-property-images="<?php echo esc_attr($showPropertyImages ? 'true' : 'false'); ?>"
-		data-include-icons="<?php echo esc_attr($includeIcons ? 'true' : 'false'); ?>">
+		data-include-icons="<?php echo esc_attr($includeIcons ? 'true' : 'false'); ?>"
+		data-layout-style="<?php echo esc_attr($layoutStyle); ?>"
+		data-button-icon="<?php echo esc_attr($buttonIcon); ?>">
 	</div>
 <?php
 	return ob_get_clean();

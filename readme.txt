@@ -101,6 +101,8 @@ Yes, all payment processing is handled securely through encrypted connections an
 * Gift certificate functionality
 * Secure payment processing
 * Admin dashboard for account management
+* Block for adding availability on your page
+* Block for adding gift certificate purchases on your page
 
 == Upgrade Notice ==
 
