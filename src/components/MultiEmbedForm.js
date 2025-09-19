@@ -573,15 +573,20 @@ const BookingSummary = ({
 			<div className="bif-summary-content">
 				{/* Property Summaries - Direct display without wrapper */}
 				{selectedProperties.map((property) => {
-					// Fix: Use the correct property total from API
-					const propertySubtotal = property.availability?.total_cost ||
+					// Use sub_total from property summary if available, otherwise calculate it
+					const propertySubtotal = property.sub_total ||
+						property.availability?.total_cost ||
 						(property.availability?.dates?.reduce((sum, date) => sum + (date.rate || 0), 0) || 0);
 
-										// Calculate mandatory extras total
-					const mandatoryExtrasTotal = property.mandatory_extras?.reduce((sum, extra) => sum + parseFloat(extra.amount || 0), 0) || 0;
+					// Calculate mandatory extras total
+					const mandatoryExtrasTotal = property.mandatory_extras_total ||
+						property.mandatory_extras?.reduce((sum, extra) => sum + parseFloat(extra.amount || 0), 0) || 0;
 
-					// Calculate property total (subtotal + mandatory extras) - ensure both are numbers
-					const propertyTotal = parseFloat(propertySubtotal) + parseFloat(mandatoryExtrasTotal);
+					// Get optional extras total from property summary
+					const optionalExtrasTotal = property.optional_extras_total || 0;
+
+					// Calculate property total (subtotal + mandatory extras + optional extras)
+					const propertyTotal = parseFloat(propertySubtotal) + parseFloat(mandatoryExtrasTotal) + parseFloat(optionalExtrasTotal);
 
 					return (
 						<div key={property.id} className="bif-property-summary">
@@ -610,7 +615,20 @@ const BookingSummary = ({
 								</div>
 							)}
 
-							{/* Property Total (Subtotal + Mandatory Extras) */}
+							{/* Optional Extras */}
+							{property.optional_extras && property.optional_extras.filter(extra => extra.selected).length > 0 && (
+								<div className="bif-optional-extras-summary">
+									<h4 className="bif-daily-breakdown-title">Optional Extras</h4>
+									{property.optional_extras.filter(extra => extra.selected).map((extra) => (
+										<div key={extra.id} className="bif-total-row" style={{ fontSize: '0.875rem', color: '#92400e' }}>
+											<span>{extra.description}</span>
+											<span>${parseFloat(extra.amount).toFixed(2)}</span>
+										</div>
+									))}
+								</div>
+							)}
+
+							{/* Property Total (Subtotal + Mandatory Extras + Optional Extras) */}
 							<div className="bif-property-total">
 								<div className="bif-total-row bif-subtotal">
 									<span>Property Total</span>
@@ -618,8 +636,8 @@ const BookingSummary = ({
 								</div>
 							</div>
 
-							{/* Show selected optional extras for this property */}
-							{selectedExtras[property.id] && selectedExtras[property.id].length > 0 && (
+							{/* Show selected optional extras for this property (OLD - keeping for backwards compatibility) */}
+							{!property.optional_extras && selectedExtras[property.id] && selectedExtras[property.id].length > 0 && (
 								<div className="bif-optional-extras-summary">
 									<h4 className="bif-daily-breakdown-title">Selected Optional Extras</h4>
 														{selectedExtras[property.id].map((extra) => (
@@ -1236,16 +1254,21 @@ const MultiEmbedForm = ({
 		}
 	};
 
-	// Get selected properties for display
+	// Get selected properties for display - merge with summary data if available
 	const selectedProperties = availability ?
 		Object.entries(availability)
 			.filter(([propertyId]) => selectionData[propertyId])
-			.map(([propertyId, propertyData]) => ({
-				id: propertyId,
-				...propertyData,
-				selectedExtras: selectedOptionalExtras[propertyId],
-				onToggleExtra: toggleOptionalExtra
-			})) : [];
+			.map(([propertyId, propertyData]) => {
+				// Get property summary data if available
+				const propertySummary = summary?.property_summaries?.[propertyId] || {};
+				return {
+					id: propertyId,
+					...propertyData,
+					...propertySummary,
+					selectedExtras: selectedOptionalExtras[propertyId],
+					onToggleExtra: toggleOptionalExtra
+				};
+			}) : [];
 
 	return (
 		<div 
