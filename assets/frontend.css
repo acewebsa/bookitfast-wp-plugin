@@ -2164,3 +2164,288 @@ border:1px solid #ced4da;
 	gap: 1.5rem;
 }
 
+/* Modal Styles for Booking Conditions */
+.bif-modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 999999;
+	padding: 1rem;
+	animation: bifModalFadeIn 0.2s ease-out;
+}
+
+@keyframes bifModalFadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.bif-modal {
+	background: white;
+	border-radius: 12px;
+	max-width: 600px;
+	width: 100%;
+	max-height: 90vh;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+	animation: bifModalSlideIn 0.2s ease-out;
+}
+
+@keyframes bifModalSlideIn {
+	from {
+		transform: translateY(-20px);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+.bif-modal-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1.5rem;
+	border-bottom: 1px solid #e5e7eb;
+}
+
+.bif-modal-title {
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: #111827;
+	margin: 0;
+}
+
+.bif-modal-close {
+	background: none;
+	border: none;
+	font-size: 2rem;
+	line-height: 1;
+	color: #6b7280;
+	cursor: pointer;
+	padding: 0;
+	width: 32px;
+	height: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 6px;
+	transition: all 0.2s ease;
+}
+
+.bif-modal-close:hover {
+	background-color: #f3f4f6;
+	color: #111827;
+}
+
+.bif-modal-close:focus {
+	outline: 2px solid #3b82f6;
+	outline-offset: 2px;
+}
+
+.bif-modal-content {
+	padding: 1.5rem;
+	overflow-y: auto;
+	flex: 1;
+}
+
+/* Style content inside modal */
+.bif-modal-content p {
+	color: #374151;
+	line-height: 1.6;
+	margin-bottom: 1rem;
+}
+
+.bif-modal-content p:last-child {
+	margin-bottom: 0;
+}
+
+.bif-modal-content ul,
+.bif-modal-content ol {
+	color: #374151;
+	line-height: 1.6;
+	margin-bottom: 1rem;
+	padding-left: 1.5rem;
+}
+
+.bif-modal-content h3,
+.bif-modal-content h4,
+.bif-modal-content h5 {
+	color: #111827;
+	margin-top: 1.5rem;
+	margin-bottom: 0.75rem;
+}
+
+.bif-modal-content h3:first-child,
+.bif-modal-content h4:first-child,
+.bif-modal-content h5:first-child {
+	margin-top: 0;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+	.bif-modal {
+		max-width: 100%;
+		margin: 1rem;
+	}
+
+	.bif-modal-header {
+		padding: 1rem;
+	}
+
+	.bif-modal-content {
+		padding: 1rem;
+	}
+}
+
+/* Horizontal Search Layout Styles - Matching reference image */
+.bif-search-box-horizontal {
+	display: flex;
+	align-items: stretch;
+	background: white;
+	border: 1px solid #e5e5e5;
+	border-radius: 4px;
+	overflow: hidden;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+	margin-bottom: 2rem;
+	max-width: 900px;
+}
+
+.bif-search-field {
+	display: flex;
+	align-items: center;
+	gap: 0.875rem;
+	padding: 1.125rem 1.5rem;
+	flex: 1;
+	min-width: 0;
+	cursor: pointer;
+}
+
+.bif-search-icon {
+	flex-shrink: 0;
+	color: var(--bif-button-color, #0073aa);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+}
+
+.bif-search-icon svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.bif-search-field-content {
+	display: flex;
+	flex-direction: column;
+	gap: 0.125rem;
+	flex: 1;
+	min-width: 0;
+}
+
+.bif-search-field-content label {
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: var(--bif-button-color, #0073aa);
+	margin: 0;
+	white-space: nowrap;
+	line-height: 1.2;
+}
+
+.bif-search-field-content input,
+.bif-search-field-content select {
+	border: none;
+	background: transparent;
+	font-size: 0.875rem;
+	color: var(--bif-button-color, #0073aa);
+	padding: 0;
+	margin: 0;
+	outline: none;
+	font-family: inherit;
+	width: 100%;
+	cursor: pointer;
+	line-height: 1.4;
+}
+
+.bif-search-field-content input[type="date"]::-webkit-calendar-picker-indicator {
+	display: none;
+}
+
+.bif-search-field-content input[type="date"]::-webkit-inner-spin-button,
+.bif-search-field-content input[type="date"]::-webkit-clear-button {
+	display: none;
+}
+
+.bif-search-field-content select {
+	appearance: none;
+	cursor: pointer;
+	padding-right: 1.25rem;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23666' d='M5 6L0 0h10z'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+
+.bif-search-field-content input[type="date"] {
+	min-width: 100px;
+}
+
+.bif-search-divider {
+	width: 1px;
+	background: #e5e5e5;
+	align-self: stretch;
+	margin: 0.5rem 0;
+}
+
+.bif-search-button {
+	background: var(--bif-button-color, #6b5d4f);
+	color: var(--bif-button-text-color, white);
+	border: none;
+	border-radius: 0;
+	padding: 1.125rem 3rem;
+	font-size: 1rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background 0.2s;
+	white-space: nowrap;
+	flex-shrink: 0;
+	letter-spacing: 0.01em;
+}
+
+.bif-search-button:hover:not(:disabled) {
+	background: var(--bif-button-color-hover, #5a4d40);
+}
+
+.bif-search-button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* Responsive adjustments for horizontal layout */
+@media (max-width: 768px) {
+	.bif-search-box-horizontal {
+		flex-direction: column;
+	}
+
+	.bif-search-divider {
+		width: 100%;
+		height: 1px;
+	}
+
+	.bif-search-button {
+		width: 100%;
+	}
+}
+

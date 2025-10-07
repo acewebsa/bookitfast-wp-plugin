@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const includeIcons = container.dataset.includeIcons === 'true';
 		const layoutStyle = container.dataset.layoutStyle || 'cards';
 		const buttonIcon = container.dataset.buttonIcon || 'search';
+		const searchLayout = container.dataset.searchLayout || 'default';
 
 		ReactDOM.render(
 			React.createElement(MultiEmbedForm, {
@@ -39,7 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				showPropertyImages: showPropertyImages,
 				includeIcons: includeIcons,
 				layoutStyle: layoutStyle,
-				buttonIcon: buttonIcon
+				buttonIcon: buttonIcon,
+				searchLayout: searchLayout
 			}),
 			container
 		);

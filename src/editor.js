@@ -1,7 +1,7 @@
 import MultiEmbedForm from "./components/MultiEmbedForm";
 import { registerBlockType } from "@wordpress/blocks";
 import { useBlockProps, InspectorControls } from "@wordpress/block-editor";
-import { PanelBody, ToggleControl, SelectControl, RangeControl, Button } from "@wordpress/components";
+import { PanelBody, ToggleControl, SelectControl, RangeControl, Button, BaseControl } from "@wordpress/components";
 import { ColorPalette } from "@wordpress/components";
 import { Icon } from "@wordpress/components";
 import { 
@@ -65,6 +65,10 @@ registerBlockType("bookitfast/multi-embed", {
 			type: "string",
 			default: "search"
 		},
+		searchLayout: {
+			type: "string",
+			default: "default"
+		},
 	},
 
 	edit: ({ attributes, setAttributes }) => {
@@ -100,7 +104,21 @@ registerBlockType("bookitfast/multi-embed", {
 			<div {...blockProps}>
 				{/* Sidebar Settings */}
 				<InspectorControls>
-					<PanelBody title="Search Options" initialOpen={true}>
+					<PanelBody title="Search Layout" initialOpen={true}>
+						<SelectControl
+							label="Search Box Style"
+							value={attributes.searchLayout}
+							options={[
+								{ label: 'Default (Stacked)', value: 'default' },
+								{ label: 'Horizontal (Check-In & Nights)', value: 'horizontal' }
+							]}
+							onChange={(value) => setAttributes({ searchLayout: value })}
+							help="Choose the layout style for the search box"
+							__next40pxDefaultSize={true}
+							__nextHasNoMarginBottom={true}
+						/>
+					</PanelBody>
+					<PanelBody title="Search Options" initialOpen={false}>
 						{loading ? (
 							<p>Loading properties...</p>
 						) : error ? (
@@ -137,30 +155,32 @@ registerBlockType("bookitfast/multi-embed", {
 							step={1}
 						/>
 
-						<ColorPalette
-							label="Button Color"
-							value={attributes.buttonColor}
-							onChange={(color) => setAttributes({ buttonColor: color })}
-							colors={[
-								{ name: 'Blue', color: '#0073aa' },
-								{ name: 'Green', color: '#46b450' },
-								{ name: 'Red', color: '#dc3232' },
-								{ name: 'Orange', color: '#ff6900' },
-								{ name: 'Purple', color: '#8224e3' },
-								{ name: 'Dark', color: '#333333' }
-							]}
-						/>
-						<ColorPalette
-							label="Button Text Color"
-							value={attributes.buttonTextColor}
-							onChange={(color) => setAttributes({ buttonTextColor: color })}
-							colors={[
-								{ name: 'White', color: '#ffffff' },
-								{ name: 'Black', color: '#000000' },
-								{ name: 'Dark Gray', color: '#333333' },
-								{ name: 'Light Gray', color: '#666666' }
-							]}
-						/>
+						<BaseControl label="Button Color" id="button-color-control">
+							<ColorPalette
+								value={attributes.buttonColor}
+								onChange={(color) => setAttributes({ buttonColor: color })}
+								colors={[
+									{ name: 'Blue', color: '#0073aa' },
+									{ name: 'Green', color: '#46b450' },
+									{ name: 'Red', color: '#dc3232' },
+									{ name: 'Orange', color: '#ff6900' },
+									{ name: 'Purple', color: '#8224e3' },
+									{ name: 'Dark', color: '#333333' }
+								]}
+							/>
+						</BaseControl>
+						<BaseControl label="Button Text Color" id="button-text-color-control">
+							<ColorPalette
+								value={attributes.buttonTextColor}
+								onChange={(color) => setAttributes({ buttonTextColor: color })}
+								colors={[
+									{ name: 'White', color: '#ffffff' },
+									{ name: 'Black', color: '#000000' },
+									{ name: 'Dark Gray', color: '#333333' },
+									{ name: 'Light Gray', color: '#666666' }
+								]}
+							/>
+						</BaseControl>
 						
 						{/* Button Icon Selector */}
 						<div style={{ marginBottom: '16px' }}>
@@ -299,6 +319,7 @@ registerBlockType("bookitfast/multi-embed", {
 					showPropertyImages={attributes.showPropertyImages}
 					includeIcons={attributes.includeIcons}
 					layoutStyle={attributes.layoutStyle}
+					searchLayout={attributes.searchLayout}
 				/>
 			</div>
 		);

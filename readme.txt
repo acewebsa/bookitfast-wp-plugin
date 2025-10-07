@@ -5,7 +5,7 @@ Tags: booking, calendar, reservation, property, management, bnb, short term rent
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,17 @@ Yes, all payment processing is handled securely through encrypted connections an
 3. Frontend booking calendar display
 
 == Changelog ==
+
+= 1.0.2 =
+* Included modal for when there is a basic booking condition
+
+= 1.0.1 =
+* Fix for including the optional extras in summary when selected
+
+
+= 1.0.0 =
+* Stable Version
+* Improved style editing and options
 
 = 0.1.0 =
 * Initial release

@@ -457,9 +457,9 @@ const PropertyCard = ({ property, isSelected, onToggle, nights, checkInDate, sho
 };
 
 // Date Selector Component
-const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onCheckAvailability, isLoading, minNights, maxNights, buttonIcon = 'search' }) => {
+const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onCheckAvailability, isLoading, minNights, maxNights, buttonIcon = 'search', searchLayout = 'default' }) => {
 	const today = new Date().toISOString().split('T')[0];
-	
+
 	// Icon mapping for display - the CSS pseudo-element handles frontend, this handles editor
 	const iconMap = {
 		'search': '🔍',
@@ -471,9 +471,71 @@ const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onChe
 		'pinSmall': '📍',
 		'globe': '🌍'
 	};
-	
+
 	const iconSymbol = iconMap[buttonIcon] || '🔍';
 
+	// Render horizontal layout
+	if (searchLayout === 'horizontal') {
+		return (
+			<div className="bif-search-box-horizontal">
+				<div className="bif-search-field" onClick={() => document.querySelector('.bif-search-box-horizontal input[type="date"]')?.showPicker?.()}>
+					<span className="bif-search-icon">
+						<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<rect x="3" y="4" width="14" height="13" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+							<line x1="3" y1="8" x2="17" y2="8" stroke="currentColor" strokeWidth="1.5"/>
+							<line x1="7" y1="2" x2="7" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+							<line x1="13" y1="2" x2="13" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+						</svg>
+					</span>
+					<div className="bif-search-field-content">
+						<label>Check-In</label>
+						<input
+							type="date"
+							value={checkInDate}
+							onChange={(e) => onDateChange(e.target.value)}
+							min={today}
+						/>
+					</div>
+				</div>
+
+				<div className="bif-search-divider"></div>
+
+				<div className="bif-search-field">
+					<span className="bif-search-icon">
+						<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+							<path d="M17 10.5c0 3.59-2.69 6.5-6 6.5s-6-2.91-6-6.5S7.69 4 11 4c.35 0 .69.03 1.02.09A5.5 5.5 0 0 0 17 10.5z"/>
+						</svg>
+					</span>
+					<div className="bif-search-field-content">
+						<label>Nights</label>
+						<select
+							value={nights}
+							onChange={(e) => onNightsChange(parseInt(e.target.value))}
+						>
+							{[...Array(maxNights - minNights + 1).keys()].map(i => {
+								const nightCount = minNights + i;
+								return (
+									<option key={nightCount} value={nightCount}>
+										{nightCount}
+									</option>
+								);
+							})}
+						</select>
+					</div>
+				</div>
+
+				<button
+					onClick={onCheckAvailability}
+					disabled={!checkInDate || isLoading}
+					className="bif-search-button"
+				>
+					{isLoading ? 'Checking...' : 'Search'}
+				</button>
+			</div>
+		);
+	}
+
+	// Default stacked layout
 	return (
 		<div className="bif-date-selector">
 			<h2 className="bif-section-title">Select Your Dates</h2>
@@ -803,6 +865,63 @@ const BookingSummary = ({
 	);
 };
 
+// Modal Component for Local Booking Conditions
+const BookingConditionModal = ({ isOpen, onClose, title, content }) => {
+	useEffect(() => {
+		// Prevent body scroll when modal is open
+		if (isOpen) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = '';
+		}
+
+		// Cleanup on unmount
+		return () => {
+			document.body.style.overflow = '';
+		};
+	}, [isOpen]);
+
+	useEffect(() => {
+		// Handle escape key press
+		const handleEscape = (e) => {
+			if (e.key === 'Escape' && isOpen) {
+				onClose();
+			}
+		};
+
+		if (isOpen) {
+			document.addEventListener('keydown', handleEscape);
+		}
+
+		return () => {
+			document.removeEventListener('keydown', handleEscape);
+		};
+	}, [isOpen, onClose]);
+
+	if (!isOpen) return null;
+
+	return (
+		<div className="bif-modal-overlay" onClick={onClose}>
+			<div className="bif-modal" onClick={(e) => e.stopPropagation()}>
+				<div className="bif-modal-header">
+					<h3 className="bif-modal-title">{title}</h3>
+					<button
+						className="bif-modal-close"
+						onClick={onClose}
+						aria-label="Close modal"
+					>
+						×
+					</button>
+				</div>
+				<div
+					className="bif-modal-content"
+					dangerouslySetInnerHTML={{ __html: content }}
+				/>
+			</div>
+		</div>
+	);
+};
+
 // Customer Details Component - Remove emoji icons
 const CustomerDetails = ({ userDetails, onUpdateDetails, formErrors, showSuburb = true, showPostcode = true, showComments = false }) => {
 	return (
@@ -924,7 +1043,8 @@ const MultiEmbedForm = ({
 	showPropertyImages = false,
 	includeIcons = false,
 	layoutStyle = 'cards', // 'cards', 'grid', 'rows'
-	buttonIcon = 'search'
+	buttonIcon = 'search',
+	searchLayout = 'default' // 'default' or 'horizontal'
 }) => {
 	const nightsFromUrl = getQueryParam('nights');
 	const validatedNights = nightsFromUrl && !isNaN(nightsFromUrl) ? Math.max(parseInt(nightsFromUrl, 10), minNights) : minNights;
@@ -964,7 +1084,8 @@ const MultiEmbedForm = ({
 	const [gcLoading, setGcLoading] = useState(false);
 	const [selectedOptionalExtras, setSelectedOptionalExtras] = useState({});
 	const [showProperties, setShowProperties] = useState(false);
-	
+	const [modalCondition, setModalCondition] = useState({ isOpen: false, title: '', content: '' });
+
 	// Handler for form data changes in DateSelector
 	const handleFormDataChange = (field, value) => {
 		switch (field) {
@@ -1294,6 +1415,7 @@ const MultiEmbedForm = ({
 					minNights={minNights}
 					maxNights={maxNights}
 					buttonIcon={buttonIcon}
+					searchLayout={searchLayout}
 				/>
 
 				{error && <div className="bif-error-message">{error}</div>}
@@ -1385,9 +1507,26 @@ const MultiEmbedForm = ({
 								I have read and agree to the{" "}
 								{summary.order_booking_conditions?.map((condition, index) => (
 									<span key={index}>
-										<a href={condition.url} target="_blank" rel="noopener noreferrer">
-											{condition.title}
-										</a>
+										{condition.type === 'local' ? (
+											<a
+												href="#"
+												onClick={(e) => {
+													e.preventDefault();
+													setModalCondition({
+														isOpen: true,
+														title: condition.title,
+														content: condition.content
+													});
+												}}
+												style={{ textDecoration: 'underline', cursor: 'pointer' }}
+											>
+												{condition.title}
+											</a>
+										) : (
+											<a href={condition.url} target="_blank" rel="noopener noreferrer">
+												{condition.title}
+											</a>
+										)}
 										{index < summary.order_booking_conditions.length - 2 ? ", " : ""}
 										{index === summary.order_booking_conditions.length - 2 ? " and " : ""}
 									</span>
@@ -1506,6 +1645,14 @@ const MultiEmbedForm = ({
 					</div>
 				)}
 			</div>
+
+			{/* Booking Condition Modal */}
+			<BookingConditionModal
+				isOpen={modalCondition.isOpen}
+				onClose={() => setModalCondition({ isOpen: false, title: '', content: '' })}
+				title={modalCondition.title}
+				content={modalCondition.content}
+			/>
 		</div>
 	);
 };

@@ -114,6 +114,10 @@ add_action('init', function () {
 			'buttonIcon' => [
 				'type' => 'string',
 				'default' => 'search'
+			],
+			'searchLayout' => [
+				'type' => 'string',
+				'default' => 'default'
 			]
 		]
 	]);
@@ -171,7 +175,8 @@ function bookitfast_render_multi_embed_block($attributes)
 	$includeIcons = !empty($attributes['includeIcons']);
 	$layoutStyle = isset($attributes['layoutStyle']) ? esc_attr($attributes['layoutStyle']) : 'cards';
 	$buttonIcon = isset($attributes['buttonIcon']) ? esc_attr($attributes['buttonIcon']) : 'search';
-	
+	$searchLayout = isset($attributes['searchLayout']) ? esc_attr($attributes['searchLayout']) : 'default';
+
 	// Map WordPress icon names to Unicode symbols for CSS content
 	$iconMap = [
 		'search' => '🔍',
@@ -241,7 +246,8 @@ function bookitfast_render_multi_embed_block($attributes)
 		data-show-property-images="<?php echo esc_attr($showPropertyImages ? 'true' : 'false'); ?>"
 		data-include-icons="<?php echo esc_attr($includeIcons ? 'true' : 'false'); ?>"
 		data-layout-style="<?php echo esc_attr($layoutStyle); ?>"
-		data-button-icon="<?php echo esc_attr($buttonIcon); ?>">
+		data-button-icon="<?php echo esc_attr($buttonIcon); ?>"
+		data-search-layout="<?php echo esc_attr($searchLayout); ?>">
 	</div>
 <?php
 	return ob_get_clean();
