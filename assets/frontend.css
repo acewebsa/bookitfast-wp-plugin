@@ -4,7 +4,7 @@
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 	max-width: 1200px;
 	margin: 0 auto;
-	padding: 2rem;
+	padding: 1.5rem;
 	background: #f8f9fa;
 	border-radius: 0.5rem;
 	box-shadow: none;
@@ -923,7 +923,7 @@ border:1px solid #ced4da;
 .bif-payment-form-container {
 	background: white;
 	border-radius: 0.5rem;
-	padding: 1.5rem;
+	padding: 1rem;
 	margin-bottom: 1.5rem;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 	border: 1px solid #e5e7eb;
@@ -1735,7 +1735,7 @@ border:1px solid #ced4da;
 /* Responsive Design */
 @media (max-width: 640px) {
 	.bif-booking-container {
-		padding: 1rem;
+		padding: 0.4rem;
 	}
 
 	.bif-date-selector,
@@ -2447,5 +2447,38 @@ border:1px solid #ced4da;
 	.bif-search-button {
 		width: 100%;
 	}
+	.bif-booking-summary {
+		padding:0.5rem;
+	}
+	.bif-bookitfast-container,
+	.bif-booking-container {
+		padding:0.5rem;
+	}
+	.bif-booking-steps .bif-payment-form-container {
+		padding:0.5rem;
+	}
+	.bif-payment-form-container .bif-payment-container{
+		padding:0.5rem;
+	}
+	.bif-booking-steps .bif-summary-section {
+		padding:0;
+	}
+	.bif-booking-steps .bif-summary-section .bif-section-title {
+		padding:0.5rem;
+	}
+	.bif-discount-form {
+		gap:0;
+	}
+	.bif-discount-code input.bif-discount-input {
+		padding:0.5rem;
+	}
+	.bif-discount-code .bif-btn {
+		padding:0.5rem;
+		border-top-left-radius:0;
+		border-bottom-left-radius:0;
+	}
+
+	.bif-terms-payment .bif-payment-options {padding:0;}
+
 }
 
