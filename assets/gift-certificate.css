@@ -288,3 +288,43 @@ select.bif-form-control {
         margin-bottom: 32px;
     }
 }
+
+/* Terms Checkbox & Privacy Consent */
+.bif-terms-checkbox,
+.bif-privacy-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    background: #f7fafc;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+}
+
+.bif-terms-checkbox input[type="checkbox"],
+.bif-privacy-consent input[type="checkbox"] {
+    margin-top: 0.25rem;
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-right: 0.75rem;
+    accent-color: #3b82f6;
+}
+
+.bif-terms-checkbox label,
+.bif-privacy-consent label {
+    color: #4a5568;
+    line-height: 1.6;
+    cursor: pointer;
+}
+
+.bif-terms-checkbox a,
+.bif-privacy-consent a {
+    color: #4299e1;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.bif-terms-checkbox a:hover,
+.bif-privacy-consent a:hover {
+    text-decoration: underline;
+}

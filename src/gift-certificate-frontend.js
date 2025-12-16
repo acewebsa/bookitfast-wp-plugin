@@ -117,7 +117,7 @@ function GiftCertificatePaymentForm({ stripePk, totalAmount, surcharge, onPaymen
             const payload = {
                 stripePaymentMethodId: paymentMethod.id,
                 amount: totalAmount, // total payable (in dollars, including surcharge)
-                currency: "AUD",
+                currency: container.getAttribute("data-currency") || "AUD",
                 giftCertificateApplied: true,
                 gc_details: {
                     amount: gcAmount,
@@ -201,11 +201,11 @@ function GiftCertificatePaymentForm({ stripePk, totalAmount, surcharge, onPaymen
 
 // Main front-end logic.
 function GiftCertificateFrontend() {
-   // console.log('GiftCertificateFrontend: Starting initialization');
+    // console.log('GiftCertificateFrontend: Starting initialization');
 
     const container = document.querySelector(".bif-bookitfast-certificate-form");
     if (!container) {
-      //  console.error('GiftCertificateFrontend: Container .bif-bookitfast-certificate-form not found');
+        //  console.error('GiftCertificateFrontend: Container .bif-bookitfast-certificate-form not found');
         return;
     }
 
@@ -302,16 +302,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Add a small delay to ensure all elements are rendered
     setTimeout(() => {
-       // console.log('Gift Certificate Frontend: Initializing after timeout');
+        // console.log('Gift Certificate Frontend: Initializing after timeout');
         GiftCertificateFrontend();
     }, 100);
 });
 
 // Also try immediate initialization if DOM is already loaded
 if (document.readyState === 'loading') {
-   // console.log('Gift Certificate Frontend: Document still loading, waiting for DOMContentLoaded');
+    // console.log('Gift Certificate Frontend: Document still loading, waiting for DOMContentLoaded');
 } else {
-   // console.log('Gift Certificate Frontend: Document already loaded, initializing immediately');
+    // console.log('Gift Certificate Frontend: Document already loaded, initializing immediately');
     GiftCertificateFrontend();
 }
 

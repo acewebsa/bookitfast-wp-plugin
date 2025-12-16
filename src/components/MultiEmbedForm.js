@@ -2,15 +2,28 @@ import { useState, useEffect } from 'react';
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
-function getWPApiUrl() {
-	const apiLink = document.querySelector('link[rel="https://api.w.org/"]');
-	if (!apiLink) {
-		// Check if we're using pretty permalinks
-		const restUrl = window.wpApiSettings?.restUrl || '/wp-json';
+const getWPApiUrl = () => {
+	const restUrl = window.wpApiSettings?.restUrl;
+	if (restUrl) {
 		return restUrl.replace(/\/$/, ''); // Remove trailing slash if present
 	}
+	const apiLink = document.querySelector('link[rel="https://api.w.org/"]');
 	return apiLink.href.replace(/\/$/, ''); // Remove trailing slash if present
-}
+};
+
+// Helper function to get currency symbol
+const getCurrencySymbol = (currency) => {
+	const symbols = {
+		'AUD': 'AUD$',
+		'USD': 'USD$',
+		'NZD': 'NZD$',
+		'GBP': 'GBP£',
+		'EUR': 'EUR€',
+		'CAD': 'CAD$',
+		'SGD': 'SGD$',
+	};
+	return symbols[currency] || currency + ' ';
+};
 
 const API_BASE = getWPApiUrl();
 
@@ -118,8 +131,8 @@ const PropertyTile = ({ property, isSelected, onToggle, nights, checkInDate, sho
 								<span className="bif-pill__date">{date.date_formatted}</span>
 								<strong className="bif-pill__amt">
 									{date.availability ? `$${date.rate}` :
-									 date.availability_reason === 'Booked Out' ? 'Booked' :
-									 date.availability_reason === 'No Tariff Set' ? 'No Rate' : 'N/A'}
+										date.availability_reason === 'Booked Out' ? 'Booked' :
+											date.availability_reason === 'No Tariff Set' ? 'No Rate' : 'N/A'}
 								</strong>
 							</div>
 						))}
@@ -237,8 +250,8 @@ const PropertyRow = ({ property, isSelected, onToggle, nights, checkInDate, show
 							<div className="bif-rmini__date">{date.date_formatted}</div>
 							<div className="bif-rmini__amt">
 								{date.availability ? `$${date.rate}` :
-								 date.availability_reason === 'Booked Out' ? 'Booked' :
-								 date.availability_reason === 'No Tariff Set' ? 'No Rate' : 'N/A'}
+									date.availability_reason === 'Booked Out' ? 'Booked' :
+										date.availability_reason === 'No Tariff Set' ? 'No Rate' : 'N/A'}
 							</div>
 						</div>
 					))}
@@ -415,8 +428,8 @@ const PropertyCard = ({ property, isSelected, onToggle, nights, checkInDate, sho
 								<div className="bif-date">{date.date_formatted}</div>
 								<div className="bif-rate">
 									{date.availability ? `$${date.rate}` :
-									 date.availability_reason === 'Booked Out' ? 'Booked' :
-									 date.availability_reason === 'No Tariff Set' ? 'No Rate' : 'N/A'}
+										date.availability_reason === 'Booked Out' ? 'Booked' :
+											date.availability_reason === 'No Tariff Set' ? 'No Rate' : 'N/A'}
 								</div>
 							</div>
 						))}
@@ -481,10 +494,10 @@ const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onChe
 				<div className="bif-search-field" onClick={() => document.querySelector('.bif-search-box-horizontal input[type="date"]')?.showPicker?.()}>
 					<span className="bif-search-icon">
 						<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<rect x="3" y="4" width="14" height="13" rx="1" stroke="currentColor" strokeWidth="1.5"/>
-							<line x1="3" y1="8" x2="17" y2="8" stroke="currentColor" strokeWidth="1.5"/>
-							<line x1="7" y1="2" x2="7" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-							<line x1="13" y1="2" x2="13" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+							<rect x="3" y="4" width="14" height="13" rx="1" stroke="currentColor" strokeWidth="1.5" />
+							<line x1="3" y1="8" x2="17" y2="8" stroke="currentColor" strokeWidth="1.5" />
+							<line x1="7" y1="2" x2="7" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+							<line x1="13" y1="2" x2="13" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
 						</svg>
 					</span>
 					<div className="bif-search-field-content">
@@ -503,7 +516,7 @@ const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onChe
 				<div className="bif-search-field">
 					<span className="bif-search-icon">
 						<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-							<path d="M17 10.5c0 3.59-2.69 6.5-6 6.5s-6-2.91-6-6.5S7.69 4 11 4c.35 0 .69.03 1.02.09A5.5 5.5 0 0 0 17 10.5z"/>
+							<path d="M17 10.5c0 3.59-2.69 6.5-6 6.5s-6-2.91-6-6.5S7.69 4 11 4c.35 0 .69.03 1.02.09A5.5 5.5 0 0 0 17 10.5z" />
 						</svg>
 					</span>
 					<div className="bif-search-field-content">
@@ -617,7 +630,7 @@ const BookingSummary = ({
 }) => {
 	const extrasTotal = Object.values(selectedExtras).flat().reduce((sum, extra) => sum + (extra.amount || 0), 0);
 
-			// Check if discount is actually applied based on summary data
+	// Check if discount is actually applied based on summary data
 	const isDiscountApplied = summary && parseFloat(summary.order_discount_code_total || 0) > 0;
 
 	const applyDiscount = () => {
@@ -702,12 +715,12 @@ const BookingSummary = ({
 							{!property.optional_extras && selectedExtras[property.id] && selectedExtras[property.id].length > 0 && (
 								<div className="bif-optional-extras-summary">
 									<h4 className="bif-daily-breakdown-title">Selected Optional Extras</h4>
-														{selectedExtras[property.id].map((extra) => (
-						<div key={extra.id} className="bif-total-row" style={{ fontSize: '0.875rem', color: '#92400e' }}>
-							<span>{extra.description}</span>
-							<span>${parseFloat(extra.amount).toFixed(2)}</span>
-						</div>
-					))}
+									{selectedExtras[property.id].map((extra) => (
+										<div key={extra.id} className="bif-total-row" style={{ fontSize: '0.875rem', color: '#92400e' }}>
+											<span>{extra.description}</span>
+											<span>${parseFloat(extra.amount).toFixed(2)}</span>
+										</div>
+									))}
 								</div>
 							)}
 						</div>
@@ -727,7 +740,7 @@ const BookingSummary = ({
 							/>
 							<button
 								onClick={applyDiscount}
-								className="bif-btn bif-btn-secondary"
+								className={`bif-btn ${discountCode?.trim() ? 'bif-btn-primary' : 'bif-btn-secondary'}`}
 							>
 								Apply
 							</button>
@@ -735,6 +748,11 @@ const BookingSummary = ({
 						{isDiscountApplied && (
 							<div className="bif-discount-applied">
 								Discount code applied
+							</div>
+						)}
+						{summary?.discount && summary.discount.success === false && discountCode?.trim() && (
+							<div className="bif-discount-error">
+								{summary.discount.reason || 'Invalid discount code'}
 							</div>
 						)}
 					</div>
@@ -801,7 +819,7 @@ const BookingSummary = ({
 									) : (
 										<>
 											<p>Remaining balance to pay: <strong>${(parseFloat(gcResult.total) - parseFloat(gcResult.gc_amount_applied)).toFixed(2)}</strong></p>
-											<p style={{fontSize: '0.875rem', color: '#6b7280'}}>*Credit card surcharge will be added at payment</p>
+											<p style={{ fontSize: '0.875rem', color: '#6b7280' }}>*Credit card surcharge will be added at payment</p>
 										</>
 									)}
 									<p>Gift Certificate balance after order: <strong>${parseFloat(gcResult.gc_balance_after_order).toFixed(2)}</strong></p>
@@ -811,7 +829,7 @@ const BookingSummary = ({
 					</div>
 				)}
 
-								{/* Grand Total */}
+				{/* Grand Total */}
 				<div className="bif-grand-total">
 					{/* Show original total if gift certificate applied */}
 					{gcResult && gcResult.valid && (
@@ -823,19 +841,19 @@ const BookingSummary = ({
 
 					{/* Show gift certificate deduction */}
 					{gcResult && gcResult.valid && (
-						<div className="bif-total-row" style={{color: '#059669'}}>
+						<div className="bif-total-row" style={{ color: '#059669' }}>
 							<span>Gift Certificate Applied</span>
 							<span>-${parseFloat(gcResult.gc_amount_applied).toFixed(2)}</span>
 						</div>
 					)}
 
-										<div className="bif-total-main">
-												<span>
+					<div className="bif-total-main">
+						<span>
 							{gcResult && gcResult.valid && (parseFloat(gcResult.total) - parseFloat(gcResult.gc_amount_applied)) === 0
 								? "Total Paid by Gift Certificate"
 								: gcResult && gcResult.valid
-								? "Balance Due"
-								: "Total Cost"
+									? "Balance Due"
+									: "Total Cost"
 							}
 						</span>
 						<span className="bif-total-amount">
@@ -848,7 +866,7 @@ const BookingSummary = ({
 
 					{/* Show note about surcharge being added at payment if there's a remaining balance */}
 					{gcResult && gcResult.valid && (parseFloat(gcResult.total) - parseFloat(gcResult.gc_amount_applied)) > 0 && summary && summary.order_has_surcharge && (
-						<div className="bif-surcharge-note" style={{fontSize: '0.875rem', color: '#6b7280', marginTop: '0.5rem'}}>
+						<div className="bif-surcharge-note" style={{ fontSize: '0.875rem', color: '#6b7280', marginTop: '0.5rem' }}>
 							*Credit card surcharge will be added at payment
 						</div>
 					)}
@@ -1268,12 +1286,12 @@ const MultiEmbedForm = ({
 		setGcLoading(true);
 		console.log('Gift Certificate: Setting loading state to true');
 
-				// Prepare summary for gift certificate application
+		// Prepare summary for gift certificate application
 		// If there are weekly discounts applied, we need to adjust the totals
 		// so the gift certificate is applied to the correct base amount
 		let summaryForGiftCertificate = { ...summary };
 
-				// If there are weekly discounts applied, adjust the summary
+		// If there are weekly discounts applied, adjust the summary
 		if (summary.order_weekly_discount > 0) {
 			console.log('Gift Certificate: Weekly discount detected, adjusting summary for gift certificate calculation');
 			console.log('Gift Certificate: Original order_grand_total:', summary.order_grand_total);
@@ -1322,21 +1340,21 @@ const MultiEmbedForm = ({
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
 
-					const responseData = await response.json();
-		console.log('Gift Certificate: Response data:', responseData);
+			const responseData = await response.json();
+			console.log('Gift Certificate: Response data:', responseData);
 
-		if (responseData.valid) {
-			setGcResult(responseData);
-			if (responseData.summary) {
-				setSummary(responseData.summary);
-				console.log('Gift Certificate: Updated summary:', responseData.summary);
+			if (responseData.valid) {
+				setGcResult(responseData);
+				if (responseData.summary) {
+					setSummary(responseData.summary);
+					console.log('Gift Certificate: Updated summary:', responseData.summary);
+				}
+				console.log('Gift Certificate: Application successful');
+				console.log('Gift Certificate: Order payable now:', responseData.order_payable_now);
+			} else {
+				console.error('Gift Certificate: API returned error:', responseData);
+				alert(responseData.message || 'Failed to apply gift certificate');
 			}
-			console.log('Gift Certificate: Application successful');
-			console.log('Gift Certificate: Order payable now:', responseData.order_payable_now);
-		} else {
-			console.error('Gift Certificate: API returned error:', responseData);
-			alert(responseData.message || 'Failed to apply gift certificate');
-		}
 		} catch (err) {
 			console.error("Gift Certificate: Error applying certificate:", err);
 			alert('Error applying gift certificate. Please try again.');
@@ -1392,7 +1410,7 @@ const MultiEmbedForm = ({
 			}) : [];
 
 	return (
-		<div 
+		<div
 			className="bif-booking-container"
 			style={{
 				'--bif-button-color': buttonColor,
@@ -1579,7 +1597,7 @@ const MultiEmbedForm = ({
 											<div className="bif-surcharge-info">
 												<p>
 													Please note a credit card surcharge applies of {summary.order_deposit_surcharge > 0 && ` $${summary.order_deposit_surcharge} for deposit or `}
-													 ${summary.order_surcharge} for the full payment.
+													${summary.order_surcharge} for the full payment.
 												</p>
 											</div>
 										)}
@@ -1590,29 +1608,29 @@ const MultiEmbedForm = ({
 													className="bif-btn bif-btn-primary"
 													onClick={() => handlePaymentOption("deposit")}
 												>
-													💳 Pay Deposit (${summary.order_deposit_amount})
+													💳 Pay Deposit ({getCurrencySymbol(summary?.order_currency || 'AUD')}{summary.order_deposit_amount})
 												</button>
-																								<button
+												<button
 													className="bif-btn bif-btn-primary"
 													onClick={() => handlePaymentOption("full")}
 												>
-													💳 Pay In Full (${gcResult && gcResult.valid
+													💳 Pay In Full ({getCurrencySymbol(summary?.order_currency || 'AUD')}{gcResult && gcResult.valid
 														? parseFloat(gcResult.order_payable_now).toFixed(2)
 														: summary.order_payable_now
 													})
 												</button>
 											</div>
-																		) : (
-																		<button
-										className="bif-btn bif-btn-primary bif-btn-large"
-										onClick={() => handlePaymentOption("full")}
-									>
-										💳 Complete Booking - ${gcResult && gcResult.valid
-											? parseFloat(gcResult.order_payable_now).toFixed(2)
-											: summary.order_payable_now
-										}
-									</button>
-								)}
+										) : (
+											<button
+												className="bif-btn bif-btn-primary bif-btn-large"
+												onClick={() => handlePaymentOption("full")}
+											>
+												💳 Complete Booking - {getCurrencySymbol(summary?.order_currency || 'AUD')}{gcResult && gcResult.valid
+													? parseFloat(gcResult.order_payable_now).toFixed(2)
+													: summary.order_payable_now
+												}
+											</button>
+										)}
 									</>
 								)}
 							</div>
@@ -1675,7 +1693,7 @@ const PaymentForm = ({ summary, propertyIds, userDetails, paymentType, giftCerti
 		try {
 			let payload = {
 				amount: paymentType === "deposit" ? summary.order_deposit_amount : summary.order_payable_now,
-				currency: "AUD",
+				currency: summary?.order_currency || "AUD",
 				summary: summary,
 				propertyIds: typeof propertyIds === 'string' ? propertyIds.split(',').map(id => parseInt(id.trim())) : propertyIds,
 				userDetails: userDetails,

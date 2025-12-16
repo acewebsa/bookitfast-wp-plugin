@@ -75,9 +75,9 @@ function GiftCertificateBlock({ attributes, setAttributes }) {
             <div className="bif-gift-certificate-block">
                 <div
                     className="bif-gift-certificate-button"
-                    style={{ 
+                    style={{
                         backgroundColor: buttonColor,
-                        color: buttonTextColor 
+                        color: buttonTextColor
                     }}
                 >
                     Gift Certificate
@@ -90,7 +90,7 @@ function GiftCertificateBlock({ attributes, setAttributes }) {
 
 // Register the Gift Certificate Block
 registerBlockType('bookitfast/gift-certificate', {
-    title: 'Gift Certificate',
+    title: 'Book It Fast Gift Certificate',
     icon: 'tickets-alt',
     category: 'widgets',
     attributes: {

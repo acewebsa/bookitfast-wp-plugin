@@ -5,7 +5,7 @@ Tags: booking, calendar, reservation, property, management, bnb, short term rent
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.4
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,10 +93,6 @@ Yes, all payment processing is handled securely through encrypted connections an
 3. Frontend booking calendar display
 
 == Changelog ==
-
-= 1.0.4 =
-* Fixed currency display to use correct API field (order_currency)
-* Added visual feedback - discount code button turns green when text is entered
 
 = 1.0.3 =
 * Added dynamic currency support - currency now automatically syncs from your Book It Fast organization settings

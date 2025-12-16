@@ -1,0 +1,43 @@
+# BookItFast Plugin Language Template
+# Copyright (C) 2024 BookItFast
+# This file is distributed under the same license as the BookItFast package.
+msgid ""
+msgstr ""
+"Project-Id-Version: BookItFast 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: includes/admin-menu.php:25
+msgid "BookItFast Dashboard"
+msgstr ""
+
+#: includes/admin-menu.php:26
+msgid "BookItFast"
+msgstr ""
+
+#: includes/admin-menu.php:42
+msgid "Failed to fetch user information"
+msgstr ""
+
+#: includes/blocks.php:15
+msgid "Multi Embed Form"
+msgstr ""
+
+#: includes/blocks.php:17
+msgid "A customizable booking form block"
+msgstr ""
+
+#: includes/blocks.php:33
+msgid "Gift Certificate"
+msgstr ""
+
+#: includes/blocks.php:35
+msgid "Gift certificate purchase form"
+msgstr ""

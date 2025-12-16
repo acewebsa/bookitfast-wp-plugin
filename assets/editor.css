@@ -3,23 +3,28 @@
 	border: 1px dashed #ccc;
 	background: #f9f9f9;
 }
+
 .bif-bookitfast-container {
 	padding: 10px;
 	border: 1px dashed #ccc;
 	background: #f9f9f9;
 }
+
 .bif-bookitfast-container .bif-form-inline {
 	display: flex;
 	gap: 20px;
 	align-items: center;
 }
+
 .bif-bookitfast-container .bif-form-group {
 	margin-bottom: 20px;
 }
+
 .bif-bookitfast-container .bif-btn {
 	background-color: #28a745;
 	color: #fff;
 }
+
 .bookitfast_availability_grid_div {
 	margin-bottom: 20px;
 	padding: 10px;
@@ -68,9 +73,11 @@
 	padding: 5px 10px;
 	font-size: 0.9em;
 }
+
 .bif-btn-danger {
 	background-color: #ff4141;
 }
+
 .bif-alert {
 	margin-top: 20px;
 	padding: 10px;
@@ -78,15 +85,18 @@
 	background: #f8d7da;
 	border: 1px solid #f5c6cb;
 }
+
 .availability-results {
 	margin-top: 20px;
 }
+
 .availability-item {
 	margin-bottom: 10px;
 	padding: 10px;
 	border: 1px solid #ccc;
 	border-radius: 5px;
 }
+
 .bif-bookitfast_availability_grid_div {
 	margin-bottom: 20px;
 	padding: 10px;
@@ -96,16 +106,19 @@
 }
 
 .bif-bookitfast_availability_table_div .bif-availability_table {
-	width:100%; border: 1px solid #ddd;
+	width: 100%;
+	border: 1px solid #ddd;
 }
 
 .property_heading_container h2 {
 	font-size: 1.5em;
 	margin: 0;
 }
+
 .bif-bookitfast_day {
-	font-size:0.8em;
+	font-size: 0.8em;
 }
+
 .bif-bookitfast_day_cell {
 	display: inline-block;
 	width: 100px;
@@ -119,7 +132,7 @@
 .bif-cell_date_available {
 	background-color: #e0f7e0;
 	border-color: #3d9140;
-	width:100%;
+	width: 100%;
 }
 
 .bif-cell_date_unavailable {
@@ -184,13 +197,20 @@
 }
 
 .bif-avail_rate {
-	width:100%;
+	width: 100%;
 	font-weight: bold;
 	color: #333;
 }
 
-.bif-property_summary_detail_row {display:flex; flex-direction: row;}
-.bif-property_summary_detail_row div {flex-basis:50%; flex-grow:1;}
+.bif-property_summary_detail_row {
+	display: flex;
+	flex-direction: row;
+}
+
+.bif-property_summary_detail_row div {
+	flex-basis: 50%;
+	flex-grow: 1;
+}
 
 /* Editor-specific button styling for preview */
 .bif-gift-certificate-block .bif-gift-certificate-button {
@@ -287,4 +307,44 @@ div.editor-styles-wrapper input,
 div.editor-styles-wrapper select,
 div.editor-styles-wrapper textarea {
 	color: inherit !important;
+}
+
+/* Terms Checkbox & Privacy Consent */
+.bif-terms-checkbox,
+.bif-privacy-consent {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.75rem;
+	padding: 1.5rem;
+	background: #f7fafc;
+	border-radius: 12px;
+	margin: 1.5rem 0;
+}
+
+.bif-terms-checkbox input[type="checkbox"],
+.bif-privacy-consent input[type="checkbox"] {
+	margin-top: 0.25rem;
+	width: 1.125rem;
+	height: 1.125rem;
+	margin-right: 0.75rem;
+	accent-color: #3b82f6;
+}
+
+.bif-terms-checkbox label,
+.bif-privacy-consent label {
+	color: #4a5568;
+	line-height: 1.6;
+	cursor: pointer;
+}
+
+.bif-terms-checkbox a,
+.bif-privacy-consent a {
+	color: #4299e1;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.bif-terms-checkbox a:hover,
+.bif-privacy-consent a:hover {
+	text-decoration: underline;
 }
