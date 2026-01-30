@@ -4,43 +4,100 @@
 if (! defined('ABSPATH')) exit;
 
 include_once(plugin_dir_path(__FILE__) . 'gift-certificate.php');
+
+/**
+ * Fix dependencies from @wordpress/scripts v30+ which uses automatic JSX runtime
+ * Maps 'react' and 'react-jsx-runtime' to 'wp-element' for WordPress compatibility
+ */
+function bookitfast_fix_script_dependencies($dependencies) {
+	$fixed = [];
+	$has_react = false;
+
+	foreach ($dependencies as $dep) {
+		// Skip react-jsx-runtime as WordPress doesn't need it
+		if ($dep === 'react-jsx-runtime') {
+			$has_react = true;
+			continue;
+		}
+		// Map 'react' to 'wp-element'
+		if ($dep === 'react') {
+			$has_react = true;
+			continue;
+		}
+		$fixed[] = $dep;
+	}
+
+	// Add wp-element if react was found
+	if ($has_react && !in_array('wp-element', $fixed)) {
+		$fixed[] = 'wp-element';
+	}
+
+	return $fixed;
+}
+
 /**
  * Register all Gutenberg blocks
  */
 add_action('init', function () {
+	$build_dir = plugin_dir_path(__FILE__) . '../build/';
+	$build_url = plugins_url('../build/', __FILE__);
+
+	// Load asset files for dependencies
+	$editor_asset = file_exists($build_dir . 'editor.asset.php')
+		? require($build_dir . 'editor.asset.php')
+		: ['dependencies' => ['wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components'], 'version' => '1.0.0'];
+
+	$frontend_asset = file_exists($build_dir . 'frontend.asset.php')
+		? require($build_dir . 'frontend.asset.php')
+		: ['dependencies' => ['wp-element'], 'version' => '1.0.0'];
+
+	$gc_editor_asset = file_exists($build_dir . 'gift-certificate.asset.php')
+		? require($build_dir . 'gift-certificate.asset.php')
+		: ['dependencies' => ['wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components'], 'version' => '1.0.0'];
+
+	$gc_frontend_asset = file_exists($build_dir . 'gift-certificate-frontend.asset.php')
+		? require($build_dir . 'gift-certificate-frontend.asset.php')
+		: ['dependencies' => ['wp-element'], 'version' => '1.0.0'];
+
+	// Fix dependencies for WordPress compatibility
+	$editor_asset['dependencies'] = bookitfast_fix_script_dependencies($editor_asset['dependencies']);
+	$frontend_asset['dependencies'] = bookitfast_fix_script_dependencies($frontend_asset['dependencies']);
+	$gc_editor_asset['dependencies'] = bookitfast_fix_script_dependencies($gc_editor_asset['dependencies']);
+	$gc_frontend_asset['dependencies'] = bookitfast_fix_script_dependencies($gc_frontend_asset['dependencies']);
+
 	// Register editor script for multi-embed block
 	wp_register_script(
 		'bookitfast-multi-embed-block',
-		plugins_url('../build/editor.js', __FILE__),
-		['wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components'],
-		filemtime(plugin_dir_path(__FILE__) . '../build/editor.js'),
+		$build_url . 'editor.js',
+		$editor_asset['dependencies'],
+		$editor_asset['version'],
 		false // Editor scripts should load in header
 	);
 
 	// Register editor script for gift certificate block
 	wp_register_script(
 		'bookitfast-gift-certificate-block',
-		plugins_url('../build/gift-certificate.js', __FILE__),
-		['wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components'],
-		filemtime(plugin_dir_path(__FILE__) . '../build/gift-certificate.js'),
+		$build_url . 'gift-certificate.js',
+		$gc_editor_asset['dependencies'],
+		$gc_editor_asset['version'],
 		false // Editor scripts should load in header
 	);
 
 	// Register frontend script for multi-embed
 	wp_register_script(
 		'bookitfast-multi-embed-frontend',
-		plugins_url('../build/frontend.js', __FILE__),
-		['wp-element'],
-		filemtime(plugin_dir_path(__FILE__) . '../build/frontend.js'),
+		$build_url . 'frontend.js',
+		$frontend_asset['dependencies'],
+		$frontend_asset['version'],
 		true
 	);
 
 	// Register frontend script for gift certificate
 	wp_register_script(
 		'bookitfast-gc-frontend',
-		plugins_url('../build/gift-certificate-frontend.js', __FILE__),
-		['wp-element'],
-		filemtime(plugin_dir_path(__FILE__) . '../build/gift-certificate-frontend.js'),
+		$build_url . 'gift-certificate-frontend.js',
+		$gc_frontend_asset['dependencies'],
+		$gc_frontend_asset['version'],
 		true
 	);
 
@@ -118,6 +175,10 @@ add_action('init', function () {
 			'searchLayout' => [
 				'type' => 'string',
 				'default' => 'default'
+			],
+			'searchBoxRadius' => [
+				'type' => 'number',
+				'default' => 60
 			]
 		]
 	]);
@@ -176,6 +237,7 @@ function bookitfast_render_multi_embed_block($attributes)
 	$layoutStyle = isset($attributes['layoutStyle']) ? esc_attr($attributes['layoutStyle']) : 'cards';
 	$buttonIcon = isset($attributes['buttonIcon']) ? esc_attr($attributes['buttonIcon']) : 'search';
 	$searchLayout = isset($attributes['searchLayout']) ? esc_attr($attributes['searchLayout']) : 'default';
+	$searchBoxRadius = isset($attributes['searchBoxRadius']) ? intval($attributes['searchBoxRadius']) : 60;
 
 	// Map WordPress icon names to Unicode symbols for CSS content
 	$iconMap = [
@@ -247,7 +309,8 @@ function bookitfast_render_multi_embed_block($attributes)
 		data-include-icons="<?php echo esc_attr($includeIcons ? 'true' : 'false'); ?>"
 		data-layout-style="<?php echo esc_attr($layoutStyle); ?>"
 		data-button-icon="<?php echo esc_attr($buttonIcon); ?>"
-		data-search-layout="<?php echo esc_attr($searchLayout); ?>">
+		data-search-layout="<?php echo esc_attr($searchLayout); ?>"
+		data-search-box-radius="<?php echo esc_attr($searchBoxRadius); ?>">
 	</div>
 <?php
 	return ob_get_clean();

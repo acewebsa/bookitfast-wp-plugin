@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const layoutStyle = container.dataset.layoutStyle || 'cards';
 		const buttonIcon = container.dataset.buttonIcon || 'search';
 		const searchLayout = container.dataset.searchLayout || 'default';
+		const searchBoxRadius = parseInt(container.dataset.searchBoxRadius) || 60;
 
 		ReactDOM.render(
 			React.createElement(MultiEmbedForm, {
@@ -41,7 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				includeIcons: includeIcons,
 				layoutStyle: layoutStyle,
 				buttonIcon: buttonIcon,
-				searchLayout: searchLayout
+				searchLayout: searchLayout,
+				searchBoxRadius: searchBoxRadius
 			}),
 			container
 		);

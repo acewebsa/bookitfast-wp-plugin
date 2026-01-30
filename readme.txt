@@ -5,7 +5,7 @@ Tags: booking, calendar, reservation, property, management, bnb, short term rent
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,14 @@ Yes, all payment processing is handled securely through encrypted connections an
 3. Frontend booking calendar display
 
 == Changelog ==
+
+= 1.0.5 =
+* Redesigned stacked (default) search layout with modern aesthetic
+* Replaced emoji icons with clean SVG icons throughout
+* Added configurable corner radius for search box styling
+* Improved typography with uppercase labels and refined spacing
+* Enhanced iOS date picker compatibility
+* Added glass-morphism effects and subtle shadows for modern look
 
 = 1.0.4 =
 * Fixed currency display to use correct API field (order_currency)

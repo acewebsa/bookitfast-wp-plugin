@@ -69,6 +69,10 @@ registerBlockType("bookitfast/multi-embed", {
 			type: "string",
 			default: "default"
 		},
+		searchBoxRadius: {
+			type: "number",
+			default: 60
+		},
 	},
 
 	edit: ({ attributes, setAttributes }) => {
@@ -117,6 +121,17 @@ registerBlockType("bookitfast/multi-embed", {
 							__next40pxDefaultSize={true}
 							__nextHasNoMarginBottom={true}
 						/>
+						{attributes.searchLayout === 'horizontal' && (
+							<RangeControl
+								label="Corner Radius"
+								value={attributes.searchBoxRadius}
+								onChange={(value) => setAttributes({ searchBoxRadius: value })}
+								min={0}
+								max={60}
+								step={4}
+								help="Adjust the roundness of the search box corners (0 = square, 60 = pill)"
+							/>
+						)}
 					</PanelBody>
 					<PanelBody title="Search Options" initialOpen={false}>
 						{loading ? (
@@ -320,6 +335,7 @@ registerBlockType("bookitfast/multi-embed", {
 					includeIcons={attributes.includeIcons}
 					layoutStyle={attributes.layoutStyle}
 					searchLayout={attributes.searchLayout}
+					searchBoxRadius={attributes.searchBoxRadius}
 				/>
 			</div>
 		);

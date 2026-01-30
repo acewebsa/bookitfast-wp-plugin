@@ -8,7 +8,7 @@
  * Author URI:      https://bookitfast.app
  * Text Domain:     book-it-fast
  * Domain Path:     /languages
- * Version:         1.0.4
+ * Version:         1.0.5
  * Requires at least: 5.0
  * Tested up to:      6.8.2
  * Requires PHP:      7.4
@@ -130,14 +130,5 @@ function bookitfast_enqueue_gift_certificate_frontend()
 }
 add_action('wp_enqueue_scripts', 'bookitfast_enqueue_gift_certificate_frontend');
 
-function bookitfast_enqueue_block_editor_assets()
-{
-	wp_enqueue_script(
-		'bookitfast-gc-block-editor',
-		plugins_url('build/editor.js', __FILE__),
-		array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor'),
-		filemtime(plugin_dir_path(__FILE__) . 'build/editor.js'),
-		false // Editor scripts should load in header, not footer
-	);
-}
-add_action('enqueue_block_editor_assets', 'bookitfast_enqueue_block_editor_assets');
+// Note: Block editor scripts are registered in includes/blocks.php via register_block_type()
+// The editor.js script is registered as 'bookitfast-multi-embed-block' with proper asset dependencies

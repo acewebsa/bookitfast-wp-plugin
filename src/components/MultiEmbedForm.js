@@ -8,7 +8,11 @@ const getWPApiUrl = () => {
 		return restUrl.replace(/\/$/, ''); // Remove trailing slash if present
 	}
 	const apiLink = document.querySelector('link[rel="https://api.w.org/"]');
-	return apiLink.href.replace(/\/$/, ''); // Remove trailing slash if present
+	if (apiLink && apiLink.href) {
+		return apiLink.href.replace(/\/$/, ''); // Remove trailing slash if present
+	}
+	// Fallback to default WordPress REST API URL
+	return window.location.origin + '/wp-json';
 };
 
 // Helper function to get currency symbol
@@ -470,7 +474,7 @@ const PropertyCard = ({ property, isSelected, onToggle, nights, checkInDate, sho
 };
 
 // Date Selector Component
-const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onCheckAvailability, isLoading, minNights, maxNights, buttonIcon = 'search', searchLayout = 'default' }) => {
+const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onCheckAvailability, isLoading, minNights, maxNights, buttonIcon = 'search', searchLayout = 'default', searchBoxRadius = 60, buttonColor = '#0073aa' }) => {
 	const today = new Date().toISOString().split('T')[0];
 
 	// Icon mapping for display - the CSS pseudo-element handles frontend, this handles editor
@@ -487,17 +491,34 @@ const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onChe
 
 	const iconSymbol = iconMap[buttonIcon] || '🔍';
 
+	// Helper to open date picker - works on both desktop and mobile
+	const openDatePicker = (e) => {
+		const input = e.currentTarget.querySelector('input[type="date"]');
+		if (input) {
+			// On touch devices, focus triggers the native picker
+			// On desktop, try showPicker() if available, otherwise focus
+			input.focus();
+			if (typeof input.showPicker === 'function') {
+				try {
+					input.showPicker();
+				} catch (err) {
+					// showPicker() can throw on some browsers, ignore errors
+				}
+			}
+		}
+	};
+
 	// Render horizontal layout
 	if (searchLayout === 'horizontal') {
 		return (
 			<div className="bif-search-box-horizontal">
-				<div className="bif-search-field" onClick={() => document.querySelector('.bif-search-box-horizontal input[type="date"]')?.showPicker?.()}>
+				<div className="bif-search-field" onClick={openDatePicker}>
 					<span className="bif-search-icon">
-						<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<rect x="3" y="4" width="14" height="13" rx="1" stroke="currentColor" strokeWidth="1.5" />
-							<line x1="3" y1="8" x2="17" y2="8" stroke="currentColor" strokeWidth="1.5" />
-							<line x1="7" y1="2" x2="7" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-							<line x1="13" y1="2" x2="13" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<rect x="3" y="6" width="18" height="15" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+							<path d="M3 10h18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+							<path d="M8 3v4M16 3v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+							<circle cx="12" cy="15" r="1.5" fill="currentColor"/>
 						</svg>
 					</span>
 					<div className="bif-search-field-content">
@@ -515,8 +536,10 @@ const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onChe
 
 				<div className="bif-search-field">
 					<span className="bif-search-icon">
-						<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-							<path d="M17 10.5c0 3.59-2.69 6.5-6 6.5s-6-2.91-6-6.5S7.69 4 11 4c.35 0 .69.03 1.02.09A5.5 5.5 0 0 0 17 10.5z" />
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M12 3a9 9 0 1 0 9 9c0-1.66-.46-3.21-1.25-4.54" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+							<path d="M17.5 5.5L12 12V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+							<circle cx="19" cy="5" r="2" stroke="currentColor" strokeWidth="1.5"/>
 						</svg>
 					</span>
 					<div className="bif-search-field-content">
@@ -542,66 +565,88 @@ const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onChe
 					disabled={!checkInDate || isLoading}
 					className="bif-search-button"
 				>
-					{isLoading ? 'Checking...' : 'Search'}
+					{isLoading ? 'Searching...' : 'Check Availability'}
 				</button>
 			</div>
 		);
 	}
 
-	// Default stacked layout
+	// Default stacked layout - Modern Coastal Elegance design
 	return (
-		<div className="bif-date-selector">
-			<h2 className="bif-section-title">Select Your Dates</h2>
+		<div className="bif-date-selector bif-date-selector-modern">
+			<div className="bif-stacked-card">
+				<h2 className="bif-stacked-title">Select Your Dates</h2>
 
-			<div className="bif-date-form">
-				<div className="bif-form-field">
-					<label>Check-in Date</label>
-					<input
-						type="date"
-						value={checkInDate}
-						onChange={(e) => onDateChange(e.target.value)}
-						min={today}
-						className="bif-date-input"
-					/>
+				<div className="bif-stacked-fields">
+					<div className="bif-stacked-field" onClick={openDatePicker}>
+						<span className="bif-stacked-icon">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<rect x="3" y="6" width="18" height="15" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+								<path d="M3 10h18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+								<path d="M8 3v4M16 3v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+								<circle cx="12" cy="15" r="1.5" fill="currentColor"/>
+							</svg>
+						</span>
+						<div className="bif-stacked-field-content">
+							<label>Check-in Date</label>
+							<input
+								type="date"
+								value={checkInDate}
+								onChange={(e) => onDateChange(e.target.value)}
+								min={today}
+								className="bif-stacked-input"
+							/>
+						</div>
+					</div>
+
+					<div className="bif-stacked-field">
+						<span className="bif-stacked-icon">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M12 3a9 9 0 1 0 9 9c0-1.66-.46-3.21-1.25-4.54" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+								<path d="M17.5 5.5L12 12V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+								<circle cx="19" cy="5" r="2" stroke="currentColor" strokeWidth="1.5"/>
+							</svg>
+						</span>
+						<div className="bif-stacked-field-content">
+							<label>Number of Nights</label>
+							<select
+								value={nights}
+								onChange={(e) => onNightsChange(parseInt(e.target.value))}
+								className="bif-stacked-select"
+							>
+								{[...Array(maxNights - minNights + 1).keys()].map(i => {
+									const nightCount = minNights + i;
+									return (
+										<option key={nightCount} value={nightCount}>
+											{nightCount} {nightCount === 1 ? 'night' : 'nights'}
+										</option>
+									);
+								})}
+							</select>
+						</div>
+					</div>
 				</div>
 
-				<div className="bif-form-field">
-					<label>Number of Nights</label>
-					<select
-						value={nights}
-						onChange={(e) => onNightsChange(parseInt(e.target.value))}
-						className="bif-nights-select"
-					>
-						{[...Array(maxNights - minNights + 1).keys()].map(i => {
-							const nightCount = minNights + i;
-							return (
-								<option key={nightCount} value={nightCount}>
-									{nightCount} {nightCount === 1 ? 'night' : 'nights'}
-								</option>
-							);
-						})}
-					</select>
-				</div>
-
-				<div className="bif-form-field">
-					<button
-						onClick={onCheckAvailability}
-						disabled={!checkInDate || isLoading}
-						className="bif-btn bif-btn-primary bif-check-availability bif-has-icon-preview"
-					>
-						{isLoading ? (
-							<>
-								<div className="bif-spinner"></div>
-								<span>Checking...</span>
-							</>
-						) : (
-							<>
-								<span className="bif-icon-preview">{iconSymbol}</span>
-								<span>Check Availability</span>
-							</>
-						)}
-					</button>
-				</div>
+				<button
+					onClick={onCheckAvailability}
+					disabled={!checkInDate || isLoading}
+					className="bif-stacked-button"
+				>
+					{isLoading ? (
+						<>
+							<div className="bif-spinner"></div>
+							<span>Checking...</span>
+						</>
+					) : (
+						<>
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
+								<path d="M16 16l4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+							</svg>
+							<span>Check Availability</span>
+						</>
+					)}
+				</button>
 			</div>
 		</div>
 	);
@@ -1062,7 +1107,8 @@ const MultiEmbedForm = ({
 	includeIcons = false,
 	layoutStyle = 'cards', // 'cards', 'grid', 'rows'
 	buttonIcon = 'search',
-	searchLayout = 'default' // 'default' or 'horizontal'
+	searchLayout = 'default', // 'default' or 'horizontal'
+	searchBoxRadius = 60
 }) => {
 	const nightsFromUrl = getQueryParam('nights');
 	const validatedNights = nightsFromUrl && !isNaN(nightsFromUrl) ? Math.max(parseInt(nightsFromUrl, 10), minNights) : minNights;
@@ -1416,7 +1462,8 @@ const MultiEmbedForm = ({
 				'--bif-button-color': buttonColor,
 				'--bif-button-color-hover': `${buttonColor}dd`,
 				'--bif-button-color-active': `${buttonColor}bb`,
-				'--bif-button-text-color': buttonTextColor
+				'--bif-button-text-color': buttonTextColor,
+				'--bif-search-box-radius': `${searchBoxRadius}px`
 			}}
 		>
 			{/* Remove the header box completely */}
@@ -1434,6 +1481,8 @@ const MultiEmbedForm = ({
 					maxNights={maxNights}
 					buttonIcon={buttonIcon}
 					searchLayout={searchLayout}
+					searchBoxRadius={searchBoxRadius}
+					buttonColor={buttonColor}
 				/>
 
 				{error && <div className="bif-error-message">{error}</div>}
