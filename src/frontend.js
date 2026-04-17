@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import MultiEmbedForm from './components/MultiEmbedForm';
 import '../assets/frontend.css';
 
+// Expose MultiEmbedForm globally so other plugins (e.g., Divi module) can use it.
+window.BookItFast = window.BookItFast || {};
+window.BookItFast.MultiEmbedForm = MultiEmbedForm;
+
 // Initialize the frontend component
 document.addEventListener('DOMContentLoaded', () => {
 	const container = document.getElementById('bif-book-it-fast-multi-embed');
