@@ -2,7 +2,7 @@
 # Creates a zip file ready for WordPress.org submission
 
 $pluginName = "bookitfast"
-$version = "1.0.3"
+$version = "1.1.0"
 $outputFile = "$pluginName-$version.zip"
 
 Write-Host "Creating Book It Fast plugin package..." -ForegroundColor Green

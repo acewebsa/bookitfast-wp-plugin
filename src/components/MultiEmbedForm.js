@@ -474,22 +474,76 @@ const PropertyCard = ({ property, isSelected, onToggle, nights, checkInDate, sho
 };
 
 // Date Selector Component
-const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onCheckAvailability, isLoading, minNights, maxNights, buttonIcon = 'search', searchLayout = 'default', searchBoxRadius = 60, buttonColor = '#0073aa' }) => {
-	const today = new Date().toISOString().split('T')[0];
-
-	// Icon mapping for display - the CSS pseudo-element handles frontend, this handles editor
-	const iconMap = {
-		'search': '🔍',
-		'calendar': '📅',
-		'home': '🏠',
-		'mapMarker': '📍',
-		'star': '⭐',
-		'pin': '📌',
-		'pinSmall': '📍',
-		'globe': '🌍'
+// SVG renderer for the search button icon — matches the names exposed by the
+// editor's Button Icon selector (search, calendar, home, mapMarker, star, pin,
+// pinSmall, globe).
+const ButtonIconSvg = ({ name = 'search', size = 20 }) => {
+	const common = {
+		width: size,
+		height: size,
+		viewBox: '0 0 24 24',
+		fill: 'none',
+		xmlns: 'http://www.w3.org/2000/svg',
 	};
+	const stroke = { stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' };
+	switch (name) {
+		case 'calendar':
+			return (
+				<svg {...common}>
+					<rect x="3" y="5" width="18" height="16" rx="2" {...stroke} />
+					<path d="M3 10h18M8 3v4M16 3v4" {...stroke} />
+				</svg>
+			);
+		case 'home':
+			return (
+				<svg {...common}>
+					<path d="M3 11l9-8 9 8v9a2 2 0 0 1-2 2h-4v-6h-6v6H5a2 2 0 0 1-2-2v-9z" {...stroke} />
+				</svg>
+			);
+		case 'mapMarker':
+		case 'pin':
+			return (
+				<svg {...common}>
+					<path d="M12 22s7-7.5 7-13a7 7 0 1 0-14 0c0 5.5 7 13 7 13z" {...stroke} />
+					<circle cx="12" cy="9" r="2.5" {...stroke} />
+				</svg>
+			);
+		case 'pinSmall':
+			return (
+				<svg {...common}>
+					<path d="M12 21s5-6 5-11a5 5 0 1 0-10 0c0 5 5 11 5 11z" {...stroke} />
+					<circle cx="12" cy="10" r="1.75" fill="currentColor" />
+				</svg>
+			);
+		case 'star':
+			return (
+				<svg {...common}>
+					<path d="M12 3l2.7 5.7 6.3.9-4.6 4.4 1.1 6.3L12 17.8 6.5 20.3l1.1-6.3L3 9.6l6.3-.9L12 3z" {...stroke} />
+				</svg>
+			);
+		case 'globe':
+			return (
+				<svg {...common}>
+					<circle cx="12" cy="12" r="9" {...stroke} />
+					<path d="M3 12h18M12 3c3 3.5 3 14 0 18M12 3c-3 3.5-3 14 0 18" {...stroke} />
+				</svg>
+			);
+		case 'search':
+		default:
+			return (
+				<svg {...common}>
+					<circle cx="11" cy="11" r="7" {...stroke} />
+					<path d="M16 16l4 4" {...stroke} />
+				</svg>
+			);
+	}
+};
 
-	const iconSymbol = iconMap[buttonIcon] || '🔍';
+const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onCheckAvailability, isLoading, minNights, maxNights, buttonIcon = 'search', searchLayout = 'default', searchFormLayout = 'default', searchBoxRadius = 60, buttonColor = '#0073aa' }) => {
+	const today = new Date().toISOString().split('T')[0];
+	// `searchFormLayout` is the new per-direction selector. 'default' means use the legacy searchLayout (default/horizontal).
+	// Any other value drives the modifier class on the wrapper; CSS handles the visual change.
+	const formStyleClass = searchFormLayout && searchFormLayout !== 'default' ? `bif-search-style--${searchFormLayout}` : '';
 
 	// Helper to open date picker - works on both desktop and mobile
 	const openDatePicker = (e) => {
@@ -508,10 +562,224 @@ const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onChe
 		}
 	};
 
+	/* Resolve which layout to render. The editor now exposes a single
+	   "Search Form Style" dropdown driven by searchFormLayout, but legacy
+	   embeds may still rely on the older searchLayout attribute alone. So
+	   when searchFormLayout is left at its default value we fall back to
+	   searchLayout (which may itself be 'horizontal' or 'default'). */
+	const effectiveLayout = (searchFormLayout && searchFormLayout !== 'default')
+		? searchFormLayout
+		: searchLayout;
+
+	// Direction-specific renderers (per inspiration/search-form.html). Each direction
+	// has its own DOM rather than re-skinning the stacked card via CSS.
+	if (effectiveLayout && effectiveLayout !== 'default' && effectiveLayout !== 'horizontal') {
+		const checkoutDate = computeCheckoutDate(checkInDate, nights);
+		const formatDisplay = (d) => d ? formatStayDate(d) : '—';
+		const nightsLabel = nights === 1 ? 'night' : 'nights';
+		const handleDateChange = (e) => onDateChange(e.target.value);
+		const handleNightsChange = (e) => onNightsChange(parseInt(e.target.value, 10));
+		// Editable check-out: derive nights from (checkout - checkin) and propagate.
+		// If the user picks a check-out before they've picked a check-in, treat the
+		// check-out as the check-in instead so the field is still useful.
+		const handleCheckoutChange = (e) => {
+			const out = e.target.value;
+			if (!out) return;
+			if (!checkInDate) {
+				onDateChange(out);
+				return;
+			}
+			const inMs = new Date(checkInDate + 'T00:00:00').getTime();
+			const outMs = new Date(out + 'T00:00:00').getTime();
+			if (!isFinite(inMs) || !isFinite(outMs)) return;
+			const diff = Math.round((outMs - inMs) / 86400000);
+			if (diff < minNights) {
+				onNightsChange(minNights);
+			} else if (diff > maxNights) {
+				onNightsChange(maxNights);
+			} else if (diff >= 1) {
+				onNightsChange(diff);
+			}
+		};
+		const minCheckoutDate = checkInDate
+			? new Date(new Date(checkInDate + 'T00:00:00').getTime() + minNights * 86400000)
+				.toISOString().slice(0, 10)
+			: today;
+		const nightOptions = [...Array(maxNights - minNights + 1).keys()].map(i => minNights + i);
+		const goIcon = <ButtonIconSvg name={buttonIcon} size={16} />;
+
+		// D1 — Quiet ledger: pill bar with split fields
+		if (effectiveLayout === 'quiet-ledger') {
+			return (
+				<div className="bif-search-quiet-ledger">
+					<div className="bif-sql-bar">
+						<label className="bif-sql-field">
+							<span className="bif-sql-lbl">Check-in</span>
+							<input className="bif-sql-val" type="date" value={checkInDate} onChange={handleDateChange} min={today} />
+						</label>
+						<label className="bif-sql-field">
+							<span className="bif-sql-lbl">Check-out</span>
+							<input className="bif-sql-val" type="date" value={checkoutDate} onChange={handleCheckoutChange} min={minCheckoutDate} />
+						</label>
+						<div className="bif-sql-nights">
+							<select className="bif-sql-nights-select" value={nights} onChange={handleNightsChange} aria-label="Number of nights">
+								{nightOptions.map(n => <option key={n} value={n}>{n}</option>)}
+							</select>
+							<span>{nightsLabel}</span>
+						</div>
+						<button className="bif-sql-go" type="button" onClick={onCheckAvailability} disabled={!checkInDate || isLoading}>
+							{isLoading ? 'Searching…' : <>{goIcon}<span>Search</span></>}
+						</button>
+					</div>
+				</div>
+			);
+		}
+
+		// D2 — Warm itemised: card with title + 2 pills + nights line + full-width CTA
+		if (effectiveLayout === 'warm-itemised') {
+			return (
+				<div className="bif-search-warm-itemised">
+					<div className="bif-swi-card">
+						<h3 className="bif-swi-title">Choose your stay</h3>
+						<div className="bif-swi-row">
+							<label className="bif-swi-pill">
+								<span className="bif-swi-lbl">Check-in</span>
+								<input className="bif-swi-val" type="date" value={checkInDate} onChange={handleDateChange} min={today} />
+							</label>
+							<label className="bif-swi-pill">
+								<span className="bif-swi-lbl">Check-out</span>
+								<input className="bif-swi-val" type="date" value={checkoutDate} onChange={handleCheckoutChange} min={minCheckoutDate} />
+							</label>
+						</div>
+						<div className="bif-swi-nightsline">
+							<span><strong className="bif-swi-n">{nights}</strong> {nightsLabel}</span>
+							<label className="bif-swi-swap">
+								Adjust:
+								<select value={nights} onChange={handleNightsChange} aria-label="Number of nights">
+									{nightOptions.map(n => <option key={n} value={n}>{n} {n === 1 ? 'night' : 'nights'}</option>)}
+								</select>
+							</label>
+						</div>
+						<button className="bif-swi-go" type="button" onClick={onCheckAvailability} disabled={!checkInDate || isLoading}>
+							{isLoading ? 'Searching…' : <>{goIcon}<span>Check availability</span></>}
+						</button>
+					</div>
+				</div>
+			);
+		}
+
+		// D3 — Editorial receipt: cream card, serif heading, two inputs with arrow
+		if (effectiveLayout === 'editorial-receipt') {
+			return (
+				<div className="bif-search-editorial-receipt">
+					<div className="bif-ser-editorial">
+						<div className="bif-ser-kicker">Step 1 · Reserve your stay</div>
+						<h3 className="bif-ser-head">Select your dates</h3>
+						<div className="bif-ser-grid">
+							<div>
+								<label htmlFor="bif-ser-checkin">Check-in</label>
+								<input id="bif-ser-checkin" type="date" value={checkInDate} onChange={handleDateChange} min={today} />
+							</div>
+							<div className="bif-ser-arrow" aria-hidden="true">→</div>
+							<div>
+								<label htmlFor="bif-ser-checkout">Check-out</label>
+								<input id="bif-ser-checkout" type="date" value={checkoutDate} onChange={handleCheckoutChange} min={minCheckoutDate} />
+							</div>
+						</div>
+						<div className="bif-ser-nightsline">
+							A stay of
+							<select value={nights} onChange={handleNightsChange} aria-label="Number of nights">
+								{nightOptions.map(n => <option key={n} value={n}>{n}</option>)}
+							</select>
+							<strong>{nightsLabel}</strong>
+						</div>
+						<button className="bif-ser-go" type="button" onClick={onCheckAvailability} disabled={!checkInDate || isLoading}>
+							{isLoading ? 'Searching' : 'Check availability'}
+						</button>
+					</div>
+				</div>
+			);
+		}
+
+		// D4 — Stacked & removable: compact one-row bar with cells + dashed nights divider
+		if (effectiveLayout === 'stacked-removable') {
+			return (
+				<div className="bif-search-stacked-removable">
+					<div className="bif-ssr-barwrap">
+						<label className="bif-ssr-cell">
+							<span className="bif-ssr-lbl">Check-in</span>
+							<input className="bif-ssr-val" type="date" value={checkInDate} onChange={handleDateChange} min={today} />
+						</label>
+						<label className="bif-ssr-cell">
+							<span className="bif-ssr-lbl">Check-out</span>
+							<input className="bif-ssr-val" type="date" value={checkoutDate} onChange={handleCheckoutChange} min={minCheckoutDate} />
+						</label>
+						<div className="bif-ssr-nights-cell">
+							<select className="bif-ssr-n" value={nights} onChange={handleNightsChange} aria-label="Number of nights">
+								{nightOptions.map(n => <option key={n} value={n}>{n}</option>)}
+							</select>
+							<span>{nightsLabel}</span>
+						</div>
+						<button className="bif-ssr-go" type="button" onClick={onCheckAvailability} disabled={!checkInDate || isLoading}>
+							{isLoading ? 'Searching…' : <>{goIcon}<span>Search</span></>}
+						</button>
+					</div>
+				</div>
+			);
+		}
+
+		// D5 — Two-column ledger: trip summary left, form fields right
+		if (effectiveLayout === 'two-column-ledger') {
+			return (
+				<div className="bif-search-two-column-ledger">
+					<div className="bif-stcl-ledger">
+						<div className="bif-stcl-left">
+							<div className="bif-stcl-lab">Trip length</div>
+							<div className="bif-stcl-big">{nights} <span className="bif-stcl-big-unit">{nightsLabel}</span></div>
+							<div className="bif-stcl-helper">
+								{checkInDate ? `${formatDisplay(checkInDate)} → ${formatDisplay(checkoutDate)}` : 'Pick a check-in date to begin.'}
+							</div>
+							<div className="bif-stcl-stub">
+								<div className="bif-stcl-stub-lbl">Itinerary</div>
+								<div className="bif-stcl-stub-bars">
+									{[...Array(Math.min(Math.max(nights, 1), 14)).keys()].map(i => (
+										<div key={i} className="bif-stcl-stub-bar" />
+									))}
+								</div>
+							</div>
+						</div>
+						<div className="bif-stcl-right">
+							<div className="bif-stcl-field-block">
+								<label htmlFor="bif-stcl-checkin">Check-in date</label>
+								<input id="bif-stcl-checkin" className="bif-stcl-ipt" type="date" value={checkInDate} onChange={handleDateChange} min={today} />
+							</div>
+							<div className="bif-stcl-two">
+								<div className="bif-stcl-field-block">
+									<label>Nights</label>
+									<select className="bif-stcl-ipt" value={nights} onChange={handleNightsChange}>
+										{nightOptions.map(n => <option key={n} value={n}>{n}</option>)}
+									</select>
+								</div>
+								<div className="bif-stcl-field-block">
+									<label htmlFor="bif-stcl-checkout">Check-out</label>
+									<input id="bif-stcl-checkout" className="bif-stcl-ipt" type="date" value={checkoutDate} onChange={handleCheckoutChange} min={minCheckoutDate} />
+								</div>
+							</div>
+							<button className="bif-stcl-go" type="button" onClick={onCheckAvailability} disabled={!checkInDate || isLoading}>
+								{isLoading ? 'Searching…' : <>{goIcon}<span>Check availability</span></>}
+							</button>
+							<div className="bif-stcl-note">No card required to check availability.</div>
+						</div>
+					</div>
+				</div>
+			);
+		}
+	}
+
 	// Render horizontal layout
-	if (searchLayout === 'horizontal') {
+	if (effectiveLayout === 'horizontal') {
 		return (
-			<div className="bif-search-box-horizontal">
+			<div className={`bif-search-box-horizontal ${formStyleClass}`}>
 				<div className="bif-search-field" onClick={openDatePicker}>
 					<span className="bif-search-icon">
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -565,7 +833,14 @@ const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onChe
 					disabled={!checkInDate || isLoading}
 					className="bif-search-button"
 				>
-					{isLoading ? 'Searching...' : 'Check Availability'}
+					{isLoading ? (
+						'Searching...'
+					) : (
+						<>
+							<ButtonIconSvg name={buttonIcon} size={18} />
+							<span>Check Availability</span>
+						</>
+					)}
 				</button>
 			</div>
 		);
@@ -573,7 +848,7 @@ const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onChe
 
 	// Default stacked layout - Modern Coastal Elegance design
 	return (
-		<div className="bif-date-selector bif-date-selector-modern">
+		<div className={`bif-date-selector bif-date-selector-modern ${formStyleClass}`}>
 			<div className="bif-stacked-card">
 				<h2 className="bif-stacked-title">Select Your Dates</h2>
 
@@ -639,10 +914,7 @@ const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onChe
 						</>
 					) : (
 						<>
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
-								<path d="M16 16l4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-							</svg>
+							<ButtonIconSvg name={buttonIcon} size={20} />
 							<span>Check Availability</span>
 						</>
 					)}
@@ -650,6 +922,39 @@ const DateSelector = ({ checkInDate, nights, onDateChange, onNightsChange, onChe
 			</div>
 		</div>
 	);
+};
+
+// Helper: format a date string (YYYY-MM-DD) like "Tue 25 Nov 2025"
+const formatStayDate = (dateStr) => {
+	if (!dateStr) return '';
+	const d = new Date(dateStr);
+	if (isNaN(d.getTime())) return dateStr;
+	return d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+};
+
+// Compute checkout date from check-in + nights
+const computeCheckoutDate = (checkIn, nights) => {
+	if (!checkIn) return '';
+	const d = new Date(checkIn);
+	if (isNaN(d.getTime())) return '';
+	d.setDate(d.getDate() + (parseInt(nights, 10) || 0));
+	return d.toISOString().slice(0, 10);
+};
+
+// Build a per-property normalized breakdown for the new layouts
+const buildPropertyBreakdown = (property, nights) => {
+	const subtotal = parseFloat(
+		property.sub_total ||
+		property.availability?.total_cost ||
+		(property.availability?.dates?.reduce((sum, date) => sum + (date.rate || 0), 0) || 0)
+	) || 0;
+	const mandatoryExtras = property.mandatory_extras || [];
+	const optionalExtras = (property.optional_extras || []).filter(e => e.selected);
+	const mandatoryTotal = parseFloat(property.mandatory_extras_total || mandatoryExtras.reduce((s, e) => s + parseFloat(e.amount || 0), 0)) || 0;
+	const optionalTotal = parseFloat(property.optional_extras_total || optionalExtras.reduce((s, e) => s + parseFloat(e.amount || 0), 0)) || 0;
+	const propertyTotal = subtotal + mandatoryTotal + optionalTotal;
+	const perNight = nights > 0 ? subtotal / nights : subtotal;
+	return { subtotal, mandatoryExtras, optionalExtras, mandatoryTotal, optionalTotal, propertyTotal, perNight };
 };
 
 // Booking Summary Component - Streamlined version
@@ -671,7 +976,8 @@ const BookingSummary = ({
 	onTriggerShowGiftCertificate,
 	onApplyGiftCertificate,
 	gcResult,
-	gcLoading = false
+	gcLoading = false,
+	summaryLayout = 'classic'
 }) => {
 	const extrasTotal = Object.values(selectedExtras).flat().reduce((sum, extra) => sum + (extra.amount || 0), 0);
 
@@ -685,6 +991,57 @@ const BookingSummary = ({
 	};
 
 	if (!selectedProperties || selectedProperties.length === 0) return null;
+
+	// Route to alternative layouts (share the same props)
+	if (summaryLayout === 'quiet-ledger') {
+		return (
+			<QuietLedgerSummary
+				selectedProperties={selectedProperties}
+				nights={nights}
+				total={total}
+				checkInDate={checkInDate}
+				summary={summary}
+				discountCode={discountCode}
+				onDiscountCodeChange={onDiscountCodeChange}
+				applyDiscount={applyDiscount}
+				isDiscountApplied={isDiscountApplied}
+				showDiscount={showDiscount}
+				showRedeemGiftCertificate={showRedeemGiftCertificate}
+				giftCertificate={giftCertificate}
+				onGiftCertificateChange={onGiftCertificateChange}
+				showGiftCertificateForm={showGiftCertificateForm}
+				onTriggerShowGiftCertificate={onTriggerShowGiftCertificate}
+				onApplyGiftCertificate={onApplyGiftCertificate}
+				gcResult={gcResult}
+				gcLoading={gcLoading}
+			/>
+		);
+	}
+
+	if (summaryLayout === 'two-column-ledger') {
+		return (
+			<TwoColumnLedgerSummary
+				selectedProperties={selectedProperties}
+				nights={nights}
+				total={total}
+				checkInDate={checkInDate}
+				summary={summary}
+				discountCode={discountCode}
+				onDiscountCodeChange={onDiscountCodeChange}
+				applyDiscount={applyDiscount}
+				isDiscountApplied={isDiscountApplied}
+				showDiscount={showDiscount}
+				showRedeemGiftCertificate={showRedeemGiftCertificate}
+				giftCertificate={giftCertificate}
+				onGiftCertificateChange={onGiftCertificateChange}
+				showGiftCertificateForm={showGiftCertificateForm}
+				onTriggerShowGiftCertificate={onTriggerShowGiftCertificate}
+				onApplyGiftCertificate={onApplyGiftCertificate}
+				gcResult={gcResult}
+				gcLoading={gcLoading}
+			/>
+		);
+	}
 
 	return (
 		<div className="bif-booking-summary">
@@ -928,6 +1285,351 @@ const BookingSummary = ({
 	);
 };
 
+// -----------------------------------------------------------------------------
+// Shared promo controls used by alternative layouts
+// -----------------------------------------------------------------------------
+const PromoControls = ({
+	variant = 'quiet',
+	showDiscount,
+	discountCode,
+	onDiscountCodeChange,
+	applyDiscount,
+	isDiscountApplied,
+	summary,
+	showRedeemGiftCertificate,
+	giftCertificate,
+	onGiftCertificateChange,
+	showGiftCertificateForm,
+	onTriggerShowGiftCertificate,
+	onApplyGiftCertificate,
+	gcResult,
+	gcLoading
+}) => {
+	if (!showDiscount && !showRedeemGiftCertificate) return null;
+
+	const wrapClass = variant === 'ledger' ? 'bif-ledger-promos' : 'bif-quiet-promos';
+
+	return (
+		<div className={wrapClass}>
+			{showDiscount && (
+				<div className="bif-promo-field">
+					<input
+						type="text"
+						placeholder="Discount code"
+						value={discountCode || ''}
+						onChange={(e) => onDiscountCodeChange(e.target.value)}
+					/>
+					<button
+						type="button"
+						className="bif-promo-apply"
+						onClick={applyDiscount}
+						disabled={!discountCode || !discountCode.trim()}
+					>
+						Apply
+					</button>
+				</div>
+			)}
+			{showDiscount && summary?.discount && summary.discount.success === false && discountCode?.trim() && (
+				<div className="bif-promo-error">
+					{summary.discount.reason || 'Invalid discount code'}
+				</div>
+			)}
+			{showRedeemGiftCertificate && summary && (
+				<div className="bif-promo-gc">
+					{!showGiftCertificateForm ? (
+						<button
+							type="button"
+							className="bif-promo-gc-toggle"
+							onClick={onTriggerShowGiftCertificate}
+						>
+							+ Apply gift certificate
+						</button>
+					) : (
+						<div className="bif-promo-gc-form">
+							<input
+								type="text"
+								placeholder="Certificate number"
+								value={giftCertificate.number}
+								onChange={(e) => onGiftCertificateChange({ ...giftCertificate, number: e.target.value })}
+								disabled={gcLoading}
+							/>
+							<input
+								type="number"
+								placeholder="PIN"
+								value={giftCertificate.pin}
+								onChange={(e) => onGiftCertificateChange({ ...giftCertificate, pin: e.target.value })}
+								disabled={gcLoading}
+							/>
+							<button
+								type="button"
+								className="bif-promo-apply"
+								onClick={onApplyGiftCertificate}
+								disabled={gcLoading}
+							>
+								{gcLoading ? 'Applying…' : 'Apply'}
+							</button>
+						</div>
+					)}
+					{gcResult && gcResult.valid && (
+						<div className="bif-promo-gc-success">
+							✓ {gcResult.result || 'Gift certificate applied'}
+						</div>
+					)}
+				</div>
+			)}
+		</div>
+	);
+};
+
+// -----------------------------------------------------------------------------
+// Layout: Quiet Ledger (D1) — hairline borders, expandable per-property rows
+// -----------------------------------------------------------------------------
+const QuietLedgerRow = ({ property, nights, defaultOpen }) => {
+	const [open, setOpen] = useState(defaultOpen);
+	const b = buildPropertyBreakdown(property, nights);
+	const initials = (property.property_name || '?')
+		.split(/\s+/).map(w => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase();
+	const hasImage = !!property.property_image;
+
+	return (
+		<div className={`bif-ql-row ${open ? 'is-open' : ''}`}>
+			<button type="button" className="bif-ql-row-head" onClick={() => setOpen(o => !o)}>
+				<span className={`bif-ql-thumb ${hasImage ? 'has-image' : ''}`}>
+					{hasImage ? (
+						<img src={property.property_image} alt={property.property_name} loading="lazy" />
+					) : (
+						initials
+					)}
+				</span>
+				<span className="bif-ql-prop">
+					<span className="bif-ql-name">{property.property_name}</span>
+					<span className="bif-ql-sub">{nights} {nights === 1 ? 'night' : 'nights'}</span>
+				</span>
+				<span className="bif-ql-amount">${b.propertyTotal.toFixed(2)}</span>
+				<svg className="bif-ql-chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+					<path d="M5 7l5 5 5-5" />
+				</svg>
+			</button>
+			{open && (
+				<div className="bif-ql-row-body">
+					<div className="bif-ql-line">
+						<span className="bif-ql-label">Stay · {nights} {nights === 1 ? 'night' : 'nights'} × ${b.perNight.toFixed(2)}</span>
+						<span className="bif-ql-val">${b.subtotal.toFixed(2)}</span>
+					</div>
+					{b.mandatoryExtras.map((extra) => (
+						<div key={`m-${extra.id}`} className="bif-ql-line">
+							<span className="bif-ql-label">{extra.description}</span>
+							<span className="bif-ql-val">${parseFloat(extra.amount).toFixed(2)}</span>
+						</div>
+					))}
+					{b.optionalExtras.map((extra) => (
+						<div key={`o-${extra.id}`} className="bif-ql-line">
+							<span className="bif-ql-label">{extra.description}</span>
+							<span className="bif-ql-val">${parseFloat(extra.amount).toFixed(2)}</span>
+						</div>
+					))}
+					<div className="bif-ql-line bif-ql-divider">
+						<span className="bif-ql-label">Property total</span>
+						<span className="bif-ql-val">${b.propertyTotal.toFixed(2)}</span>
+					</div>
+				</div>
+			)}
+		</div>
+	);
+};
+
+const QuietLedgerSummary = (props) => {
+	const {
+		selectedProperties, nights, total, checkInDate, summary, gcResult,
+	} = props;
+
+	const subtotal = parseFloat(summary?.order_sub_total || 0) + parseFloat(summary?.order_mandatory_extras_total || 0);
+	const discountAmount = parseFloat(summary?.order_discount_code_total || 0);
+	const gcApplied = gcResult && gcResult.valid ? parseFloat(gcResult.gc_amount_applied || 0) : 0;
+	const finalTotal = gcResult && gcResult.valid
+		? Math.max(parseFloat(gcResult.total) - gcApplied, 0)
+		: parseFloat(total || 0);
+	const checkoutDate = computeCheckoutDate(checkInDate, nights);
+
+	return (
+		<div className="bif-booking-summary bif-summary-quiet-ledger">
+			<div className="bif-ql-head">
+				<h3 className="bif-ql-title">Booking summary</h3>
+				<span className="bif-ql-stay">
+					{nights} {nights === 1 ? 'night' : 'nights'}
+					{checkInDate && checkoutDate ? ` · ${formatStayDate(checkInDate)} → ${formatStayDate(checkoutDate)}` : ''}
+				</span>
+			</div>
+
+			<div className="bif-ql-rows">
+				{selectedProperties.map((property, idx) => (
+					<QuietLedgerRow
+						key={property.id}
+						property={property}
+						nights={nights}
+						defaultOpen={idx === 0 || selectedProperties.length === 1}
+					/>
+				))}
+			</div>
+
+			<PromoControls variant="quiet" {...props} />
+
+			<div className="bif-ql-totals">
+				<div className="bif-ql-line">
+					<span className="bif-ql-label">Subtotal</span>
+					<span className="bif-ql-val">${subtotal.toFixed(2)}</span>
+				</div>
+				{discountAmount > 0 && (
+					<div className="bif-ql-line bif-ql-applied">
+						<span className="bif-ql-label">Discount applied</span>
+						<span className="bif-ql-val">−${discountAmount.toFixed(2)}</span>
+					</div>
+				)}
+				{gcApplied > 0 && (
+					<div className="bif-ql-line bif-ql-applied">
+						<span className="bif-ql-label">Gift certificate</span>
+						<span className="bif-ql-val">−${gcApplied.toFixed(2)}</span>
+					</div>
+				)}
+				<div className="bif-ql-grand">
+					<span className="bif-ql-label">
+						{gcResult && gcResult.valid && finalTotal === 0 ? 'Paid by gift certificate' : 'Total cost'}
+					</span>
+					<span className="bif-ql-val">${finalTotal.toFixed(2)}</span>
+				</div>
+				{gcResult && gcResult.valid && finalTotal > 0 && summary?.order_has_surcharge && (
+					<div className="bif-ql-note">*Credit card surcharge will be added at payment</div>
+				)}
+			</div>
+		</div>
+	);
+};
+
+// -----------------------------------------------------------------------------
+// Layout: Two-Column Ledger (D5) — total + stay metadata | itemised ledger
+// -----------------------------------------------------------------------------
+const TwoColumnLedgerSummary = (props) => {
+	const {
+		selectedProperties, nights, total, checkInDate, summary, gcResult,
+	} = props;
+
+	const subtotal = parseFloat(summary?.order_sub_total || 0) + parseFloat(summary?.order_mandatory_extras_total || 0);
+	const discountAmount = parseFloat(summary?.order_discount_code_total || 0);
+	const gcApplied = gcResult && gcResult.valid ? parseFloat(gcResult.gc_amount_applied || 0) : 0;
+	const savings = discountAmount + gcApplied;
+	const finalTotal = gcResult && gcResult.valid
+		? Math.max(parseFloat(gcResult.total) - gcApplied, 0)
+		: parseFloat(total || 0);
+	const checkoutDate = computeCheckoutDate(checkInDate, nights);
+
+	return (
+		<div className="bif-booking-summary bif-summary-two-col">
+			<div className="bif-tc-ledger">
+				<div className="bif-tc-left">
+					<h4 className="bif-tc-eyebrow">
+						{gcResult && gcResult.valid && finalTotal === 0 ? 'Paid in full' : 'Pay today'}
+					</h4>
+					<div className="bif-tc-grand">${finalTotal.toFixed(2)}</div>
+					{savings > 0 && (
+						<div className="bif-tc-saved">
+							<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+								<path d="M13 4L6 11l-3-3" />
+							</svg>
+							${savings.toFixed(2)} in savings applied
+						</div>
+					)}
+
+					<div className="bif-tc-stay">
+						<span className="bif-tc-stay-icon" aria-hidden="true">
+							<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.6">
+								<rect x="2.5" y="3.5" width="13" height="12" rx="1.5" />
+								<path d="M2.5 7h13M6 1.5v3M12 1.5v3" />
+							</svg>
+						</span>
+						<div>
+							<div className="bif-tc-stay-label">Stay dates</div>
+							<div className="bif-tc-stay-val">
+								{checkInDate && checkoutDate
+									? `${formatStayDate(checkInDate)} → ${formatStayDate(checkoutDate)}`
+									: '—'}
+							</div>
+						</div>
+					</div>
+
+					<div className="bif-tc-cols">
+						<div>
+							<div className="bif-tc-col-lbl">Nights</div>
+							<div className="bif-tc-col-val">{nights}</div>
+						</div>
+						<div>
+							<div className="bif-tc-col-lbl">Properties</div>
+							<div className="bif-tc-col-val">{selectedProperties.length}</div>
+						</div>
+					</div>
+				</div>
+
+				<div className="bif-tc-right">
+					<div className="bif-tc-right-head">
+						<span>Itemised</span>
+						<span>$ AUD</span>
+					</div>
+
+					{selectedProperties.map((property) => {
+						const b = buildPropertyBreakdown(property, nights);
+						return (
+							<div key={property.id} className="bif-tc-item">
+								<span className="bif-tc-item-name">{property.property_name}</span>
+								<span className="bif-tc-item-amt">${b.propertyTotal.toFixed(2)}</span>
+								<span className="bif-tc-sub-item">
+									<span>{nights} {nights === 1 ? 'night' : 'nights'} × ${b.perNight.toFixed(2)}</span>
+									<span className="bif-tc-sub-amt">${b.subtotal.toFixed(2)}</span>
+								</span>
+								{b.mandatoryExtras.map((extra) => (
+									<span key={`m-${extra.id}`} className="bif-tc-sub-item">
+										<span>{extra.description}</span>
+										<span className="bif-tc-sub-amt">${parseFloat(extra.amount).toFixed(2)}</span>
+									</span>
+								))}
+								{b.optionalExtras.map((extra) => (
+									<span key={`o-${extra.id}`} className="bif-tc-sub-item">
+										<span>{extra.description}</span>
+										<span className="bif-tc-sub-amt">${parseFloat(extra.amount).toFixed(2)}</span>
+									</span>
+								))}
+							</div>
+						);
+					})}
+
+					<div className="bif-tc-divider" />
+
+					<div className="bif-tc-sum">
+						<span className="bif-tc-sum-lbl">Subtotal</span>
+						<span className="bif-tc-sum-val">${subtotal.toFixed(2)}</span>
+					</div>
+					{discountAmount > 0 && (
+						<div className="bif-tc-sum bif-tc-sum-applied">
+							<span className="bif-tc-sum-lbl">Discount applied</span>
+							<span className="bif-tc-sum-val">−${discountAmount.toFixed(2)}</span>
+						</div>
+					)}
+					{gcApplied > 0 && (
+						<div className="bif-tc-sum bif-tc-sum-applied">
+							<span className="bif-tc-sum-lbl">Gift certificate</span>
+							<span className="bif-tc-sum-val">−${gcApplied.toFixed(2)}</span>
+						</div>
+					)}
+
+					<PromoControls variant="ledger" {...props} />
+
+					{gcResult && gcResult.valid && finalTotal > 0 && summary?.order_has_surcharge && (
+						<div className="bif-tc-note">*Credit card surcharge will be added at payment</div>
+					)}
+				</div>
+			</div>
+		</div>
+	);
+};
+
 // Modal Component for Local Booking Conditions
 const BookingConditionModal = ({ isOpen, onClose, title, content }) => {
 	useEffect(() => {
@@ -986,9 +1688,9 @@ const BookingConditionModal = ({ isOpen, onClose, title, content }) => {
 };
 
 // Customer Details Component - Remove emoji icons
-const CustomerDetails = ({ userDetails, onUpdateDetails, formErrors, showSuburb = true, showPostcode = true, showComments = false }) => {
+const CustomerDetails = ({ userDetails, onUpdateDetails, formErrors, showSuburb = true, showPostcode = true, showComments = false, yourDetailsLayout = 'classic' }) => {
 	return (
-		<div className="bif-customer-details">
+		<div className={`bif-customer-details bif-details-style--${yourDetailsLayout}`}>
 			<h2 className="bif-section-title">Your Details</h2>
 
 			<div className="bif-customer-form">
@@ -1108,7 +1810,12 @@ const MultiEmbedForm = ({
 	layoutStyle = 'cards', // 'cards', 'grid', 'rows'
 	buttonIcon = 'search',
 	searchLayout = 'default', // 'default' or 'horizontal'
-	searchBoxRadius = 60
+	searchBoxRadius = 60,
+	summaryLayout = 'classic', // 'classic', 'quiet-ledger', 'two-column-ledger'
+	searchFormLayout = 'default', // 'default' (uses searchLayout), or one of the five direction slugs
+	propertySelectionLayout = 'cards', // 'cards' (uses layoutStyle), or direction slug
+	yourDetailsLayout = 'classic',
+	termsLayout = 'classic'
 }) => {
 	const nightsFromUrl = getQueryParam('nights');
 	const validatedNights = nightsFromUrl && !isNaN(nightsFromUrl) ? Math.max(parseInt(nightsFromUrl, 10), minNights) : minNights;
@@ -1173,8 +1880,12 @@ const MultiEmbedForm = ({
 
 	// Fetch availability data
 	const fetchAvailability = async (startDate = form.date, nights = form.nights) => {
-		if (!startDate || !propertyIdsString) {
-			console.warn("fetchAvailability skipped - Missing startDate or propertyIds");
+		if (!startDate) {
+			setError('Please pick a check-in date before searching.');
+			return;
+		}
+		if (!propertyIdsString) {
+			setError('No properties are configured for this block. Open the block settings and select at least one property under "Search Options".');
 			return;
 		}
 
@@ -1481,48 +2192,58 @@ const MultiEmbedForm = ({
 					maxNights={maxNights}
 					buttonIcon={buttonIcon}
 					searchLayout={searchLayout}
+					searchFormLayout={searchFormLayout}
 					searchBoxRadius={searchBoxRadius}
 					buttonColor={buttonColor}
 				/>
 
 				{error && <div className="bif-error-message">{error}</div>}
 
-				{/* Step 2: Property Selection */}
-				{showProperties && availability && (
-					<div className="bif-property-list">
-						<h2 className="bif-section-title">Available Properties</h2>
-						<div className={`bif-properties bif-properties--${layoutStyle}`}>
-							{Object.entries(availability).map(([propertyId, propertyData]) => {
-								const propertyProps = {
-									key: propertyId,
-									property: {
-										id: propertyId,
-										...propertyData,
-										selectedExtras: selectedOptionalExtras[propertyId],
-										onToggleExtra: toggleOptionalExtra
-									},
-									isSelected: selectionData[propertyId],
-									onToggle: () => toggleSelection(propertyId),
-									nights: form.nights,
-									checkInDate: form.date,
-									showPropertyImages: showPropertyImages,
-									includeIcons: includeIcons
-								};
-
-								// Render different components based on layout style
-								switch (layoutStyle) {
-									case 'grid':
-										return <PropertyTile {...propertyProps} />;
-									case 'rows':
-										return <PropertyRow {...propertyProps} />;
-									case 'cards':
-									default:
-										return <PropertyCard {...propertyProps} />;
-								}
-							})}
+				{/* Step 2: Property Selection.
+				    Resolved layout: propertySelectionLayout drives both the wrapper
+				    modifier class and the base renderer. When set to one of the new
+				    direction slugs we fall back to the PropertyCard renderer so CSS
+				    overrides have consistent inner DOM to retarget. */}
+				{showProperties && availability && (() => {
+					const baseLayouts = ['cards', 'grid', 'rows'];
+					const resolvedLayout = propertySelectionLayout && !baseLayouts.includes(propertySelectionLayout)
+						? propertySelectionLayout
+						: (propertySelectionLayout || layoutStyle);
+					const baseRendererKey = baseLayouts.includes(resolvedLayout) ? resolvedLayout : (layoutStyle || 'cards');
+					return (
+						<div className={`bif-property-list bif-properties-style--${resolvedLayout}`}>
+							<h2 className="bif-section-title">Available Properties</h2>
+							<div className={`bif-properties bif-properties--${baseRendererKey}`}>
+								{Object.entries(availability).map(([propertyId, propertyData]) => {
+									const propertyProps = {
+										key: propertyId,
+										property: {
+											id: propertyId,
+											...propertyData,
+											selectedExtras: selectedOptionalExtras[propertyId],
+											onToggleExtra: toggleOptionalExtra
+										},
+										isSelected: selectionData[propertyId],
+										onToggle: () => toggleSelection(propertyId),
+										nights: form.nights,
+										checkInDate: form.date,
+										showPropertyImages: showPropertyImages,
+										includeIcons: includeIcons
+									};
+									switch (baseRendererKey) {
+										case 'grid':
+											return <PropertyTile {...propertyProps} />;
+										case 'rows':
+											return <PropertyRow {...propertyProps} />;
+										case 'cards':
+										default:
+											return <PropertyCard {...propertyProps} />;
+									}
+								})}
+							</div>
 						</div>
-					</div>
-				)}
+					);
+				})()}
 
 				{/* Step 3: Booking Summary */}
 				{summary && selectedProperties.length > 0 && (
@@ -1545,6 +2266,7 @@ const MultiEmbedForm = ({
 						onApplyGiftCertificate={applyGiftCertificate}
 						gcResult={gcResult}
 						gcLoading={gcLoading}
+						summaryLayout={summaryLayout}
 					/>
 				)}
 
@@ -1557,12 +2279,13 @@ const MultiEmbedForm = ({
 						showSuburb={showSuburb}
 						showPostcode={showPostcode}
 						showComments={showComments}
+						yourDetailsLayout={yourDetailsLayout}
 					/>
 				)}
 
 				{/* Step 5: Terms and Payment */}
 				{summary && selectedProperties.length > 0 && (
-					<div className="bif-terms-payment">
+					<div className={`bif-terms-payment bif-terms-style--${termsLayout}`}>
 						<div className="bif-terms-checkbox">
 							<input
 								type="checkbox"

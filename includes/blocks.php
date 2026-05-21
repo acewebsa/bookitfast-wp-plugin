@@ -179,6 +179,26 @@ add_action('init', function () {
 			'searchBoxRadius' => [
 				'type' => 'number',
 				'default' => 60
+			],
+			'summaryLayout' => [
+				'type' => 'string',
+				'default' => 'classic'
+			],
+			'searchFormLayout' => [
+				'type' => 'string',
+				'default' => 'default'
+			],
+			'propertySelectionLayout' => [
+				'type' => 'string',
+				'default' => 'cards'
+			],
+			'yourDetailsLayout' => [
+				'type' => 'string',
+				'default' => 'classic'
+			],
+			'termsLayout' => [
+				'type' => 'string',
+				'default' => 'classic'
 			]
 		]
 	]);
@@ -238,6 +258,12 @@ function bookitfast_render_multi_embed_block($attributes)
 	$buttonIcon = isset($attributes['buttonIcon']) ? esc_attr($attributes['buttonIcon']) : 'search';
 	$searchLayout = isset($attributes['searchLayout']) ? esc_attr($attributes['searchLayout']) : 'default';
 	$searchBoxRadius = isset($attributes['searchBoxRadius']) ? intval($attributes['searchBoxRadius']) : 60;
+	$summaryLayout = isset($attributes['summaryLayout']) ? esc_attr($attributes['summaryLayout']) : 'classic';
+	// New per-surface layout attributes, with legacy fallback to the older searchLayout / layoutStyle.
+	$searchFormLayout = isset($attributes['searchFormLayout']) ? esc_attr($attributes['searchFormLayout']) : $searchLayout;
+	$propertySelectionLayout = isset($attributes['propertySelectionLayout']) ? esc_attr($attributes['propertySelectionLayout']) : $layoutStyle;
+	$yourDetailsLayout = isset($attributes['yourDetailsLayout']) ? esc_attr($attributes['yourDetailsLayout']) : 'classic';
+	$termsLayout = isset($attributes['termsLayout']) ? esc_attr($attributes['termsLayout']) : 'classic';
 
 	// Map WordPress icon names to Unicode symbols for CSS content
 	$iconMap = [
@@ -310,7 +336,12 @@ function bookitfast_render_multi_embed_block($attributes)
 		data-layout-style="<?php echo esc_attr($layoutStyle); ?>"
 		data-button-icon="<?php echo esc_attr($buttonIcon); ?>"
 		data-search-layout="<?php echo esc_attr($searchLayout); ?>"
-		data-search-box-radius="<?php echo esc_attr($searchBoxRadius); ?>">
+		data-search-box-radius="<?php echo esc_attr($searchBoxRadius); ?>"
+		data-summary-layout="<?php echo esc_attr($summaryLayout); ?>"
+		data-search-form-layout="<?php echo esc_attr($searchFormLayout); ?>"
+		data-property-selection-layout="<?php echo esc_attr($propertySelectionLayout); ?>"
+		data-your-details-layout="<?php echo esc_attr($yourDetailsLayout); ?>"
+		data-terms-layout="<?php echo esc_attr($termsLayout); ?>">
 	</div>
 <?php
 	return ob_get_clean();

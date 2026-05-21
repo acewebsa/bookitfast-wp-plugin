@@ -29,6 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		const buttonIcon = container.dataset.buttonIcon || 'search';
 		const searchLayout = container.dataset.searchLayout || 'default';
 		const searchBoxRadius = parseInt(container.dataset.searchBoxRadius) || 60;
+		const summaryLayout = container.dataset.summaryLayout || 'classic';
+		const searchFormLayout = container.dataset.searchFormLayout || 'default';
+		const propertySelectionLayout = container.dataset.propertySelectionLayout || 'cards';
+		const yourDetailsLayout = container.dataset.yourDetailsLayout || 'classic';
+		const termsLayout = container.dataset.termsLayout || 'classic';
 
 		ReactDOM.render(
 			React.createElement(MultiEmbedForm, {
@@ -47,7 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
 				layoutStyle: layoutStyle,
 				buttonIcon: buttonIcon,
 				searchLayout: searchLayout,
-				searchBoxRadius: searchBoxRadius
+				searchBoxRadius: searchBoxRadius,
+				summaryLayout: summaryLayout,
+				searchFormLayout: searchFormLayout,
+				propertySelectionLayout: propertySelectionLayout,
+				yourDetailsLayout: yourDetailsLayout,
+				termsLayout: termsLayout
 			}),
 			container
 		);

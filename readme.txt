@@ -3,9 +3,9 @@ Contributors: bookitfast
 Donate link: https://bookitfast.app/
 Tags: booking, calendar, reservation, property, management, bnb, short term rental, str, holiday rental, vacation rental, holiday house
 Requires at least: 5.0
-Tested up to: 6.8
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.5
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,6 +94,18 @@ Yes, all payment processing is handled securely through encrypted connections an
 
 == Changelog ==
 
+= 1.1.0 =
+* New: Configurable visual style per booking surface — Search Form, Available Properties, Booking Summary, Your Details, and Terms can each be set to one of five new design directions (Quiet Ledger, Warm Itemised, Editorial Receipt, Stacked & Removable, Two-Column Ledger).
+* New: Search form supports an editable Check-out date that automatically derives the number of nights, with the classic Nights selector still available.
+* New: Property image now appears in the booking summary thumbnail (Quiet Ledger direction) when available.
+* New: Helpful in-place error message when no properties are configured or no check-in date is selected, replacing the previous silent fail.
+* Improved: Search Form Style dropdown is now consolidated — Default (Stacked), Horizontal (Check-In & Nights), and all five new directions live in a single editor control.
+* Improved: Available Properties Style dropdown is now consolidated — Card List, Grid Tiles, Compact Rows, and all five new directions in one editor control. Label renamed for clarity.
+* Improved: Button text colour, button colour, and button icon are now reflected correctly in the block editor preview for every search-form variant.
+* Improved: Date pickers and night selectors in the new search-form directions now have proper padding, hover states, and custom dropdown chevrons (no more browser-default chrome).
+* Improved: Spacing below the search form so the booking flow no longer feels cramped against the property list.
+* Security: Major dependency upgrade — @wordpress/scripts bumped to 32.x, @wordpress/icons bumped to 13.x, plus an overrides block in package.json that force-resolves seventeen flagged transitive dependencies (including axios, lodash, minimatch, tar, fast-uri, basic-ftp, immutable, svgo, webpack-dev-server, ws, postcss). Down from 42 reported vulnerabilities to 3 dev-only residuals.
+
 = 1.0.5 =
 * Redesigned stacked (default) search layout with modern aesthetic
 * Replaced emoji icons with clean SVG icons throughout
@@ -134,6 +146,9 @@ Yes, all payment processing is handled securely through encrypted connections an
 * Block for adding gift certificate purchases on your page
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Adds five new visual layouts per booking surface, an editable check-out date with auto-derived nights, and a major dependency upgrade that patches the bulk of reported security advisories. Recommended for all sites.
 
 = 0.1.0 =
 Initial release of the Book It Fast WordPress plugin.

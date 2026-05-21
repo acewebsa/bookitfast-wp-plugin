@@ -17,6 +17,15 @@ import {
 import '../assets/editor.css';
 const { useState, useEffect } = wp.element;
 
+// Direction slugs reused across multiple surface dropdowns.
+const DIRECTION_OPTIONS = [
+	{ label: 'Quiet Ledger (minimal)', value: 'quiet-ledger' },
+	{ label: 'Warm Itemised', value: 'warm-itemised' },
+	{ label: 'Editorial Receipt', value: 'editorial-receipt' },
+	{ label: 'Stacked & Removable', value: 'stacked-removable' },
+	{ label: 'Two-Column Ledger', value: 'two-column-ledger' },
+];
+
 registerBlockType("bookitfast/multi-embed", {
 	title: "Book It Fast Availability",
 	description: "A multi-property booking embed for WordPress.",
@@ -73,6 +82,26 @@ registerBlockType("bookitfast/multi-embed", {
 			type: "number",
 			default: 60
 		},
+		summaryLayout: {
+			type: "string",
+			default: "classic"
+		},
+		searchFormLayout: {
+			type: "string",
+			default: "default"
+		},
+		propertySelectionLayout: {
+			type: "string",
+			default: "cards"
+		},
+		yourDetailsLayout: {
+			type: "string",
+			default: "classic"
+		},
+		termsLayout: {
+			type: "string",
+			default: "classic"
+		},
 	},
 
 	edit: ({ attributes, setAttributes }) => {
@@ -110,18 +139,37 @@ registerBlockType("bookitfast/multi-embed", {
 				<InspectorControls>
 					<PanelBody title="Search Layout" initialOpen={true}>
 						<SelectControl
-							label="Search Box Style"
-							value={attributes.searchLayout}
+							label="Search Form Style"
+							/* For backwards compat: if a legacy embed only has searchLayout
+							   set (e.g. 'horizontal'), reflect that in the unified dropdown
+							   even though the new searchFormLayout attribute defaults to 'default'. */
+							value={
+								attributes.searchFormLayout && attributes.searchFormLayout !== 'default'
+									? attributes.searchFormLayout
+									: (attributes.searchLayout || 'default')
+							}
 							options={[
 								{ label: 'Default (Stacked)', value: 'default' },
-								{ label: 'Horizontal (Check-In & Nights)', value: 'horizontal' }
+								{ label: 'Horizontal (Check-In & Nights)', value: 'horizontal' },
+								...DIRECTION_OPTIONS,
 							]}
-							onChange={(value) => setAttributes({ searchLayout: value })}
-							help="Choose the layout style for the search box"
+							onChange={(value) => {
+								/* Keep the legacy searchLayout attribute in lockstep for
+								   default/horizontal so the existing renderer continues to
+								   work; for the new directions, searchFormLayout drives the
+								   dedicated DOMs and searchLayout becomes a no-op. */
+								if (value === 'default' || value === 'horizontal') {
+									setAttributes({ searchFormLayout: value, searchLayout: value });
+								} else {
+									setAttributes({ searchFormLayout: value });
+								}
+							}}
+							help="Choose the layout style for the search form."
 							__next40pxDefaultSize={true}
 							__nextHasNoMarginBottom={true}
 						/>
-						{attributes.searchLayout === 'horizontal' && (
+						{(attributes.searchFormLayout === 'horizontal' ||
+							(attributes.searchFormLayout === 'default' && attributes.searchLayout === 'horizontal')) && (
 							<RangeControl
 								label="Corner Radius"
 								value={attributes.searchBoxRadius}
@@ -258,15 +306,48 @@ registerBlockType("bookitfast/multi-embed", {
 					</PanelBody>
 					<PanelBody title="Results Layout" initialOpen={false}>
 						<SelectControl
-							label="Layout Style"
-							value={attributes.layoutStyle}
+							label="Available Properties Style"
+							/* For backwards compat: if a legacy embed has only layoutStyle
+							   set, reflect that in the unified dropdown even though the new
+							   propertySelectionLayout defaults to 'cards'. */
+							value={
+								attributes.propertySelectionLayout &&
+								!['cards', 'grid', 'rows'].includes(attributes.propertySelectionLayout)
+									? attributes.propertySelectionLayout
+									: (attributes.layoutStyle || 'cards')
+							}
 							options={[
 								{ label: 'Card List', value: 'cards' },
 								{ label: 'Grid Tiles', value: 'grid' },
-								{ label: 'Compact Rows', value: 'rows' }
+								{ label: 'Compact Rows', value: 'rows' },
+								...DIRECTION_OPTIONS,
 							]}
-							onChange={(value) => setAttributes({ layoutStyle: value })}
-							help="Choose how property results are displayed"
+							onChange={(value) => {
+								/* Mirror cards/grid/rows into the legacy layoutStyle attribute so
+								   the classic PropertyCard / PropertyTile / PropertyRow dispatch
+								   keeps working. Direction slugs go only to
+								   propertySelectionLayout; runtime falls back to PropertyCard for
+								   the base DOM and CSS handles the visual restyle. */
+								if (['cards', 'grid', 'rows'].includes(value)) {
+									setAttributes({ propertySelectionLayout: value, layoutStyle: value });
+								} else {
+									setAttributes({ propertySelectionLayout: value });
+								}
+							}}
+							help="Choose how property results are displayed."
+							__next40pxDefaultSize={true}
+							__nextHasNoMarginBottom={true}
+						/>
+						<SelectControl
+							label="Booking Summary Style"
+							value={attributes.summaryLayout}
+							options={[
+								{ label: 'Classic', value: 'classic' },
+								{ label: 'Quiet Ledger (minimal)', value: 'quiet-ledger' },
+								{ label: 'Two-Column Ledger (Stripe-style)', value: 'two-column-ledger' }
+							]}
+							onChange={(value) => setAttributes({ summaryLayout: value })}
+							help="Choose the visual style for the booking summary panel"
 							__next40pxDefaultSize={true}
 							__nextHasNoMarginBottom={true}
 						/>
@@ -316,27 +397,76 @@ registerBlockType("bookitfast/multi-embed", {
 							__nextHasNoMarginBottom={true}
 						/>
 					</PanelBody>
+					<PanelBody title="Form Style" initialOpen={false}>
+						<SelectControl
+							label="Your Details Style"
+							value={attributes.yourDetailsLayout}
+							options={[
+								{ label: 'Classic', value: 'classic' },
+								{ label: 'Quiet Ledger', value: 'quiet-ledger' },
+								{ label: 'Warm Itemised', value: 'warm-itemised' },
+								{ label: 'Editorial Receipt', value: 'editorial-receipt' },
+								{ label: 'Stacked & Removable', value: 'stacked-removable' },
+							]}
+							onChange={(value) => setAttributes({ yourDetailsLayout: value })}
+							help="Visual style for the customer details form."
+							__next40pxDefaultSize={true}
+							__nextHasNoMarginBottom={true}
+						/>
+						<SelectControl
+							label="Terms &amp; Conditions Style"
+							value={attributes.termsLayout}
+							options={[
+								{ label: 'Classic', value: 'classic' },
+								{ label: 'Quiet Ledger', value: 'quiet-ledger' },
+								{ label: 'Warm Itemised', value: 'warm-itemised' },
+								{ label: 'Stacked & Removable', value: 'stacked-removable' },
+							]}
+							onChange={(value) => setAttributes({ termsLayout: value })}
+							help="Visual style for the agree-to-terms section."
+							__next40pxDefaultSize={true}
+							__nextHasNoMarginBottom={true}
+						/>
+					</PanelBody>
 				</InspectorControls>
 
-				{/* Pass Attributes to MultiEmbedForm */}
-				<MultiEmbedForm
-					propertyIds={attributes.propertyIds}
-					showDiscount={attributes.showDiscount}
-					showSuburb={attributes.showSuburb}
-					showPostcode={attributes.showPostcode}
-					showRedeemGiftCertificate={attributes.showRedeemGiftCertificate}
-					showComments={attributes.showComments}
-					buttonColor={attributes.buttonColor}
-					buttonTextColor={attributes.buttonTextColor}
-					buttonIcon={attributes.buttonIcon}
-					minNights={attributes.minNights}
-					maxNights={attributes.maxNights}
-					showPropertyImages={attributes.showPropertyImages}
-					includeIcons={attributes.includeIcons}
-					layoutStyle={attributes.layoutStyle}
-					searchLayout={attributes.searchLayout}
-					searchBoxRadius={attributes.searchBoxRadius}
-				/>
+				{/* Wrap preview in the same id-scoped container the frontend uses
+				    so frontend CSS (scoped under #bif-book-it-fast-multi-embed) applies,
+				    and inline the button color CSS variables that the frontend gets
+				    via wp_add_inline_style. */}
+				<div
+					id="bif-book-it-fast-multi-embed"
+					style={{
+						'--bif-button-color': attributes.buttonColor,
+						'--bif-button-color-hover': `${attributes.buttonColor}dd`,
+						'--bif-button-color-active': `${attributes.buttonColor}bb`,
+						'--bif-button-text-color': attributes.buttonTextColor,
+					}}
+				>
+					<MultiEmbedForm
+						propertyIds={attributes.propertyIds}
+						showDiscount={attributes.showDiscount}
+						showSuburb={attributes.showSuburb}
+						showPostcode={attributes.showPostcode}
+						showRedeemGiftCertificate={attributes.showRedeemGiftCertificate}
+						showComments={attributes.showComments}
+						buttonColor={attributes.buttonColor}
+						buttonTextColor={attributes.buttonTextColor}
+						buttonIcon={attributes.buttonIcon}
+						minNights={attributes.minNights}
+						maxNights={attributes.maxNights}
+						showPropertyImages={attributes.showPropertyImages}
+						includeIcons={attributes.includeIcons}
+						layoutStyle={attributes.layoutStyle}
+						searchLayout={attributes.searchLayout}
+						searchBoxRadius={attributes.searchBoxRadius}
+						summaryLayout={attributes.summaryLayout}
+						searchFormLayout={attributes.searchFormLayout}
+						propertySelectionLayout={attributes.propertySelectionLayout}
+						yourDetailsLayout={attributes.yourDetailsLayout}
+						termsLayout={attributes.termsLayout}
+					/>
+				</div>
 			</div>
 		);
 	},
