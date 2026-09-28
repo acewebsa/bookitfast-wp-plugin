@@ -55,6 +55,17 @@ const getPropertyBondAmount = (property) => parseFloat(property?.bond?.bond_amou
 
 const bondDueText = (dueDate) => dueDate ? `payable by ${formatApiDate(dueDate)}` : 'payable before check-in';
 
+// Label for a single date in the per-night rate strip (tile / row / card views)
+const getDateRateLabel = (date) => {
+	if (date.availability) return `$${date.rate}`;
+	switch (date.availability_reason) {
+		case 'Booked Out': return 'Booked';
+		case 'No Tariff Set': return 'No Rate';
+		case 'Min Nights': return date.min_nights ? `Min Nights (${date.min_nights})` : 'Min Nights';
+		default: return 'N/A';
+	}
+};
+
 const API_BASE = getWPApiUrl();
 
 const stripePromiseGlobal = loadStripe('your-publishable-key-here');
@@ -160,9 +171,7 @@ const PropertyTile = ({ property, isSelected, onToggle, nights, checkInDate, sho
 							<div key={index} className={`bif-pill ${date.availability ? 'ok' : 'na'}`}>
 								<span className="bif-pill__date">{date.date_formatted}</span>
 								<strong className="bif-pill__amt">
-									{date.availability ? `$${date.rate}` :
-										date.availability_reason === 'Booked Out' ? 'Booked' :
-											date.availability_reason === 'No Tariff Set' ? 'No Rate' : 'N/A'}
+									{getDateRateLabel(date)}
 								</strong>
 							</div>
 						))}
@@ -279,9 +288,7 @@ const PropertyRow = ({ property, isSelected, onToggle, nights, checkInDate, show
 						<div key={index} className={`bif-rmini ${date.availability ? 'ok' : 'na'}`}>
 							<div className="bif-rmini__date">{date.date_formatted}</div>
 							<div className="bif-rmini__amt">
-								{date.availability ? `$${date.rate}` :
-									date.availability_reason === 'Booked Out' ? 'Booked' :
-										date.availability_reason === 'No Tariff Set' ? 'No Rate' : 'N/A'}
+								{getDateRateLabel(date)}
 							</div>
 						</div>
 					))}
@@ -457,9 +464,7 @@ const PropertyCard = ({ property, isSelected, onToggle, nights, checkInDate, sho
 							<div key={index} className={`bif-daily-rate ${date.availability ? 'bif-available' : 'bif-unavailable'}`}>
 								<div className="bif-date">{date.date_formatted}</div>
 								<div className="bif-rate">
-									{date.availability ? `$${date.rate}` :
-										date.availability_reason === 'Booked Out' ? 'Booked' :
-											date.availability_reason === 'No Tariff Set' ? 'No Rate' : 'N/A'}
+									{getDateRateLabel(date)}
 								</div>
 							</div>
 						))}
