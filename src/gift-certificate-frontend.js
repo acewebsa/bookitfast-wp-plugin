@@ -3,7 +3,78 @@ import ReactDOM from "react-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import '../assets/frontend.css';
+import '../assets/gift-certificate-layouts.css';
 // Gift certificate frontend functionality only
+
+/**
+ * Wire the amount selector (tiles or dropdown) so the chosen value always lands
+ * in the #bif-gc_amount input/hidden field that the rest of the form reads.
+ *
+ * - Buttons mode: radio tiles set the hidden #bif-gc_amount. A "custom" tile
+ *   reveals #bif-gc_custom_amount, whose value flows into #bif-gc_amount.
+ * - Dropdown mode: a "custom" <option> reveals #bif-gc_custom_amount likewise.
+ */
+function initGiftCertificateAmountSelector(container) {
+    const amountField = container.querySelector('#bif-gc_amount');
+    if (!amountField) return;
+
+    const customWrap = container.querySelector('.bif-gc-custom-amount');
+    const customInput = container.querySelector('#bif-gc_custom_amount');
+    const tiles = container.querySelectorAll('.bif-gc-amount-tile input[type="radio"]');
+
+    const showCustom = (show) => {
+        if (customWrap) customWrap.style.display = show ? 'block' : 'none';
+        if (show && customInput) customInput.focus();
+    };
+
+    // Buttons / tiles mode.
+    if (tiles.length) {
+        tiles.forEach((radio) => {
+            radio.addEventListener('change', () => {
+                container.querySelectorAll('.bif-gc-amount-tile').forEach((t) =>
+                    t.classList.remove('is-active'));
+                const tile = radio.closest('.bif-gc-amount-tile');
+                if (tile) tile.classList.add('is-active');
+
+                if (radio.value === 'custom') {
+                    showCustom(true);
+                    amountField.value = customInput && customInput.value ? customInput.value : '';
+                } else {
+                    showCustom(false);
+                    amountField.value = radio.value;
+                }
+            });
+            if (radio.checked) radio.dispatchEvent(new Event('change'));
+        });
+    }
+
+    // Dropdown mode with a "custom" option.
+    if (amountField.tagName === 'SELECT') {
+        const syncSelect = () => {
+            if (amountField.value === 'custom') {
+                showCustom(true);
+            } else {
+                showCustom(false);
+            }
+        };
+        amountField.addEventListener('change', syncSelect);
+        syncSelect();
+    }
+
+    // Custom number input flows into the amount field.
+    if (customInput) {
+        customInput.addEventListener('input', () => {
+            // In dropdown mode the select holds "custom"; mirror the numeric value
+            // into a dataset so submit logic can resolve it. In buttons mode the
+            // hidden field is updated directly.
+            if (amountField.tagName === 'SELECT') {
+                amountField.dataset.customValue = customInput.value;
+            } else {
+                amountField.value = customInput.value;
+            }
+        });
+    }
+}
 
 // Form validation function
 function validateForm() {
@@ -226,6 +297,9 @@ function GiftCertificateFrontend() {
 
     //console.log('GiftCertificateFrontend: Button found, adding click listener', proceedButton);
 
+    // Wire the amount selector (tiles / dropdown) into #bif-gc_amount.
+    initGiftCertificateAmountSelector(container);
+
     proceedButton.addEventListener("click", () => {
         //console.log('GiftCertificateFrontend: Make Payment button clicked');
 
@@ -236,7 +310,14 @@ function GiftCertificateFrontend() {
             // Display error messages
             const errorContainer = document.getElementById('bif-gc-error-container');
             if (errorContainer) {
-                errorContainer.innerHTML = errorMessages.map(msg => `<p>${msg}</p>`).join('');
+                // Build DOM nodes with textContent (never innerHTML) to avoid XSS
+                // if a message ever contains user/server-supplied text.
+                errorContainer.textContent = '';
+                errorMessages.forEach((msg) => {
+                    const p = document.createElement('p');
+                    p.textContent = msg;
+                    errorContainer.appendChild(p);
+                });
                 errorContainer.style.display = 'block';
             } else {
                 console.error('GiftCertificateFrontend: Error container #bif-gc-error-container not found');
@@ -250,9 +331,14 @@ function GiftCertificateFrontend() {
             errorContainer.style.display = 'none';
         }
 
-        // Get the entered amount.
+        // Get the entered amount. In dropdown "custom" mode the select holds the
+        // string "custom" and the numeric value lives in dataset.customValue.
         const amountField = container.querySelector("#bif-gc_amount");
-        let amount = parseFloat(amountField.value);
+        let rawAmount = amountField.value;
+        if (rawAmount === "custom") {
+            rawAmount = amountField.dataset.customValue || "";
+        }
+        let amount = parseFloat(rawAmount);
         if (isNaN(amount)) amount = 0;
 
         //console.log('GiftCertificateFrontend: Amount:', amount);

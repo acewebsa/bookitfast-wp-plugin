@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const propertySelectionLayout = container.dataset.propertySelectionLayout || 'cards';
 		const yourDetailsLayout = container.dataset.yourDetailsLayout || 'classic';
 		const termsLayout = container.dataset.termsLayout || 'classic';
+		const autoSelectSingleProperty = container.dataset.autoSelectSingleProperty === 'true';
 
 		ReactDOM.render(
 			React.createElement(MultiEmbedForm, {
@@ -57,7 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				searchFormLayout: searchFormLayout,
 				propertySelectionLayout: propertySelectionLayout,
 				yourDetailsLayout: yourDetailsLayout,
-				termsLayout: termsLayout
+				termsLayout: termsLayout,
+				autoSelectSingleProperty: autoSelectSingleProperty
 			}),
 			container
 		);

@@ -1,0 +1,67 @@
+/**
+ * Availability Search block styles.
+ */
+.bif-search {
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .1);
+    padding: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto 1.5rem;
+}
+.bif-search *, .bif-search *::before, .bif-search *::after { box-sizing: border-box; }
+.bif-search__title { margin: 0 0 1rem; font-size: 1.4rem; font-weight: 700; text-align: center; }
+.bif-search__row { display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap; }
+.bif-search__field { flex: 1 1 180px; display: flex; flex-direction: column; gap: .35rem; font-size: .85rem; font-weight: 600; color: #444; }
+.bif-search__field input, .bif-search__field select { padding: .7rem .8rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; background: #fff; width: 100%; }
+.bif-search__field input:focus, .bif-search__field select:focus { outline: none; border-color: var(--bif-button-color, #0073aa); }
+.bif-search__go {
+    flex: 0 0 auto;
+    padding: .8rem 2rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--bif-button-color, #0073aa);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: filter .2s ease, transform .2s ease;
+}
+.bif-search__go:hover { filter: brightness(1.07); transform: translateY(-1px); }
+.bif-search__error { color: #c53030; margin: .75rem 0 0; font-size: .9rem; }
+
+/* Date-range picker --------------------------------------------------- */
+.bif-search__daterange { position: relative; flex: 1 1 240px; }
+.bif-search__range-input { cursor: pointer; }
+.bif-search__cal {
+    position: absolute;
+    z-index: 60;
+    top: calc(100% + 6px);
+    left: 0;
+    width: 280px;
+    max-width: 90vw;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 12px 44px rgba(0, 0, 0, .2);
+    padding: 12px;
+}
+.bif-cal__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.bif-cal__title { font-weight: 700; font-size: .95rem; color: #333; }
+.bif-cal__nav { border: none; background: #f0f0f0; border-radius: 6px; width: 28px; height: 28px; cursor: pointer; font-size: 16px; line-height: 1; color: #444; }
+.bif-cal__nav:hover { background: var(--bif-button-color, #0073aa); color: #fff; }
+.bif-cal__dow { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin-bottom: 4px; }
+.bif-cal__dow span { text-align: center; font-size: .72rem; font-weight: 700; color: #999; }
+.bif-cal__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.bif-cal__day { border: none; background: transparent; border-radius: 6px; height: 34px; cursor: pointer; font-size: .9rem; color: #333; padding: 0; }
+.bif-cal__day:hover:not(:disabled) { background: #eef3f8; }
+.bif-cal__day.is-disabled, .bif-cal__day:disabled { color: #ccc; cursor: default; }
+.bif-cal__day.is-inrange { background: #e8f1f8; border-radius: 0; }
+.bif-cal__day.is-start, .bif-cal__day.is-end { background: var(--bif-button-color, #0073aa); color: #fff; }
+.bif-cal__day.is-start { border-radius: 6px 0 0 6px; }
+.bif-cal__day.is-end { border-radius: 0 6px 6px 0; }
+
+@media (max-width: 600px) {
+    .bif-search__row { flex-direction: column; align-items: stretch; }
+    .bif-search__go { width: 100%; }
+}

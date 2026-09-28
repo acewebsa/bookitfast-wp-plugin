@@ -1,0 +1,865 @@
+/* =====================================================================
+   Book It Fast — Gift Certificate Layout Themes
+   ---------------------------------------------------------------------
+   Five drop-in visual treatments for the gift-certificate purchase form.
+   The form wrapper `.bif-bookitfast-certificate-form` carries exactly one
+   layout class:
+       .bif-gc-layout-minimal   (#s1 Minimal  — system sans, hairline)
+       .bif-gc-layout-bold      (#s2 Bold     — brutalist black/orange)
+       .bif-gc-layout-editorial (#s3 Editorial— serif magazine)
+       .bif-gc-layout-playful   (#s4 Playful  — gradient, pills, rounded)
+       .bif-gc-layout-luxury    (#s5 Luxury   — navy + gold serif)
+   (`.bif-gc-layout-classic` is left to the base CSS and not styled here.)
+
+   EVERYTHING is scoped under the layout class so nothing leaks to the page
+   or between layouts.
+
+   OVERRIDE HOOKS (custom properties, settable by Divi Design tab / the
+   Gutenberg inspector, or by PHP inline style per instance):
+       --bif-gc-font            base font-family
+       --bif-gc-heading-font    heading font-family (h3 / h4)
+       --bif-button-color       submit button background
+       --bif-button-text-color  submit button text colour
+
+   AMOUNT-TILE SELECTORS:
+       default tile : .bif-gc-amount-tile span
+       active tile  : .bif-gc-amount-tile input:checked + span
+                      .bif-gc-amount-tile.is-active span   (fallback)
+   ===================================================================== */
+
+
+/* =====================================================================
+   SHARED — radio inputs are visually hidden in every layout; the <span>
+   (or the tile label) is the clickable surface.
+   ===================================================================== */
+.bif-gc-amount-tiles {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 0.5rem;
+}
+.bif-gc-amount-tile {
+	position: relative;
+	margin: 0;
+	cursor: pointer;
+}
+.bif-gc-amount-tile input[type="radio"] {
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+	margin: 0;
+	pointer-events: none;
+}
+.bif-gc-amount-tile span {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	cursor: pointer;
+	user-select: none;
+}
+
+
+/* =====================================================================
+   CLASSIC (default) — the original white card.
+   Defined here (not in the base CSS) so the background stays a low-specificity
+   default that a Divi Design-tab / theme / inline override can beat.
+   ===================================================================== */
+.bif-gc-layout-classic {
+	background: #ffffff;
+	border-radius: 16px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =====================================================================
+   STYLE 1 — MINIMAL  (#s1)
+   Modern minimal · system sans · hairline borders · blue accent.
+   ===================================================================== */
+.bif-gc-layout-minimal {
+	--bif-gc-font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+	--bif-gc-heading-font: var(--bif-gc-font);
+	--bif-button-color: #1e293b;
+	--bif-button-text-color: #ffffff;
+
+	--bif-mn-bg: #ffffff;
+	--bif-mn-fg: #111827;
+	--bif-mn-muted: #6b7280;
+	--bif-mn-border: #e5e7eb;
+	--bif-mn-accent: #1d4ed8;
+	--bif-mn-accent-tint: #eff6ff;
+
+	font-family: var(--bif-gc-font);
+	background: var(--bif-mn-bg);
+	border: 1px solid var(--bif-mn-border);
+	border-radius: 10px;
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+	color: var(--bif-mn-fg);
+	overflow: hidden;
+}
+.bif-gc-layout-minimal .bif-form-header {
+	padding: 1.75rem 2rem 0;
+	background: transparent;
+}
+.bif-gc-layout-minimal .bif-form-header h3 {
+	font-family: var(--bif-gc-heading-font);
+	font-size: 1.625rem;
+	font-weight: 600;
+	letter-spacing: -0.03em;
+	color: var(--bif-mn-fg);
+	margin: 0;
+}
+.bif-gc-layout-minimal .bif-form-content {
+	padding: 1.5rem 2rem 2rem;
+}
+.bif-gc-layout-minimal .bif-section {
+	margin-bottom: 1.75rem;
+}
+.bif-gc-layout-minimal .bif-section h4 {
+	font-size: 0.65rem;
+	font-weight: 600;
+	letter-spacing: 0.13em;
+	text-transform: uppercase;
+	color: var(--bif-mn-muted);
+	margin: 0 0 0.875rem;
+	font-family: var(--bif-gc-font);
+}
+.bif-gc-layout-minimal .bif-form-group {
+	margin-bottom: 1rem;
+}
+.bif-gc-layout-minimal .bif-form-group label {
+	display: block;
+	font-size: 0.75rem;
+	font-weight: 500;
+	color: #4b5563;
+	margin-bottom: 0.3rem;
+}
+.bif-gc-layout-minimal .bif-form-control {
+	width: 100%;
+	padding: 0.625rem 0.75rem;
+	border: 1px solid var(--bif-mn-border);
+	border-radius: 6px;
+	font: 0.875rem/1.5 var(--bif-gc-font);
+	color: var(--bif-mn-fg);
+	background: var(--bif-mn-bg);
+	outline: none;
+	transition: border-color 0.14s, box-shadow 0.14s;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.bif-gc-layout-minimal textarea.bif-form-control {
+	resize: vertical;
+	min-height: 88px;
+}
+.bif-gc-layout-minimal .bif-form-control::placeholder { color: #d1d5db; }
+.bif-gc-layout-minimal .bif-form-control:focus {
+	border-color: var(--bif-mn-accent);
+	box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.08);
+}
+/* Amount tiles */
+.bif-gc-layout-minimal .bif-gc-amount-tile span {
+	padding: 0.625rem 0.375rem;
+	border: 1px solid var(--bif-mn-border);
+	border-radius: 6px;
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: #374151;
+	background: var(--bif-mn-bg);
+	transition: border-color 0.14s, color 0.14s, background 0.14s;
+}
+.bif-gc-layout-minimal .bif-gc-amount-tile span:hover { border-color: #93c5fd; }
+.bif-gc-layout-minimal .bif-gc-amount-tile input:checked + span,
+.bif-gc-layout-minimal .bif-gc-amount-tile.is-active span {
+	border-color: var(--bif-mn-accent);
+	color: var(--bif-mn-accent);
+	background: var(--bif-mn-accent-tint);
+}
+.bif-gc-layout-minimal .bif-gc-custom-amount { margin-top: 0.5rem; }
+/* Consent row */
+.bif-gc-layout-minimal .bif-section .bif-form-group label:has(input[type="checkbox"]),
+.bif-gc-layout-minimal .bif-form-group label input[type="checkbox"] ~ * {
+	text-transform: none;
+}
+.bif-gc-layout-minimal .bif-form-group label:has(> input[type="checkbox"]) {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5rem;
+	font-size: 0.8125rem;
+	font-weight: 400;
+	color: var(--bif-mn-muted);
+	line-height: 1.5;
+}
+.bif-gc-layout-minimal .bif-form-group label a { color: var(--bif-mn-accent); }
+/* Stripe card */
+.bif-gc-layout-minimal #bif-gc-card-element {
+	padding: 0.625rem 0.75rem;
+	border: 1px solid var(--bif-mn-border);
+	border-radius: 6px;
+	background: var(--bif-mn-bg);
+}
+/* Submit button */
+.bif-gc-layout-minimal .bif-button-container { margin-top: 0.5rem; }
+.bif-gc-layout-minimal .bif-btn-primary {
+	width: 100%;
+	padding: 0.875rem;
+	background: var(--bif-button-color);
+	color: var(--bif-button-text-color);
+	border: none;
+	border-radius: 6px;
+	font: 600 0.875rem/1 var(--bif-gc-font);
+	letter-spacing: 0.02em;
+	cursor: pointer;
+	transition: filter 0.14s, background 0.14s;
+}
+.bif-gc-layout-minimal .bif-btn-primary:hover { filter: brightness(0.85); }
+
+
+/* =====================================================================
+   STYLE 2 — BOLD  (#s2)
+   Brutalist · black canvas · orange accent · underline fields.
+   ===================================================================== */
+.bif-gc-layout-bold {
+	--bif-gc-font: -apple-system, system-ui, 'Helvetica Neue', Arial, sans-serif;
+	--bif-gc-heading-font: var(--bif-gc-font);
+	--bif-button-color: #ff4d00;
+	--bif-button-text-color: #ffffff;
+
+	--bif-bd-accent: #ff4d00;
+	--bif-bd-card: #111111;
+	--bif-bd-border: #1f1f1f;
+	--bif-bd-text: #dddddd;
+
+	font-family: var(--bif-gc-font);
+	background: var(--bif-bd-card);
+	border: 1px solid var(--bif-bd-border);
+	border-radius: 0;
+	color: var(--bif-bd-text);
+}
+.bif-gc-layout-bold .bif-form-header {
+	padding: 2.25rem 2.25rem 0;
+	background: transparent;
+}
+.bif-gc-layout-bold .bif-form-header h3 {
+	font-family: var(--bif-gc-heading-font);
+	font-size: clamp(2rem, 6vw, 3rem);
+	font-weight: 900;
+	line-height: 0.92;
+	letter-spacing: -0.04em;
+	text-transform: uppercase;
+	color: #ffffff;
+	margin: 0;
+}
+.bif-gc-layout-bold .bif-form-content {
+	padding: 2rem 2.25rem 2.25rem;
+}
+.bif-gc-layout-bold .bif-section { margin-bottom: 1.25rem; }
+.bif-gc-layout-bold .bif-section h4 {
+	font-family: var(--bif-gc-font);
+	font-size: 0.6rem;
+	font-weight: 800;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: #404040;
+	margin: 2rem 0 1rem;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+.bif-gc-layout-bold .bif-section:first-of-type h4 { margin-top: 0; }
+.bif-gc-layout-bold .bif-section h4::after {
+	content: '';
+	flex: 1;
+	height: 1px;
+	background: var(--bif-bd-border);
+}
+.bif-gc-layout-bold .bif-form-group { margin-bottom: 1.125rem; }
+.bif-gc-layout-bold .bif-form-group label {
+	display: block;
+	font-size: 0.62rem;
+	font-weight: 700;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: #444444;
+	margin-bottom: 0.4rem;
+}
+.bif-gc-layout-bold .bif-form-control {
+	width: 100%;
+	padding: 0.75rem 0;
+	border: none;
+	border-bottom: 2px solid #262626;
+	border-radius: 0;
+	background: transparent;
+	font: 1rem/1.4 var(--bif-gc-font);
+	color: var(--bif-bd-text);
+	outline: none;
+	transition: border-color 0.14s;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.bif-gc-layout-bold select.bif-form-control { color: var(--bif-bd-text); }
+.bif-gc-layout-bold select.bif-form-control option { background: var(--bif-bd-card); }
+.bif-gc-layout-bold textarea.bif-form-control { resize: none; min-height: 76px; }
+.bif-gc-layout-bold .bif-form-control::placeholder { color: #383838; }
+.bif-gc-layout-bold .bif-form-control:focus { border-bottom-color: var(--bif-bd-accent); }
+/* Amount tiles — wrap, square, heavy */
+.bif-gc-layout-bold .bif-gc-amount-tiles {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+.bif-gc-layout-bold .bif-gc-amount-tile span {
+	padding: 0.5rem 1.125rem;
+	border: 2px solid #2a2a2a;
+	border-radius: 0;
+	font-size: 1.0625rem;
+	font-weight: 900;
+	letter-spacing: -0.02em;
+	color: #555555;
+	background: transparent;
+	transition: border-color 0.12s, color 0.12s, background 0.12s;
+}
+.bif-gc-layout-bold .bif-gc-amount-tile span:hover { border-color: #444444; color: #cccccc; }
+.bif-gc-layout-bold .bif-gc-amount-tile input:checked + span,
+.bif-gc-layout-bold .bif-gc-amount-tile.is-active span {
+	border-color: var(--bif-bd-accent);
+	color: var(--bif-bd-accent);
+	background: rgba(255, 77, 0, 0.05);
+}
+.bif-gc-layout-bold .bif-gc-custom-amount { margin-top: 1.25rem; }
+/* Consent row */
+.bif-gc-layout-bold .bif-form-group label:has(> input[type="checkbox"]) {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5rem;
+	font-size: 0.75rem;
+	font-weight: 400;
+	letter-spacing: 0;
+	text-transform: none;
+	color: #888888;
+	line-height: 1.5;
+}
+.bif-gc-layout-bold .bif-form-group label a { color: var(--bif-bd-accent); }
+/* Stripe card */
+.bif-gc-layout-bold #bif-gc-card-element {
+	padding: 0.75rem 0;
+	border: none;
+	border-bottom: 2px solid #262626;
+	background: transparent;
+}
+/* Submit button */
+.bif-gc-layout-bold .bif-button-container { margin-top: 2.25rem; }
+.bif-gc-layout-bold .bif-btn-primary {
+	display: block;
+	width: 100%;
+	padding: 1.125rem;
+	background: var(--bif-button-color);
+	color: var(--bif-button-text-color);
+	border: none;
+	border-radius: 0;
+	font: 900 0.875rem/1 var(--bif-gc-font);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: filter 0.12s;
+}
+.bif-gc-layout-bold .bif-btn-primary:hover { filter: brightness(0.88); }
+
+
+/* =====================================================================
+   STYLE 3 — EDITORIAL  (#s3)
+   Magazine · serif display · cream paper · terracotta accent · ruled.
+   ===================================================================== */
+.bif-gc-layout-editorial {
+	--bif-gc-font: Georgia, 'Times New Roman', serif;
+	--bif-gc-heading-font: Georgia, 'Times New Roman', serif;
+	--bif-gc-meta-font: -apple-system, system-ui, sans-serif;
+	--bif-button-color: #1a1510;
+	--bif-button-text-color: #f5efe8;
+
+	--bif-ed-paper: #fbf9f5;
+	--bif-ed-ink: #1a1510;
+	--bif-ed-rule: #c8bfb0;
+	--bif-ed-muted: #9a8c7e;
+	--bif-ed-accent: #c0612a;
+
+	font-family: var(--bif-gc-font);
+	background: var(--bif-ed-paper);
+	border: 1px solid var(--bif-ed-rule);
+	border-top: 3px solid var(--bif-ed-ink);
+	border-radius: 0;
+	color: #2c2218;
+}
+.bif-gc-layout-editorial .bif-form-header {
+	padding: 1.5rem 2.25rem 1.25rem;
+	border-bottom: 1px solid var(--bif-ed-rule);
+	background: transparent;
+}
+.bif-gc-layout-editorial .bif-form-header h3 {
+	font-family: var(--bif-gc-heading-font);
+	font-size: clamp(1.75rem, 4vw, 2.75rem);
+	font-weight: 400;
+	font-style: italic;
+	line-height: 1.04;
+	letter-spacing: -0.02em;
+	color: var(--bif-ed-ink);
+	margin: 0;
+}
+.bif-gc-layout-editorial .bif-form-content {
+	padding: 1.75rem 2.25rem 2.25rem;
+}
+.bif-gc-layout-editorial .bif-section { margin-bottom: 1.5rem; }
+.bif-gc-layout-editorial .bif-section h4 {
+	font-family: var(--bif-gc-meta-font);
+	font-size: 0.62rem;
+	font-weight: 700;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--bif-ed-muted);
+	margin: 0 0 0.875rem;
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid var(--bif-ed-rule);
+}
+.bif-gc-layout-editorial .bif-form-group { margin-bottom: 1.25rem; }
+.bif-gc-layout-editorial .bif-form-group label {
+	display: block;
+	font-family: var(--bif-gc-meta-font);
+	font-size: 0.62rem;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--bif-ed-muted);
+	margin-bottom: 0.375rem;
+}
+.bif-gc-layout-editorial .bif-form-control {
+	width: 100%;
+	padding: 0.6rem 0;
+	border: none;
+	border-bottom: 1px solid var(--bif-ed-rule);
+	border-radius: 0;
+	background: transparent;
+	font: 0.9375rem/1.5 var(--bif-gc-font);
+	color: var(--bif-ed-ink);
+	outline: none;
+	transition: border-color 0.14s;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.bif-gc-layout-editorial select.bif-form-control { background: transparent; }
+.bif-gc-layout-editorial textarea.bif-form-control { resize: none; min-height: 72px; }
+.bif-gc-layout-editorial .bif-form-control::placeholder { color: var(--bif-ed-rule); font-style: italic; }
+.bif-gc-layout-editorial .bif-form-control:focus { border-bottom-color: var(--bif-ed-accent); }
+/* Amount tiles — 2-col bordered swatches, ink fill when active */
+.bif-gc-layout-editorial .bif-gc-amount-tiles {
+	grid-template-columns: repeat(2, 1fr);
+}
+.bif-gc-layout-editorial .bif-gc-amount-tile span {
+	padding: 0.5rem;
+	border: 1px solid var(--bif-ed-rule);
+	border-radius: 0;
+	font-size: 0.9375rem;
+	color: #5a4e42;
+	background: #ffffff;
+	transition: background 0.14s, color 0.14s, border-color 0.14s;
+}
+.bif-gc-layout-editorial .bif-gc-amount-tile span:hover { border-color: var(--bif-ed-muted); }
+.bif-gc-layout-editorial .bif-gc-amount-tile input:checked + span,
+.bif-gc-layout-editorial .bif-gc-amount-tile.is-active span {
+	background: var(--bif-ed-ink);
+	color: #f5efe8;
+	border-color: var(--bif-ed-ink);
+}
+.bif-gc-layout-editorial .bif-gc-custom-amount { margin-top: 0.625rem; }
+/* Consent row */
+.bif-gc-layout-editorial .bif-form-group label:has(> input[type="checkbox"]) {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5rem;
+	font-family: var(--bif-gc-meta-font);
+	font-size: 0.75rem;
+	font-weight: 400;
+	letter-spacing: 0;
+	text-transform: none;
+	color: #6b5e50;
+	line-height: 1.55;
+}
+.bif-gc-layout-editorial .bif-form-group label a { color: var(--bif-ed-accent); }
+/* Stripe card */
+.bif-gc-layout-editorial #bif-gc-card-element {
+	padding: 0.6rem 0;
+	border: none;
+	border-bottom: 1px solid var(--bif-ed-rule);
+	background: transparent;
+}
+/* Submit button */
+.bif-gc-layout-editorial .bif-button-container { margin-top: 1.5rem; }
+.bif-gc-layout-editorial .bif-btn-primary {
+	width: 100%;
+	padding: 0.8125rem;
+	background: var(--bif-button-color);
+	color: var(--bif-button-text-color);
+	border: none;
+	border-radius: 0;
+	font: 400 0.8125rem/1 var(--bif-gc-font);
+	letter-spacing: 0.06em;
+	cursor: pointer;
+	transition: background 0.14s;
+}
+.bif-gc-layout-editorial .bif-btn-primary:hover { background: var(--bif-ed-accent); }
+
+
+/* =====================================================================
+   STYLE 4 — PLAYFUL  (#s4)
+   Approachable · sky-mint gradient · pill amounts · rounded cards.
+   ===================================================================== */
+.bif-gc-layout-playful {
+	--bif-gc-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+	--bif-gc-heading-font: var(--bif-gc-font);
+	--bif-button-color: linear-gradient(135deg, #10b981, #06b6d4);
+	--bif-button-text-color: #ffffff;
+
+	--bif-pl-accent: #10b981;
+	--bif-pl-fg: #1e3a5f;
+	--bif-pl-field-bg: #f9fafb;
+	--bif-pl-border: #e5e7eb;
+
+	font-family: var(--bif-gc-font);
+	background: #ffffff;
+	border: none;
+	border-radius: 20px;
+	box-shadow: 0 4px 28px rgba(0, 0, 0, 0.07), 0 1px 6px rgba(0, 0, 0, 0.04);
+	color: #374151;
+	overflow: hidden;
+}
+.bif-gc-layout-playful .bif-form-header {
+	padding: 1.75rem 2rem 0;
+	background: transparent;
+}
+.bif-gc-layout-playful .bif-form-header h3 {
+	font-family: var(--bif-gc-heading-font);
+	font-size: clamp(1.625rem, 5vw, 2.25rem);
+	font-weight: 800;
+	line-height: 1.1;
+	color: var(--bif-pl-fg);
+	margin: 0;
+}
+.bif-gc-layout-playful .bif-form-content {
+	padding: 1.5rem 2rem 2rem;
+}
+.bif-gc-layout-playful .bif-section { margin-bottom: 1.75rem; }
+.bif-gc-layout-playful .bif-section h4 {
+	font-family: var(--bif-gc-font);
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.07em;
+	text-transform: uppercase;
+	color: #6b7280;
+	margin: 0 0 1rem;
+}
+.bif-gc-layout-playful .bif-form-group { margin-bottom: 1rem; }
+.bif-gc-layout-playful .bif-form-group label {
+	display: block;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: #374151;
+	margin-bottom: 0.35rem;
+}
+.bif-gc-layout-playful .bif-form-control {
+	width: 100%;
+	padding: 0.6875rem 0.875rem;
+	border: 2px solid var(--bif-pl-border);
+	border-radius: 12px;
+	font: 0.9375rem/1.4 var(--bif-gc-font);
+	color: #111827;
+	background: var(--bif-pl-field-bg);
+	outline: none;
+	transition: border-color 0.15s, background 0.15s;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.bif-gc-layout-playful textarea.bif-form-control { resize: none; min-height: 80px; }
+.bif-gc-layout-playful .bif-form-control::placeholder { color: #d1d5db; }
+.bif-gc-layout-playful .bif-form-control:focus {
+	border-color: var(--bif-pl-accent);
+	background: #ffffff;
+}
+/* Amount tiles — wrapping rounded pills, gradient fill when active */
+.bif-gc-layout-playful .bif-gc-amount-tiles {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+.bif-gc-layout-playful .bif-gc-amount-tile span {
+	padding: 0.5rem 1.125rem;
+	border: 2px solid var(--bif-pl-border);
+	border-radius: 999px;
+	font-size: 0.9375rem;
+	font-weight: 700;
+	color: #374151;
+	background: #ffffff;
+	transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.bif-gc-layout-playful .bif-gc-amount-tile span:hover { border-color: #a7f3d0; }
+.bif-gc-layout-playful .bif-gc-amount-tile input:checked + span,
+.bif-gc-layout-playful .bif-gc-amount-tile.is-active span {
+	border-color: transparent;
+	color: #ffffff;
+	background: linear-gradient(135deg, #10b981, #06b6d4);
+}
+.bif-gc-layout-playful .bif-gc-custom-amount { margin-top: 0.875rem; }
+.bif-gc-layout-playful .bif-gc-custom-amount .bif-form-control { border-radius: 10px; }
+/* Consent row */
+.bif-gc-layout-playful .bif-form-group label:has(> input[type="checkbox"]) {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5rem;
+	font-size: 0.8125rem;
+	font-weight: 400;
+	color: #6b7280;
+	line-height: 1.5;
+}
+.bif-gc-layout-playful .bif-form-group label a { color: var(--bif-pl-accent); }
+/* Stripe card */
+.bif-gc-layout-playful #bif-gc-card-element {
+	padding: 0.6875rem 0.875rem;
+	border: 2px solid var(--bif-pl-border);
+	border-radius: 12px;
+	background: var(--bif-pl-field-bg);
+}
+/* Submit button */
+.bif-gc-layout-playful .bif-button-container { margin-top: 1.625rem; }
+.bif-gc-layout-playful .bif-btn-primary {
+	width: 100%;
+	padding: 1rem;
+	background: var(--bif-button-color);
+	color: var(--bif-button-text-color);
+	border: none;
+	border-radius: 14px;
+	font: 700 1rem/1 var(--bif-gc-font);
+	cursor: pointer;
+	transition: opacity 0.15s, transform 0.12s;
+}
+.bif-gc-layout-playful .bif-btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+.bif-gc-layout-playful .bif-btn-primary:active { transform: translateY(0); }
+
+
+/* =====================================================================
+   STYLE 5 — LUXURY  (#s5)
+   Dark navy · gold · serif · gridded amount block · slide-fill button.
+   ===================================================================== */
+.bif-gc-layout-luxury {
+	--bif-gc-font: Georgia, 'Times New Roman', serif;
+	--bif-gc-heading-font: Georgia, 'Times New Roman', serif;
+	--bif-gc-meta-font: -apple-system, system-ui, sans-serif;
+	--bif-button-color: transparent;
+	--bif-button-text-color: #b59547;
+
+	--bif-lx-bg: #0c0f1e;
+	--bif-lx-panel: #151929;
+	--bif-lx-tile: #0f1222;
+	--bif-lx-border: #1d2236;
+	--bif-lx-gold: #b59547;
+	--bif-lx-text: #b8c4dc;
+	--bif-lx-faint: #3a4568;
+
+	font-family: var(--bif-gc-font);
+	background: var(--bif-lx-bg);
+	border: 1px solid var(--bif-lx-border);
+	border-radius: 0;
+	color: var(--bif-lx-text);
+}
+.bif-gc-layout-luxury .bif-form-header {
+	padding: 2.75rem 2rem 0;
+	text-align: center;
+	background: transparent;
+}
+.bif-gc-layout-luxury .bif-form-header h3 {
+	font-family: var(--bif-gc-heading-font);
+	font-size: clamp(1.875rem, 5vw, 2.625rem);
+	font-weight: 400;
+	letter-spacing: 0.02em;
+	line-height: 1.12;
+	color: #e8dcc8;
+	margin: 0;
+}
+.bif-gc-layout-luxury .bif-form-header h3::before,
+.bif-gc-layout-luxury .bif-form-header h3::after {
+	content: '';
+	display: block;
+	width: 48px;
+	height: 1px;
+	background: var(--bif-lx-gold);
+	margin: 1.25rem auto;
+}
+.bif-gc-layout-luxury .bif-form-content {
+	padding: 2rem 2rem 2.5rem;
+}
+.bif-gc-layout-luxury .bif-section { margin-bottom: 1.5rem; }
+.bif-gc-layout-luxury .bif-section h4 {
+	font-family: var(--bif-gc-meta-font);
+	font-size: 0.58rem;
+	font-weight: 600;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: #2a3050;
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin: 2.5rem 0 1.75rem;
+}
+.bif-gc-layout-luxury .bif-section:first-of-type h4 { margin-top: 0; }
+.bif-gc-layout-luxury .bif-section h4::before,
+.bif-gc-layout-luxury .bif-section h4::after {
+	content: '';
+	flex: 1;
+	height: 1px;
+	background: #1a2040;
+}
+.bif-gc-layout-luxury .bif-form-group { margin-bottom: 1.625rem; }
+.bif-gc-layout-luxury .bif-form-group label {
+	display: block;
+	font-family: var(--bif-gc-meta-font);
+	font-size: 0.58rem;
+	font-weight: 600;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--bif-lx-gold);
+	margin-bottom: 0.5rem;
+}
+.bif-gc-layout-luxury .bif-form-control {
+	width: 100%;
+	padding: 0.75rem 0;
+	border: none;
+	border-bottom: 1px solid #1a2040;
+	border-radius: 0;
+	background: transparent;
+	font: 0.9375rem/1.5 var(--bif-gc-font);
+	color: var(--bif-lx-text);
+	outline: none;
+	transition: border-color 0.22s;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.bif-gc-layout-luxury select.bif-form-control option { background: var(--bif-lx-panel); }
+.bif-gc-layout-luxury textarea.bif-form-control { resize: none; min-height: 76px; }
+.bif-gc-layout-luxury .bif-form-control::placeholder { color: #252c40; font-style: italic; }
+.bif-gc-layout-luxury .bif-form-control:focus { border-bottom-color: var(--bif-lx-gold); }
+/* Amount tiles — seamless gridded block. Uses translucent overlays (not solid
+   hardcoded colours) so the block adapts to ANY form background the user sets. */
+.bif-gc-layout-luxury .bif-gc-amount-tiles {
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1px;
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.bif-gc-layout-luxury .bif-gc-amount-tile span {
+	padding: 1.125rem 0.5rem;
+	background: rgba(255, 255, 255, 0.03);
+	font-size: 0.9375rem;
+	color: var(--bif-lx-faint);
+	transition: background 0.2s, color 0.2s;
+}
+.bif-gc-layout-luxury .bif-gc-amount-tile span:hover { color: #c8d0e8; }
+.bif-gc-layout-luxury .bif-gc-amount-tile input:checked + span,
+.bif-gc-layout-luxury .bif-gc-amount-tile.is-active span {
+	background: rgba(255, 255, 255, 0.1);
+	color: var(--bif-lx-gold);
+}
+.bif-gc-layout-luxury .bif-gc-custom-amount { margin-top: 1.625rem; }
+/* Consent row */
+.bif-gc-layout-luxury .bif-form-group label:has(> input[type="checkbox"]) {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5rem;
+	font-family: var(--bif-gc-meta-font);
+	font-size: 0.7rem;
+	font-weight: 400;
+	letter-spacing: 0.04em;
+	text-transform: none;
+	color: #4a5470;
+	line-height: 1.6;
+}
+.bif-gc-layout-luxury .bif-form-group label a { color: var(--bif-lx-gold); }
+/* Stripe card */
+.bif-gc-layout-luxury #bif-gc-card-element {
+	padding: 0.75rem 0;
+	border: none;
+	border-bottom: 1px solid #1a2040;
+	background: transparent;
+}
+/* Submit button — outlined gold with slide-fill on hover */
+.bif-gc-layout-luxury .bif-button-container { margin-top: 2.75rem; }
+.bif-gc-layout-luxury .bif-btn-primary {
+	position: relative;
+	display: block;
+	width: 100%;
+	padding: 1.125rem;
+	background: var(--bif-button-color);
+	border: 1px solid var(--bif-lx-gold);
+	color: var(--bif-button-text-color);
+	font: 400 0.68rem/1 var(--bif-gc-meta-font);
+	letter-spacing: 0.3em;
+	text-transform: uppercase;
+	cursor: pointer;
+	overflow: hidden;
+	transition: color 0.28s;
+	z-index: 0;
+}
+.bif-gc-layout-luxury .bif-btn-primary::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: var(--bif-lx-gold);
+	transform: translateX(-101%);
+	transition: transform 0.28s ease;
+	z-index: -1;
+}
+.bif-gc-layout-luxury .bif-btn-primary:hover { color: var(--bif-lx-bg); }
+.bif-gc-layout-luxury .bif-btn-primary:hover::after { transform: translateX(0); }
+
+
+/* =====================================================================
+   ALERT / ERROR CONTAINER — light tinting per layout so the danger
+   alert reads correctly on both light and dark canvases.
+   ===================================================================== */
+.bif-gc-layout-minimal .bif-alert-danger,
+.bif-gc-layout-playful .bif-alert-danger,
+.bif-gc-layout-editorial .bif-alert-danger {
+	background: #fef2f2;
+	border: 1px solid #fecaca;
+	color: #b91c1c;
+	padding: 0.75rem 1rem;
+	border-radius: 6px;
+	margin-bottom: 1.25rem;
+}
+.bif-gc-layout-bold .bif-alert-danger,
+.bif-gc-layout-luxury .bif-alert-danger {
+	background: rgba(220, 38, 38, 0.08);
+	border: 1px solid rgba(220, 38, 38, 0.4);
+	color: #f87171;
+	padding: 0.75rem 1rem;
+	margin-bottom: 1.25rem;
+}
+
+
+/* =====================================================================
+   RESPONSIVE — stack amount tiles to 2 columns, reduce padding.
+   Mirrors the reference's @media (max-width: 600px) block.
+   ===================================================================== */
+@media (max-width: 600px) {
+	.bif-gc-layout-minimal .bif-gc-amount-tiles,
+	.bif-gc-layout-editorial .bif-gc-amount-tiles,
+	.bif-gc-layout-luxury .bif-gc-amount-tiles {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.bif-gc-layout-minimal .bif-form-header,
+	.bif-gc-layout-playful .bif-form-header { padding: 1.375rem 1.375rem 0; }
+	.bif-gc-layout-minimal .bif-form-content,
+	.bif-gc-layout-playful .bif-form-content { padding: 1.25rem 1.375rem 1.5rem; }
+	.bif-gc-layout-bold .bif-form-header { padding: 1.5rem 1.375rem 0; }
+	.bif-gc-layout-bold .bif-form-content { padding: 1.375rem; }
+	.bif-gc-layout-editorial .bif-form-header { padding: 1.25rem 1.375rem 1rem; }
+	.bif-gc-layout-editorial .bif-form-content { padding: 1.375rem; }
+	.bif-gc-layout-luxury .bif-form-header { padding: 2rem 1.375rem 0; }
+	.bif-gc-layout-luxury .bif-form-content { padding: 1.5rem 1.375rem 1.75rem; }
+	.bif-gc-layout-playful { border-radius: 16px; }
+}

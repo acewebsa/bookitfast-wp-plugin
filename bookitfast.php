@@ -8,7 +8,7 @@
  * Author URI:      https://bookitfast.app
  * Text Domain:     book-it-fast
  * Domain Path:     /languages
- * Version:         1.1.0
+ * Version:         1.2.0
  * Requires at least: 5.0
  * Tested up to:      7.0
  * Requires PHP:      7.4
@@ -47,6 +47,9 @@ define('BOOKITFAST_API_URL', 'https://bookitfast.app');
 require_once BOOKITFAST_PATH . 'includes/admin-menu.php';
 require_once BOOKITFAST_PATH . 'includes/api.php';
 require_once BOOKITFAST_PATH . 'includes/blocks.php';
+require_once BOOKITFAST_PATH . 'includes/availability-search.php';
+require_once BOOKITFAST_PATH . 'includes/availability-calendar.php';
+require_once BOOKITFAST_PATH . 'includes/patterns.php';
 
 // Activation hook
 register_activation_hook(__FILE__, 'bookitfast_activate');
@@ -62,6 +65,7 @@ function bookitfast_activate()
 // Register REST API routes
 
 // Function to authenticate with Laravel API
+if (! function_exists('bookitfast_api_authenticate')) {
 function bookitfast_api_authenticate($email, $password)
 {
 	$api_url = get_option('bookitfast_api_url');
@@ -90,6 +94,7 @@ function bookitfast_api_authenticate($email, $password)
 	}
 
 	return new WP_Error('invalid_credentials', 'Invalid email or password.');
+}
 }
 
 function bookitfast_get_user_properties()

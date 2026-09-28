@@ -1,11 +1,11 @@
 === Book It Fast ===
 Contributors: bookitfast
 Donate link: https://bookitfast.app/
-Tags: booking, calendar, reservation, property, management, bnb, short term rental, str, holiday rental, vacation rental, holiday house
+Tags: short term rental, str, holiday rental, vacation rental, booking
 Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,12 @@ Yes, all payment processing is handled securely through encrypted connections an
 3. Frontend booking calendar display
 
 == Changelog ==
+
+= 1.2.0 =
+* New: BIF Availability Calendar block — a month grid showing booked vs. free nights for a single property, sourced live from the booking engine. Configurable property, months shown, optional month scrolling (browse up to 24 months with prev/next arrows), booked and available colours, available-cell fill, and a legend.
+* New: /property-availability-calendar REST endpoint (property_id + months) that proxies the booking engine's booked/available date ranges.
+* New: "Hero with Booking Search" block pattern — a full-width hero with the BIF Availability Search built in, ready to drop onto a homepage (set the search's target booking page in the block settings).
+* Changed: Block display names are now consistently prefixed "BIF" — BIF Availability (was Book It Fast Availability), BIF Gift Certificate (was Book It Fast Gift Certificate), plus BIF Availability Calendar and BIF Availability Search.
 
 = 1.1.0 =
 * New: Configurable visual style per booking surface — Search Form, Available Properties, Booking Summary, Your Details, and Terms can each be set to one of five new design directions (Quiet Ledger, Warm Itemised, Editorial Receipt, Stacked & Removable, Two-Column Ledger).

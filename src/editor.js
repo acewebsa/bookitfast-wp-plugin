@@ -27,7 +27,7 @@ const DIRECTION_OPTIONS = [
 ];
 
 registerBlockType("bookitfast/multi-embed", {
-	title: "Book It Fast Availability",
+	title: "BIF Availability",
 	description: "A multi-property booking embed for WordPress.",
 	icon: "calendar",
 	category: "widgets",
@@ -101,6 +101,10 @@ registerBlockType("bookitfast/multi-embed", {
 		termsLayout: {
 			type: "string",
 			default: "classic"
+		},
+		autoSelectSingleProperty: {
+			type: "boolean",
+			default: false
 		},
 	},
 
@@ -200,6 +204,14 @@ registerBlockType("bookitfast/multi-embed", {
 								__nextHasNoMarginBottom={true}
 							/>
 						)}
+
+						<ToggleControl
+							label="Auto-select single property"
+							checked={attributes.autoSelectSingleProperty}
+							onChange={(value) => setAttributes({ autoSelectSingleProperty: value })}
+							help="When the block is configured with exactly one property, skip the property-selection step and go straight to the booking summary after Search."
+							__nextHasNoMarginBottom={true}
+						/>
 
 						<RangeControl
 							label="Minimum Nights"
@@ -465,6 +477,7 @@ registerBlockType("bookitfast/multi-embed", {
 						propertySelectionLayout={attributes.propertySelectionLayout}
 						yourDetailsLayout={attributes.yourDetailsLayout}
 						termsLayout={attributes.termsLayout}
+						autoSelectSingleProperty={attributes.autoSelectSingleProperty}
 					/>
 				</div>
 			</div>

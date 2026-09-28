@@ -199,6 +199,10 @@ add_action('init', function () {
 			'termsLayout' => [
 				'type' => 'string',
 				'default' => 'classic'
+			],
+			'autoSelectSingleProperty' => [
+				'type' => 'boolean',
+				'default' => false
 			]
 		]
 	]);
@@ -264,6 +268,7 @@ function bookitfast_render_multi_embed_block($attributes)
 	$propertySelectionLayout = isset($attributes['propertySelectionLayout']) ? esc_attr($attributes['propertySelectionLayout']) : $layoutStyle;
 	$yourDetailsLayout = isset($attributes['yourDetailsLayout']) ? esc_attr($attributes['yourDetailsLayout']) : 'classic';
 	$termsLayout = isset($attributes['termsLayout']) ? esc_attr($attributes['termsLayout']) : 'classic';
+	$autoSelectSingleProperty = !empty($attributes['autoSelectSingleProperty']);
 
 	// Map WordPress icon names to Unicode symbols for CSS content
 	$iconMap = [
@@ -341,7 +346,8 @@ function bookitfast_render_multi_embed_block($attributes)
 		data-search-form-layout="<?php echo esc_attr($searchFormLayout); ?>"
 		data-property-selection-layout="<?php echo esc_attr($propertySelectionLayout); ?>"
 		data-your-details-layout="<?php echo esc_attr($yourDetailsLayout); ?>"
-		data-terms-layout="<?php echo esc_attr($termsLayout); ?>">
+		data-terms-layout="<?php echo esc_attr($termsLayout); ?>"
+		data-auto-select-single-property="<?php echo esc_attr($autoSelectSingleProperty ? 'true' : 'false'); ?>">
 	</div>
 <?php
 	return ob_get_clean();
@@ -379,20 +385,57 @@ function bookitfast_register_gift_certificate_block()
 		filemtime(plugin_dir_path(__FILE__) . '../build/gift-certificate-frontend.css')
 	);
 
+	// Register editor styles (base + layout themes) so the block preview shows
+	// the real selected design in the editor.
+	$gc_editor_css = plugin_dir_path(__FILE__) . '../build/gift-certificate.css';
+	if (file_exists($gc_editor_css)) {
+		wp_register_style(
+			'bookitfast-gc-editor-style',
+			plugins_url('../build/gift-certificate.css', __FILE__),
+			[],
+			filemtime($gc_editor_css)
+		);
+	}
+
 	// Register the block
 	register_block_type('bookitfast/gift-certificate', array(
 		'editor_script' => 'bookitfast-gc-editor',
+		'editor_style' => 'bookitfast-gc-editor-style',
 		'script' => 'bookitfast-gc-frontend',
 		'style' => 'bookitfast-gc-styles',
 		'render_callback' => 'bookitfast_render_gift_certificate_block',
 		'attributes' => array(
 			'buttonColor' => array(
 				'type' => 'string',
-				'default' => '#0073aa'
+				'default' => ''
 			),
 			'buttonTextColor' => array(
 				'type' => 'string',
-				'default' => '#ffffff'
+				'default' => ''
+			),
+			'backgroundColor' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'layoutStyle' => array(
+				'type' => 'string',
+				'default' => 'classic'
+			),
+			'amountSelector' => array(
+				'type' => 'string',
+				'default' => 'buttons'
+			),
+			'bodyFont' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'headingFont' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'labelFont' => array(
+				'type' => 'string',
+				'default' => ''
 			)
 		)
 	));

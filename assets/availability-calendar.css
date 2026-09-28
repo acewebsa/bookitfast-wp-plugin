@@ -1,0 +1,129 @@
+/**
+ * Availability Calendar block (#2) — month grid of booked vs. free nights.
+ * Colours are driven by inline CSS vars (--bif-cal-booked / --bif-cal-free)
+ * set from the block settings, with sensible defaults here.
+ */
+.bif-cal {
+    --bif-cal-booked: #d9534f;
+    --bif-cal-free: #2e7d5b;
+    box-sizing: border-box;
+    max-width: 1100px;
+    margin: 1.5rem auto;
+    font-family: inherit;
+}
+.bif-cal *, .bif-cal *::before, .bif-cal *::after { box-sizing: border-box; }
+
+.bif-cal__title { font-size: 1.4rem; font-weight: 700; margin: 0 0 .75rem; text-align: center; }
+.bif-cal__note { text-align: center; color: #888; background: #f6f6f6; border: 1px dashed #ccc; border-radius: 8px; padding: 1rem; margin: 0 0 1rem; }
+
+.bif-cal__legend { display: flex; justify-content: center; gap: 1.5rem; margin: 0 0 1.25rem; font-size: .85rem; color: #555; }
+.bif-cal__legend-item { display: inline-flex; align-items: center; gap: .45rem; }
+.bif-cal__swatch { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+.bif-cal__swatch--free { background: color-mix(in srgb, var(--bif-cal-free) 18%, #fff); border: 1px solid var(--bif-cal-free); }
+.bif-cal__swatch--booked { background: color-mix(in srgb, var(--bif-cal-booked) 14%, #fff); border: 1px solid var(--bif-cal-booked); }
+
+.bif-cal__months { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem 2rem; }
+.bif-cal__month { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 1rem 1.1rem; box-shadow: 0 4px 18px rgba(0,0,0,.05); }
+.bif-cal__month-label { text-align: center; font-weight: 700; color: #2c3e50; margin-bottom: .6rem; }
+
+.bif-cal__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.bif-cal__dow { text-align: center; font-size: .7rem; text-transform: uppercase; letter-spacing: .04em; color: #aab; padding-bottom: .35rem; }
+.bif-cal__pad { aspect-ratio: 1; }
+
+.bif-cal__day {
+    aspect-ratio: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    font: inherit;
+    font-size: .85rem;
+    color: #333;
+    padding: 0;
+    cursor: default;
+    transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.bif-cal__day > span { line-height: 1; }
+
+/* Free / selectable nights */
+.bif-cal__day.is-free {
+    color: var(--bif-cal-free);
+    border-color: color-mix(in srgb, var(--bif-cal-free) 32%, transparent);
+    cursor: pointer;
+}
+.bif-cal__day.is-free:hover,
+.bif-cal__day.is-free:focus-visible {
+    background: color-mix(in srgb, var(--bif-cal-free) 12%, transparent);
+    outline: none;
+}
+.bif-cal__day.is-selected {
+    background: var(--bif-cal-free);
+    border-color: var(--bif-cal-free);
+    color: #fff;
+    font-weight: 700;
+}
+
+/* Booked nights — struck through */
+.bif-cal__day.is-booked {
+    color: var(--bif-cal-booked);
+    background: color-mix(in srgb, var(--bif-cal-booked) 10%, transparent);
+    text-decoration: line-through;
+    cursor: not-allowed;
+}
+
+/* Past nights */
+.bif-cal__day.is-past { color: #c8ccd2; cursor: default; }
+
+/* Optional: fill the available cell background with a faint tint of the
+   available colour (border-only by default). */
+.bif-cal--fill-free .bif-cal__day.is-free {
+    background: color-mix(in srgb, var(--bif-cal-free) 14%, transparent);
+}
+.bif-cal--fill-free .bif-cal__day.is-free:hover,
+.bif-cal--fill-free .bif-cal__day.is-free:focus-visible {
+    background: color-mix(in srgb, var(--bif-cal-free) 26%, transparent);
+}
+
+/* Month navigation — scroll through a larger loaded range, `months` per view. */
+.bif-cal__viewport { display: flex; align-items: center; gap: .35rem; }
+.bif-cal--nav .bif-cal__months {
+    display: flex;
+    flex-wrap: nowrap;
+    flex: 1 1 auto;
+    min-width: 0; /* allow the flex item to shrink + scroll internally (not overflow the page) */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    gap: 1.5rem;
+    /* Hide the scrollbar — navigation is via the arrows / swipe. */
+    scrollbar-width: none;        /* Firefox */
+    -ms-overflow-style: none;     /* IE / old Edge */
+}
+.bif-cal--nav .bif-cal__months::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;                /* Chrome / Safari / Edge */
+}
+.bif-cal--nav .bif-cal__month {
+    flex: 0 0 calc((100% - (var(--bif-cal-per-view, 1) - 1) * 1.5rem) / var(--bif-cal-per-view, 1));
+    scroll-snap-align: start;
+}
+.bif-cal__nav {
+    flex: 0 0 auto;
+    width: 38px; height: 38px;
+    border: 1px solid #ddd; border-radius: 50%;
+    background: #fff; color: #2c3e50;
+    font-size: 1.5rem; line-height: 1;
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background .15s ease, border-color .15s ease, opacity .15s ease;
+}
+.bif-cal__nav:hover { background: #f3f4f6; border-color: var(--bif-cal-free); }
+.bif-cal__nav:disabled { opacity: .3; cursor: default; }
+
+@media (max-width: 600px) {
+    .bif-cal__months { grid-template-columns: 1fr; }
+    .bif-cal--nav .bif-cal__month { flex: 0 0 100%; }
+}

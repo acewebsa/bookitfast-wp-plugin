@@ -1815,7 +1815,8 @@ const MultiEmbedForm = ({
 	searchFormLayout = 'default', // 'default' (uses searchLayout), or one of the five direction slugs
 	propertySelectionLayout = 'cards', // 'cards' (uses layoutStyle), or direction slug
 	yourDetailsLayout = 'classic',
-	termsLayout = 'classic'
+	termsLayout = 'classic',
+	autoSelectSingleProperty = false
 }) => {
 	const nightsFromUrl = getQueryParam('nights');
 	const validatedNights = nightsFromUrl && !isNaN(nightsFromUrl) ? Math.max(parseInt(nightsFromUrl, 10), minNights) : minNights;
@@ -1922,7 +1923,28 @@ const MultiEmbedForm = ({
 				acc[propertyId] = false;
 				return acc;
 			}, {});
-			setSelectionData(initialSelection);
+
+			/* Auto-select when the block is configured for it AND there is exactly
+			   one configured property AND that property is available for the
+			   requested date range. We pre-mark it selected in the same selectionData
+			   payload we set, then trigger fetchSummary directly — saves the user the
+			   "Select Property" click and jumps straight to the booking summary. */
+			const propertyIds = Object.keys(data);
+			let selectionToApply = initialSelection;
+			if (autoSelectSingleProperty && propertyIds.length === 1) {
+				const onlyId = propertyIds[0];
+				const onlyProperty = data[onlyId];
+				const isAvailable = onlyProperty && (onlyProperty.available === true || onlyProperty.available === 'true');
+				if (isAvailable) {
+					selectionToApply = { ...initialSelection, [onlyId]: true };
+					setSelectionData(selectionToApply);
+					await fetchSummary(selectionToApply, discountCode);
+				} else {
+					setSelectionData(selectionToApply);
+				}
+			} else {
+				setSelectionData(selectionToApply);
+			}
 		} catch (err) {
 			console.error(err);
 			setError('Failed to fetch availability. Please try again.');
@@ -2203,8 +2225,16 @@ const MultiEmbedForm = ({
 				    Resolved layout: propertySelectionLayout drives both the wrapper
 				    modifier class and the base renderer. When set to one of the new
 				    direction slugs we fall back to the PropertyCard renderer so CSS
-				    overrides have consistent inner DOM to retarget. */}
-				{showProperties && availability && (() => {
+				    overrides have consistent inner DOM to retarget.
+				    When autoSelectSingleProperty is on AND the block has exactly one
+				    property AND that property is available, hide this step entirely —
+				    selectionData was already set and fetchSummary already ran. */}
+				{showProperties && availability && !(
+					autoSelectSingleProperty &&
+					Object.keys(availability).length === 1 &&
+					availability[Object.keys(availability)[0]] &&
+					(availability[Object.keys(availability)[0]].available === true || availability[Object.keys(availability)[0]].available === 'true')
+				) && (() => {
 					const baseLayouts = ['cards', 'grid', 'rows'];
 					const resolvedLayout = propertySelectionLayout && !baseLayouts.includes(propertySelectionLayout)
 						? propertySelectionLayout
