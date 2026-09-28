@@ -8,7 +8,7 @@
  * Author URI:      https://bookitfast.app
  * Text Domain:     book-it-fast
  * Domain Path:     /languages
- * Version:         1.2.0
+ * Version:         1.2.1
  * Requires at least: 5.0
  * Tested up to:      7.1.2
  * Requires PHP:      7.4

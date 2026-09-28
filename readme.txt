@@ -5,7 +5,7 @@ Tags: short term rental, str, holiday rental, vacation rental, booking
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,6 +94,11 @@ Yes, all payment processing is handled securely through encrypted connections an
 
 == Changelog ==
 
+= 1.2.1 =
+* New: Refundable bond is now shown to guests when one applies — a "Refundable Bond (payable separately)" line for each property in the Booking Summary (Classic, Quiet Ledger and Two-Column Ledger layouts), a notice under the total making clear the bond is not included and the date it is payable by, and a reminder above the payment buttons.
+* Improved: Dates that are unavailable because of a minimum-stay rule now show "Min Nights (N)" in the per-night rate strip (grid tiles, compact rows and card list) instead of "N/A".
+* Tested up to WordPress 7.1.2.
+
 = 1.2.0 =
 * New: BIF Availability Calendar block — a month grid showing booked vs. free nights for a single property, sourced live from the booking engine. Configurable property, months shown, optional month scrolling (browse up to 24 months with prev/next arrows), booked and available colours, available-cell fill, and a legend.
 * New: /property-availability-calendar REST endpoint (property_id + months) that proxies the booking engine's booked/available date ranges.
@@ -152,6 +157,9 @@ Yes, all payment processing is handled securely through encrypted connections an
 * Block for adding gift certificate purchases on your page
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+Guests are now told when a refundable bond applies, how much it is, and the date it is payable by. Recommended for all sites that charge a bond.
 
 = 1.1.0 =
 Adds five new visual layouts per booking surface, an editable check-out date with auto-derived nights, and a major dependency upgrade that patches the bulk of reported security advisories. Recommended for all sites.
