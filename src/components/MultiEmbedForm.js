@@ -29,6 +29,32 @@ const getCurrencySymbol = (currency) => {
 	return symbols[currency] || currency + ' ';
 };
 
+// Format an API date string (YYYY-MM-DD) as a readable date without timezone shifting
+const formatApiDate = (dateString) => {
+	if (!dateString) return '';
+	const [year, month, day] = dateString.split('T')[0].split('-').map(Number);
+	if (!year || !month || !day) return dateString;
+	return new Date(year, month - 1, day).toLocaleDateString('en-AU', {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+	});
+};
+
+// Returns refundable bond details for an order, or null when no bond applies.
+// The bond is NOT part of order_grand_total / order_payable_now - it is charged separately.
+const getOrderBond = (summary) => {
+	if (!summary || !summary.bond_applies) return null;
+	const amount = parseFloat(summary.order_bond_total || 0);
+	if (!(amount > 0)) return null;
+	return { amount, dueDate: summary.order_bond_due_date || null };
+};
+
+// Per-property bond amount from property_summaries[id].bond
+const getPropertyBondAmount = (property) => parseFloat(property?.bond?.bond_amount || 0);
+
+const bondDueText = (dueDate) => dueDate ? `payable by ${formatApiDate(dueDate)}` : 'payable before check-in';
+
 const API_BASE = getWPApiUrl();
 
 const stripePromiseGlobal = loadStripe('your-publishable-key-here');
@@ -984,6 +1010,8 @@ const BookingSummary = ({
 	// Check if discount is actually applied based on summary data
 	const isDiscountApplied = summary && parseFloat(summary.order_discount_code_total || 0) > 0;
 
+	const orderBond = getOrderBond(summary);
+
 	const applyDiscount = () => {
 		if (discountCode.trim()) {
 			onApplyDiscount(discountCode);
@@ -1112,6 +1140,14 @@ const BookingSummary = ({
 									<span>${parseFloat(propertyTotal).toFixed(2)}</span>
 								</div>
 							</div>
+
+							{/* Refundable bond - shown separately as it is not part of the booking total */}
+							{getPropertyBondAmount(property) > 0 && (
+								<div className="bif-total-row bif-bond-row">
+									<span>Refundable Bond (payable separately)</span>
+									<span>${getPropertyBondAmount(property).toFixed(2)}</span>
+								</div>
+							)}
 
 							{/* Show selected optional extras for this property (OLD - keeping for backwards compatibility) */}
 							{!property.optional_extras && selectedExtras[property.id] && selectedExtras[property.id].length > 0 && (
@@ -1279,6 +1315,14 @@ const BookingSummary = ({
 							Includes discount of ${parseFloat(summary.order_discount_code_total || 0).toFixed(2)}
 						</div>
 					)}
+
+					{/* Bond notice - bond is not included in the total and is payable on a separate date */}
+					{orderBond && (
+						<div className="bif-bond-notice">
+							<strong>Bond:</strong> A refundable bond of ${orderBond.amount.toFixed(2)} also applies to this booking.
+							It is not included in the total above and is {bondDueText(orderBond.dueDate)}.
+						</div>
+					)}
 				</div>
 			</div>
 		</div>
@@ -1432,6 +1476,12 @@ const QuietLedgerRow = ({ property, nights, defaultOpen }) => {
 						<span className="bif-ql-label">Property total</span>
 						<span className="bif-ql-val">${b.propertyTotal.toFixed(2)}</span>
 					</div>
+					{getPropertyBondAmount(property) > 0 && (
+						<div className="bif-ql-line bif-ql-bond">
+							<span className="bif-ql-label">Refundable bond (payable separately)</span>
+							<span className="bif-ql-val">${getPropertyBondAmount(property).toFixed(2)}</span>
+						</div>
+					)}
 				</div>
 			)}
 		</div>
@@ -1450,6 +1500,7 @@ const QuietLedgerSummary = (props) => {
 		? Math.max(parseFloat(gcResult.total) - gcApplied, 0)
 		: parseFloat(total || 0);
 	const checkoutDate = computeCheckoutDate(checkInDate, nights);
+	const orderBond = getOrderBond(summary);
 
 	return (
 		<div className="bif-booking-summary bif-summary-quiet-ledger">
@@ -1500,6 +1551,11 @@ const QuietLedgerSummary = (props) => {
 				{gcResult && gcResult.valid && finalTotal > 0 && summary?.order_has_surcharge && (
 					<div className="bif-ql-note">*Credit card surcharge will be added at payment</div>
 				)}
+				{orderBond && (
+					<div className="bif-ql-note bif-ql-bond-note">
+						Refundable bond of ${orderBond.amount.toFixed(2)} not included — {bondDueText(orderBond.dueDate)}.
+					</div>
+				)}
 			</div>
 		</div>
 	);
@@ -1521,6 +1577,7 @@ const TwoColumnLedgerSummary = (props) => {
 		? Math.max(parseFloat(gcResult.total) - gcApplied, 0)
 		: parseFloat(total || 0);
 	const checkoutDate = computeCheckoutDate(checkInDate, nights);
+	const orderBond = getOrderBond(summary);
 
 	return (
 		<div className="bif-booking-summary bif-summary-two-col">
@@ -1596,6 +1653,12 @@ const TwoColumnLedgerSummary = (props) => {
 										<span className="bif-tc-sub-amt">${parseFloat(extra.amount).toFixed(2)}</span>
 									</span>
 								))}
+								{getPropertyBondAmount(property) > 0 && (
+									<span className="bif-tc-sub-item bif-tc-bond">
+										<span>Refundable bond (payable separately)</span>
+										<span className="bif-tc-sub-amt">${getPropertyBondAmount(property).toFixed(2)}</span>
+									</span>
+								)}
 							</div>
 						);
 					})}
@@ -1623,6 +1686,11 @@ const TwoColumnLedgerSummary = (props) => {
 
 					{gcResult && gcResult.valid && finalTotal > 0 && summary?.order_has_surcharge && (
 						<div className="bif-tc-note">*Credit card surcharge will be added at payment</div>
+					)}
+					{orderBond && (
+						<div className="bif-tc-note bif-tc-bond-note">
+							Refundable bond of ${orderBond.amount.toFixed(2)} not included — {bondDueText(orderBond.dueDate)}.
+						</div>
 					)}
 				</div>
 			</div>
@@ -2188,6 +2256,8 @@ const MultiEmbedForm = ({
 				};
 			}) : [];
 
+	const orderBond = getOrderBond(summary);
+
 	return (
 		<div
 			className="bif-booking-container"
@@ -2394,6 +2464,16 @@ const MultiEmbedForm = ({
 									</div>
 								) : (
 									<>
+										{/* Bond reminder - payable separately from today's payment */}
+										{orderBond && (
+											<div className="bif-bond-notice bif-bond-notice--payment">
+												<p>
+													A refundable bond of {getCurrencySymbol(summary?.order_currency || 'AUD')}{orderBond.amount.toFixed(2)} is {bondDueText(orderBond.dueDate)}.
+													It is not included in the amount charged today.
+												</p>
+											</div>
+										)}
+
 										{/* Show surcharge info only if there's a remaining balance to pay with credit card */}
 										{summary.order_surcharge > 0 && parseFloat(summary.order_payable_now || 0) > 0 && (
 											<div className="bif-surcharge-info">

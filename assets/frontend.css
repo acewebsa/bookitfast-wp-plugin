@@ -1727,6 +1727,42 @@ div.editor-styles-wrapper .bif-booking-container button.bif-search-button,
 	margin-bottom: 0;
 }
 
+/* Refundable bond */
+.bif-bond-row,
+.bif-ql-bond .bif-ql-label,
+.bif-ql-bond .bif-ql-val,
+.bif-tc-bond {
+	font-size: 0.875rem;
+	color: #1d4ed8;
+}
+
+.bif-bond-notice {
+	margin-top: 0.75rem;
+	padding: 0.75rem 1rem;
+	background: #eff6ff;
+	border: 1px solid #bfdbfe;
+	border-radius: 0.375rem;
+	font-size: 0.875rem;
+	color: #1e3a8a;
+	line-height: 1.5;
+}
+
+.bif-bond-notice--payment {
+	margin-top: 0;
+	margin-bottom: 1rem;
+}
+
+.bif-bond-notice p {
+	margin: 0;
+}
+
+.bif-ql-bond-note,
+.bif-tc-bond-note {
+	color: #1e3a8a;
+	font-style: normal;
+	font-weight: 500;
+}
+
 /* Customer Details Form */
 .bif-customer-details {
 	padding: 2rem;
